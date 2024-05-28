@@ -1,0 +1,58 @@
+.body-container {
+    background-image: url("../../../../assets/card.png") !important;
+    height: 150vh;
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  
+.card-img-bottom{
+    height: 480px;
+    width: 200px !important;
+    padding-bottom: 20px;
+}
+
+.card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(242, 240, 244, 1);
+    border-radius: 25px !important;
+    margin-top: -350px !important;
+    height: 800px !important;
+    padding-bottom: -150px !important;
+    margin-right: 50px;
+}
+.investor{
+    color: rgba(66, 133, 244, 1) !important;
+}
+.skillworker{
+    color: rgba(31, 161, 44, 1) !important;
+}
+.paragraph{
+    color:rgba(25, 27, 33, 1);
+    padding-top: 20px;
+}
+.card-body{
+    padding-top: 100px !important;
+}
+@media (max-width: 768px) {
+    .card{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(242, 240, 244, 1);
+        border-radius: 25px !important;
+        margin-top: -350px !important;
+        height: 600px !important;
+        padding-bottom: -150px !important;
+    }
+    .card-img-bottom{
+        height: 380px;
+        width: 180px !important;
+        padding-bottom: 20px;
+    }
+    .body-container{
+        background-image: none !important;
+    }
+}

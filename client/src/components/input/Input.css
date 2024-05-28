@@ -1,0 +1,83 @@
+.inputType {
+  width: 580px;
+  padding: 8px;
+  margin-bottom: 20px;
+  height: 56px;
+  padding-left: 20px;
+  border-style: none;
+  background-color: rgb(224, 223, 223);
+}
+
+.inputTypeLogin {
+  width: 600px;
+  padding: 8px;
+  margin-bottom: 20px;
+  height: 56px;
+  background-color: rgb(253, 252, 252);
+  border: 1px solid rgba(102, 102, 102, 0.35);
+  border-radius: 10px;
+}
+.inputTypeSignup {
+  width: 650px;
+  padding: 8px;
+  height: 56px;
+  background-color: rgb(177, 175, 175);
+  border: 1px solid rgba(102, 102, 102, 0.35);
+  border-radius: 10px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.inputTypeEdit {
+  width: 600px;
+  padding: 8px;
+  margin-bottom: 20px;
+  height: 56px;
+  border: 1px solid rgba(102, 102, 102, 0.35);
+  border-radius: 5px;
+  margin-right: auto;
+}
+
+.inputType::placeholder {
+  color: #000000 !important;
+}
+
+.inputTypeSearch {
+  width: 550px;
+  padding: 8px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .inputType {
+    width: 500px;
+    padding: 8px;
+    margin-bottom: 20px;
+    height: 56px;
+    padding-left: 20px;
+  }
+
+  .inputType::placeholder {
+    color: #000000 !important;
+  }
+
+  .inputTypeSearch {
+    width: 300px;
+    padding: 8px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  .inputTypeSignup {
+    width: 500px;
+    padding: 8px;
+    margin-bottom: 20px;
+    height: 56px;
+    background-color: rgb(177, 175, 175);
+    border: 1px solid rgba(102, 102, 102, 0.35);
+    border-radius: 10px;
+    margin-left: 0px;
+  }
+}

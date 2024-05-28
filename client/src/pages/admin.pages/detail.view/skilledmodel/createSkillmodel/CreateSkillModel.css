@@ -1,0 +1,27 @@
+.plus-button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.custom-modal-body {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.modal-content {
+  width: 800px !important;
+  margin-left: -100px !important;
+  margin-right: 0px !important;
+  margin-bottom: 20px;
+}
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+  margin-top: -10px;
+  font-size: 10px;
+  opacity: 0.8;
+}

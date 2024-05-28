@@ -1,0 +1,51 @@
+.header-container {
+    background-image: url("../../../../assets/header.png");
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 120vh;
+    margin-top: 100px;
+    
+}
+
+
+.title-head {
+    font-size: 150px;
+    text-align: start;
+    margin-left: 100px;
+    color: rgba(255, 255, 255, 0.79);
+}
+
+.button-container {
+    width: 350px;
+    margin-left: 110px !important;
+    margin-top: 40px;
+}
+.person-image{
+    margin-top: 10px;
+    height: 100vh;
+}
+
+@media (max-width: 768px) {
+    .title-head {
+        font-size: 100px;
+        margin-left: 150px;
+        color: rgb(255, 255, 255);
+        margin-top: 200px;
+        text-align: center;
+    }
+
+    .button-container {
+        width: 400px;
+        margin-left: 50px;
+        gap: 20px;
+    }
+    .person-image{
+        display: none;
+    }
+    .header-container{
+        background-image:none;
+        background-color:rgba(0, 96, 255, 0.72) !important;
+        height: 100vh;
+    }
+}

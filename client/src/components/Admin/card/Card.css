@@ -1,0 +1,20 @@
+.dashboard-card {
+    margin-bottom: 20px;
+  }
+  .dashboard-card-body{
+    height: 200px;
+    width: 300px;
+    border: 1px solid black;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    background-color: white;
+    margin-top: 10px;
+
+  }
+  .dasboard-moneybill{
+    color: green;
+  }

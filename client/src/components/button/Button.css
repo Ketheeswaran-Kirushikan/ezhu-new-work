@@ -1,0 +1,139 @@
+.loginpage-login-Button {
+  background-color: rgba(0, 96, 255, 1);
+  width: 580px;
+  height: 64px;
+  color: white;
+  border-radius: 25px;
+  border-style: none;
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.loginpage-signup-Button {
+  background-color: transparent;
+  width: 580px;
+  height: 64px;
+  border-radius: 25px;
+  border-style: none;
+  font-size: 25px;
+  font-weight: 500;
+  border: 1px solid black;
+  color: rgba(102, 102, 102, 1);
+}
+
+.homepage-login-Button {
+  background-color: rgb(1, 31, 80);
+  width: 160px;
+  height: 50px;
+  color: white;
+  border-radius: 10px;
+  border-style: none;
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.homepage-signup-Button {
+  background-color: transparent;
+  width: 160px;
+  height: 50px;
+  border-radius: 10px;
+  border-style: none;
+  font-size: 25px;
+  font-weight: 500;
+  border: 1px solid rgb(1, 31, 80);
+  color: rgb(255, 255, 255);
+}
+
+.homepage-submit-Button {
+  background-color: black;
+  color: white;
+  width: 580px;
+  height: 50px;
+  margin-top: 100px;
+  border-style: none;
+  font-size: 25px;
+}
+.registerPop-close-Button {
+  background-color: rgb(8, 92, 228);
+  width: 160px;
+  height: 50px;
+  color: white;
+  border-radius: 10px;
+  border-style: none;
+  font-size: 25px;
+  font-weight: 500;
+}
+.usermodel-view {
+  color: green;
+  height: 40px;
+  width: 40px;
+  background-color: transparent;
+  border-style: none;
+}
+
+@media (max-width: 768px) {
+  .loginpage-login-Button {
+    background-color: rgba(0, 96, 255, 1);
+    width: 580px;
+    height: 64px;
+    color: white;
+    border-radius: 25px;
+    border-style: none;
+    font-size: 25px;
+    font-weight: 500;
+  }
+
+  .loginpage-signup-Button {
+    background-color: transparent;
+    width: 580px;
+    height: 64px;
+    border-radius: 25px;
+    border-style: none;
+    font-size: 25px;
+    font-weight: 500;
+    border: 1px solid black;
+    color: rgba(102, 102, 102, 1);
+  }
+
+  .homepage-login-Button {
+    background-color: rgb(1, 31, 80);
+    width: 160px;
+    height: 50px;
+    color: white;
+    border-radius: 10px;
+    border-style: none;
+    font-size: 25px;
+    font-weight: 500;
+  }
+
+  .homepage-signup-Button {
+    background-color: transparent;
+    width: 160px !important;
+    height: 50px;
+    border-radius: 10px;
+    border-style: none;
+    font-size: 25px;
+    font-weight: 500;
+    border: 1px solid rgb(1, 31, 80);
+    color: rgb(255, 255, 255);
+  }
+  .homepage-submit-Button {
+    background-color: black;
+    color: white;
+    width: 500px;
+    height: 50px;
+    margin-top: 30px;
+    border-style: none;
+    font-size: 25px;
+  }
+}
+
+.search-button {
+  background-color: transparent;
+  color: rgb(255, 255, 255);
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  border-style: none;
+  font-size: 20px;
+}

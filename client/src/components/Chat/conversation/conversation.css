@@ -1,0 +1,15 @@
+.conversation-item {
+  border-bottom: 1px solid #ddd;
+  padding: 0.5rem 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 100px;
+}
+
+.conversation-item:hover {
+  background-color: rgba(0, 96, 255, 1);
+}
+.selected-conversation {
+  background-color: rgba(0, 96, 255, 1);
+}

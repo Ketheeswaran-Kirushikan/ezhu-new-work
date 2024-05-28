@@ -1,0 +1,15 @@
+.textArea {
+    width: 1000px !important;
+    height: 100px;
+    padding: 10px;
+    box-sizing: border-box;
+    resize: vertical;
+  }
+  
+  @media (max-width: 768px) {
+    .textArea {
+      max-width: 500px;
+    }
+  }
+  
+  

@@ -1,0 +1,23 @@
+.background-register-color-container{
+    background-color: white;
+          
+}
+
+.centered-register-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 250px;
+        width: 500px;
+        text-align: center;
+    }
+    
+    .register-card-heading-skilledworkers {
+        font-size: 20px;
+        margin-top:25px;
+        margin-bottom: 25px;
+        text-decoration: none !important;
+        line-height: 40px;
+
+    }

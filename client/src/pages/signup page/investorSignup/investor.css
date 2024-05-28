@@ -1,0 +1,74 @@
+.gradient {
+  background: #e0eafc;
+  background: -webkit-linear-gradient(to right, #cfdef3, #e0eafc);
+  background: linear-gradient(to right, #cfdef3, #e0eafc);
+
+  height: fit-content !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.gradient p {
+  width: 1000px;
+  font-size: 20px;
+  color: #020202;
+  padding-bottom: 30px;
+}
+.gradient h1 {
+  width: 1000px;
+  font-weight: 700;
+}
+.Signup-label {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.signup-card {
+  margin-top: 20px;
+  height: fit-content;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid black;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 1000px;
+  box-shadow: 0px 16px 200px 8px rgba(0, 0, 0, 0.3);
+}
+
+.small {
+  margin-left: 0px;
+}
+
+.img-fluid {
+  height: 200px;
+  width: auto;
+}
+.button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  gap: 50px;
+  margin-left: 0px !important;
+}
+
+@media (max-width: 768px) {
+  .signup-card {
+    height: fit-content;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid black;
+    border-radius: 15px;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    margin-left: 50px;
+  }
+  .gradient {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

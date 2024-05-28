@@ -1,0 +1,68 @@
+.background-color-container {
+    background-color: #F5FEFD !important;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.close-button {
+    background-color: transparent !important;
+    border-style: none;
+    color: black;
+    font-size: 25px;
+    margin-top: -15px;
+}
+
+.centered-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    width: 500px;
+}
+
+.head-popup {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.custom-card {
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    display: inline-block;
+    text-align: center;
+    height: 400px;
+    background-color: #fff;
+}
+
+.card-image {
+    height: 200px;
+    border-radius: 5px;
+}
+
+.card-heading-investors {
+    font-size: 25px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    text-decoration: none !important;
+    color: rgba(66, 133, 244, 1) !important;
+}
+
+.card-heading-skilledworkers {
+    font-size: 25px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    text-decoration: none !important;
+    color: rgba(31, 161, 44, 1) !important;
+}
+
+.custom-button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+} 

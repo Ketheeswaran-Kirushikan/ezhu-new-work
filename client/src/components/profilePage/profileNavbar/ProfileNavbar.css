@@ -1,0 +1,230 @@
+/* ProfileNavbar.css */
+.profile-nav-fixed {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1030; /* Adjust z-index to ensure the navbar is on top of other content */
+}
+
+.logOut-button-canvas {
+  background-color: transparent;
+  border: none;
+  color: #007bff;
+  cursor: pointer;
+  text-align: center;
+  padding: 0;
+}
+
+.logOut-button-canvas:hover {
+  color: #0056b3;
+}
+
+.offcanvas-header {
+  display: flex;
+  align-items: center;
+}
+
+.canvas-header-container {
+  display: flex;
+  align-items: center;
+}
+
+.canvas-font {
+  margin-left: 10px;
+}
+
+.profile-navbar-two {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 100px;
+}
+.profile-nav-item {
+  padding-left: 0px !important;
+}
+.profile-nav-background {
+  background-color: rgba(0, 96, 255, 1);
+  color: white;
+  height: 100px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+.input-group-text {
+  background-color: transparent;
+  color: white;
+}
+.profile-edit-canvas {
+  height: 100% !important;
+  width: 400px !important;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+.profile-edit-canvas-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.canvas-header-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 0px;
+  gap: 30px;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: -50px;
+}
+.canvas-font {
+  font-size: 30px !important;
+}
+.profile-offcanvas-list {
+  margin-top: 20px;
+  text-align: start;
+  text-decoration: none;
+  list-style: none;
+  width: 400px;
+  padding-left: 30px;
+}
+.profile-offcanvas-item {
+  margin-top: 40px;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+.logOut-button-canvas {
+  background-color: transparent;
+  border: 1px solid red;
+  color: red;
+  width: 300px;
+  height: 50px;
+  border-radius: 5px;
+  margin-top: 300px;
+  margin-left: 25px;
+  margin-right: auto;
+}
+.logOut-button-canvas:hover {
+  background-color: rgba(255, 0, 0, 0.4);
+  color: white;
+}
+
+.profile-nav-search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-nav-image {
+  height: 80px;
+  max-width: 100%;
+}
+
+.profile-nav-input {
+  width: 400px;
+}
+.profile-nav-icons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  font-size: 20px;
+}
+.profile-nav-name {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  font-size: 20px;
+}
+.profile-nav-name a {
+  text-decoration: none !important;
+}
+/* ProfileNavbar.css */
+
+.modal.show {
+  display: block;
+}
+
+.modal-backdrop {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .profile-nav-image {
+    height: 60px;
+  }
+
+  .profile-nav-input {
+    width: 100%;
+  }
+  .profile-nav-background {
+    background-color: rgba(0, 96, 255, 1);
+    color: white;
+    height: 150px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+  .profile-nav-search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  .profile-nav-name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+  }
+  .profile-nav-icons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    gap: 20px;
+  }
+  .profile-nav-input {
+    width: 200px;
+  }
+}
+
+/* Additional media query for even smaller screens */
+@media (max-width: 480px) {
+  .profile-nav-image {
+    height: 40px;
+  }
+
+  .profile-nav-input {
+    font-size: 14px;
+  }
+  .profile-nav-background {
+    background-color: rgba(0, 96, 255, 1);
+    color: white;
+    height: 150px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+  .profile-nav-search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  .profile-nav-name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+  }
+  .profile-nav-icons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+  }
+  .profile-nav-input {
+    width: 200px;
+  }
+}

@@ -1,0 +1,77 @@
+.login-container-background {
+  background-image: url('../../assets//Login.png') !important;
+  background-size: cover;
+  background-position: center;
+  backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+.loginHeading{
+  font-size: 50px;
+}
+
+.login-container {
+  background-color: white !important;
+  width: 650px !important;
+  height: 750px !important;
+  color: rgba(102, 102, 102, 1);
+  display: flex;
+  justify-content: center !;
+  align-items: center; 
+  margin: 0 auto;
+  border-radius: 20px;
+  font-size: 20px;
+  padding: 0px;
+  margin-top: -100px;
+}
+.card-body{
+  text-align: center;
+  margin-top: -50px;
+}
+.label-container{
+  display: flex;
+  justify-content: space-between;
+  padding-left: 10px !important;
+}
+.label-work{
+  text-align: start !important;
+  margin-left: -20px;
+}
+.hr-line{
+  padding-bottom: 20px;
+}
+.span-class{
+  margin-bottom: 20px !important;
+  font-size: 20px;
+}
+.login-logo-image{
+  height: 660px;
+  width: 1000px;
+  
+}
+.image-container{
+  margin-left: -20px;
+}
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.56);
+  color: white;
+  padding: 20px 0;
+}
+
+.footer a {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.main-container{
+  margin-top:-100px;
+}

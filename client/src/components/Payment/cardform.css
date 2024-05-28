@@ -1,0 +1,20 @@
+.payment-container {
+  padding: 20px;
+}
+
+.payment-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.payment-button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.payment-button {
+  padding: 10px 20px;
+  cursor: pointer;
+}

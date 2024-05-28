@@ -1,0 +1,57 @@
+.request-card {
+  height: 430px;
+  width: 350px !important; /* Fixed width */
+  border: 1px solid black;
+  border-radius: 20px;
+  display: inline-block; /* Ensures each card stays in a row */
+  vertical-align: top; /* Aligns the cards at the top */
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding-top: 30px;
+  text-align: center;
+  min-width: 350px;
+}
+
+.card-image-work {
+  height: 200px !important;
+  width: 200px;
+  border-radius: 50%;
+}
+
+.card-body-request {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  padding-left: 10px;
+  padding-right: 20px;
+  text-align: center;
+  overflow: hidden; /* Ensures content does not overflow */
+}
+
+.follow-button {
+  width: 200px;
+  height: 40px;
+}
+
+.card-flow {
+  display: flex;
+  flex-direction: row;
+  gap: 100px;
+  overflow-x: auto;
+  padding: 20px;
+  white-space: nowrap;
+  scroll-behavior: smooth;
+  transition: all 0.3s ease-in-out;
+}
+
+.card-flow::-webkit-scrollbar {
+  display: none;
+}
+
+.card-flow {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

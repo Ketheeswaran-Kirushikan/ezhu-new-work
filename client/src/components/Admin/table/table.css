@@ -1,0 +1,40 @@
+
+  .table thead tr th {
+    background-color: rgb(0, 0, 0);
+    color: white;
+    border-style: none;
+    width: 1000px;
+  }
+  
+  .table tbody tr {
+    width: 1000px;
+    color: white;
+    border-top: 5px solid rgba(17, 24, 39, 1);
+  }
+  
+
+  .table tbody tr td {
+    padding: 10px; 
+    background-color: rgb(0, 0, 0);
+    color: white;
+    border-style: none;
+
+  }
+
+  .Link-tag {
+    text-decoration: none !important;
+    list-style: none !important;
+  }
+  .table-edit-button{
+    color: green;
+    font-size: 20px;
+    margin-right: 20px;
+    
+}
+.table-delete-button{
+    color: rgb(82, 3, 3);
+    font-size: 20px;
+}
+td{
+  text-align: center;
+}

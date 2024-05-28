@@ -1,0 +1,61 @@
+.about-container {
+    background-image: url("../../../../assets/Subtract1.png");
+    height: 180vh;
+    background-repeat: no-repeat;
+    padding-top: 400px;
+    overflow: hidden;
+    position: relative; 
+    z-index: 1000; 
+    background-size: contain;
+}
+
+
+  .detail-container {
+    background-color: #f8f9fa;
+    padding: 50px;
+    border: 1px solid #3d3e3f;
+    border-radius: 5px;
+    margin: 100px auto;
+    max-width: 1500px;
+    max-height: fit-content;
+    text-align: center;
+    border-radius: 30px;
+}
+
+.title {
+    font-size: 50px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: rgba(115, 114, 121, 1);
+    padding-top: 60px;
+}
+
+.description {
+    font-size: 20px;
+    color: rgba(47, 46, 46, 1);
+    line-height: 50px;
+}
+
+@media (max-width: 768px) {
+    .about-container {
+        background-image: none;
+        height: 180vh;
+        background-repeat: no-repeat;
+        padding-top: 250px;
+      }
+    
+      .detail-container {
+        background-color: #f8f9fa;
+        padding: 50px;
+        border: 1px solid #3d3e3f;
+        border-radius: 5px;
+        max-width: 1500px;
+        max-height: fit-content;
+        text-align: center;
+        border-radius: 30px;
+    }
+    .about-container {
+        height: 180vh;
+        padding-top: 400px;
+    }
+}
