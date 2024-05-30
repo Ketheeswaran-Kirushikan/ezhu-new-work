@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import backendUrl from "../../../../context/Config";
 import {
   Card,
   CardImg,
@@ -10,7 +11,7 @@ import {
 import axios from "axios";
 import "./investornav.css";
 import { useLocation } from "react-router-dom";
-import backendUrl from "../../../context/Config";
+
 const InvestorNav = () => {
   const [skilledPersons, setSkilledPersons] = useState([]);
   const [loading, setLoading] = useState(true);

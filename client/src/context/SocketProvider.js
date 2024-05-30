@@ -1,7 +1,7 @@
+import backendUrl from "./Config";
 import React, { createContext, useEffect, useState } from "react";
 import socketIOClient from "socket.io-client";
 const SocketContext = createContext();
-import backendUrl from "./Config";
 
 const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
