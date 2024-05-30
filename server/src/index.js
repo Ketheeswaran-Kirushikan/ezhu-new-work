@@ -23,6 +23,11 @@ const corsOptions = {
   credentials: true,
 };
 
+// Add a basic status check endpoint
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "Server is running!" });
+});
+
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(bodyParser.json({ limit: "50mb" }));
