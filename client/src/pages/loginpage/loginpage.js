@@ -9,7 +9,8 @@ import Input from "../../components/input/Input";
 import Checkbox from "@mui/material/Checkbox";
 import "./loginpage.css";
 import logo from "../../assets/file(2).png";
-const backendurl = process.env.BACK_END_URL;
+const backendurl =
+  process.env.BACK_END_URL || "https://ezhu-server.onrender.com";
 
 const LoginPage = () => {
   const [checked, setChecked] = useState(true);
