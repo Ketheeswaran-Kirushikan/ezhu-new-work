@@ -5,7 +5,7 @@ import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-
+import backendUrl from "../../../context/Config";
 const InvestorCloseModal = ({ user, onClose, onDelete }) => {
   const notifySuccess = () => {
     toast.success("User deleted successfully");
@@ -18,7 +18,7 @@ const InvestorCloseModal = ({ user, onClose, onDelete }) => {
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `${process.env.BACK_END_URL}/Ezhu/Investor/deleteInvestorPerson/${user._id}`
+        `${backendUrl}/Ezhu/Investor/deleteInvestorPerson/${user._id}`
       );
       notifySuccess();
       onDelete();

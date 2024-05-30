@@ -5,6 +5,7 @@ import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import backendUrl from "../../../context/Config";
 
 const CloseModal = ({ user, onClose, onDelete }) => {
   const notifySuccess = () => {
@@ -18,7 +19,7 @@ const CloseModal = ({ user, onClose, onDelete }) => {
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `${process.env.BACK_END_URL}/Ezhu/skilledworker/deleteSkilledPerson/${user._id}`
+        `${backendUrl}/Ezhu/skilledworker/deleteSkilledPerson/${user._id}`
       );
       notifySuccess();
       onDelete();
