@@ -32,7 +32,7 @@ const Investoredit = ({ user, onClose }) => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `http://localhost:3002/Ezhu/Investor/updateInvestorPerson/${editedUser._id}`,
+        `${process.env.BACK_END_URL}/Ezhu/Investor/updateInvestorPerson/${editedUser._id}`,
         editedUser
       );
       if (response.status === 200) {

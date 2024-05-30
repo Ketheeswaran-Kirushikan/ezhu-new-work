@@ -16,7 +16,7 @@ const Table = () => {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:3002/Ezhu/Skillworker/Request/findSkilledPersonRequest"
+        `${process.env.BACK_END_URL}/Ezhu/Skillworker/Request/findSkilledPersonRequest`
       )
       .then((response) => setSkilledPersons(response.data))
       .catch((err) => console.log("Error fetching data:", err));

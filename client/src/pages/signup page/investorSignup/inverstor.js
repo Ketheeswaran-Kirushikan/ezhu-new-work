@@ -41,7 +41,7 @@ const Investor = () => {
 
     try {
       await axios.post(
-        "http://localhost:3002/Ezhu/Investor/Request/createInvestorRequest",
+        `${process.env.BACK_END_URL}/Ezhu/Investor/Request/createInvestorRequest`,
         userData
       );
       togglePopup();

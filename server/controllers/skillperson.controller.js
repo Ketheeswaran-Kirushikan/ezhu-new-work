@@ -9,12 +9,8 @@ sgMail.setApiKey(process.env.SEND_GRID_MAIL_API_SECRET_KEY);
 const app = express();
 app.use(cors);
 
-const verifyUser = async (req, res) => {
+const verifyUser = async (_id, res) => {
   try {
-    console.log("Request Parameters:", req.params);
-    const { _id } = req.params;
-
-    // Find the user request in the database
     const userRequest = await SkilledPersonRequest.findById(_id);
     if (!userRequest) {
       return res
@@ -127,7 +123,7 @@ const deleteUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const { _id } = req.params;
-    console.log("Getted ID", _id);
+    // console.log("Getted ID", _id);
     const detailUser = req.body;
     const user = await SkilledPerson.findByIdAndUpdate(_id, detailUser, {
       new: true,

@@ -5,7 +5,6 @@ const Investor = require("../models/investors.model");
 const createFollowers = async (req, res) => {
   try {
     const { id, userid } = req.params;
-    console.log("Getted ID:", id, "Follower ID:", userid);
 
     if (!id || !userid) {
       return res
@@ -40,26 +39,35 @@ const createFollowers = async (req, res) => {
 const findUser = async (req, res) => {
   const { id } = req.params;
   try {
-    const allSkilledWorkers = await Skilledperson.find({}, "_id");
-    const skilledWorkerIds = allSkilledWorkers.map((worker) =>
-      worker._id.toString()
-    );
-    const user =
-      (await Skilledperson.findById(id)) || (await Investor.findById(id));
+    const allSkilledWorkers = await Skilledperson.find({}, "_id role");
+    const allInvestors = await Investor.find({}, "_id role");
+    const allUsers = [...allSkilledWorkers, ...allInvestors];
+    console.log(allUsers);
+    const user = allUsers.find((user) => user._id.toString() === id);
+
     if (user) {
-      const followersRequest = user.followRequest.map((followerId) =>
-        followerId.toString()
+      const followersRequest = user.followRequest || [];
+      const followers = user.followers || [];
+
+      const notFollowedIds = allUsers
+        .map((user) => ({ _id: user._id.toString(), role: user.role }))
+        .filter(
+          (worker) =>
+            !(
+              followersRequest.includes(worker._id) ||
+              followers.includes(worker._id)
+            )
+        );
+
+      const notFollowedDetails = await Promise.all(
+        notFollowedIds.map(async ({ _id, role }) => {
+          const userDetails =
+            (await Skilledperson.findById(_id)) ||
+            (await Investor.findById(_id));
+          return { ...userDetails.toJSON(), role };
+        })
       );
-      const followers = user.followers.map((followerId) =>
-        followerId.toString()
-      );
-      const notFollowedIds = skilledWorkerIds.filter(
-        (workerId) =>
-          !followersRequest.includes(workerId) && !followers.includes(workerId)
-      );
-      const notFollowedDetails = await Skilledperson.find({
-        _id: { $in: notFollowedIds },
-      });
+
       res.json(notFollowedDetails);
     } else {
       res.status(404).json({ error: "User not found" });
@@ -159,10 +167,44 @@ const sendRequest = async (req, res) => {
   }
 };
 
+const getFollowers = async (req, res) => {
+  const { id } = req.params;
+  let user;
+  // Find the user by ID in Skilledperson collection
+  user = await Skilledperson.findById(id);
+  // If user not found in Skilledperson collection, find in Investor collection
+  if (!user) {
+    user = await Investor.findById(id);
+  }
+  if (user) {
+    let followers = [];
+    // Loop through user's followers
+    for (let i = 0; i < user.followers.length; i++) {
+      let follower;
+      // Find follower in Skilledperson collection
+      follower = await Skilledperson.findById(user.followers[i]);
+      // If follower not found in Skilledperson collection, find in Investor collection
+      if (!follower) {
+        follower = await Investor.findById(user.followers[i]);
+      }
+      // If follower exists, add it to followers array
+      if (follower) {
+        followers.push(follower);
+      }
+    }
+    // Send followers array as JSON response
+    res.json(followers);
+  } else {
+    // If user not found, send 404 status
+    res.status(404).json({ message: "User not found" });
+  }
+};
+
 module.exports = {
   createFollowers,
   findUser,
   changeFollowers,
   sendRequest,
   deleteFollowers,
+  getFollowers,
 };

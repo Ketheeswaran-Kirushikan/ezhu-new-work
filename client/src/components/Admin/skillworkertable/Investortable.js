@@ -18,7 +18,7 @@ const InvestorTable = () => {
 
   const fetchData = () => {
     axios
-      .get("http://localhost:3002/Ezhu/Investor/findInvestorPerson")
+      .get(`${process.env.BACK_END_URL}Ezhu/Investor/findInvestorPerson`)
       .then((response) => setSkilledPersons(response.data))
       .catch((err) => console.log(err));
   };

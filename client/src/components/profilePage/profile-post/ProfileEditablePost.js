@@ -8,7 +8,6 @@ import {
   faHeart,
   faMessage,
 } from "@fortawesome/free-regular-svg-icons";
-
 const ProfileEditablePost = ({ userData }) => {
   const [posts, setPosts] = useState([]);
   const [user, setUser] = useState({});
@@ -17,7 +16,7 @@ const ProfileEditablePost = ({ userData }) => {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:3002/Ezhu/Post/postScrollProfile/${userData._id}`,
+        `${process.env.BACK_END_URL}/Ezhu/Post/postScrollProfile/${userData._id}`,
         {
           params: {
             role: userData.role,

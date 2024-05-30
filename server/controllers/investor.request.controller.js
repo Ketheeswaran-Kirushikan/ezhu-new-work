@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const skilledPerson = require("../models/skillperson.request.model");
-const { uploadSkilled } = require("../utils/multer");
+const investors = require("../models/investor.request.model");
+const { uploadInvestor } = require("../utils/multer");
 const cors = require("cors");
 const sgMail = require("@sendgrid/mail");
 
@@ -14,7 +14,7 @@ app.use("/uploads", express.static("uploads")); // Serve uploaded files statical
 
 const createUser = async (req, res) => {
   try {
-    uploadSkilled.fields([
+    uploadInvestor.fields([
       { name: "images", maxCount: 4 },
       { name: "certificates", maxCount: 4 },
     ])(req, res, async function (err) {
@@ -34,12 +34,13 @@ const createUser = async (req, res) => {
         skill,
         nationalid,
         district,
-        referenceNumbers,
+        companyName,
+        registrationNumber,
       } = req.body;
 
       const images = req.files["images"] ? req.files["images"][0].path : null;
 
-      const newUser = new skilledPerson({
+      const newUser = new investors({
         first_name,
         last_name,
         email,
@@ -50,7 +51,8 @@ const createUser = async (req, res) => {
         nationalid,
         district,
         images,
-        referenceNumbers,
+        companyName,
+        registrationNumber,
       });
 
       await newUser.save();
@@ -82,7 +84,7 @@ const createUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   try {
     const value = req.params.value;
-    const deletedData = await Investor.findOneAndDelete({
+    const deletedData = await investors.findOneAndDelete({
       user_id: value,
     });
     if (deletedData) {
@@ -98,7 +100,7 @@ const deleteUser = async (req, res) => {
 };
 const findUser = async (req, res) => {
   try {
-    const allInvestors = await Investor.find();
+    const allInvestors = await investors.find();
     if (allInvestors.length > 0) {
       res.json(allInvestors);
     } else {

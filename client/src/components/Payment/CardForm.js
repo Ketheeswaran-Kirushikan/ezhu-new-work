@@ -4,6 +4,7 @@ import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
 
 const CardForm = () => {
+  // const stripePublicKey = process.env.REACT_APP_STRIPE_PUBLIC_KEY;
   const { userId } = useParams();
   const products = [
     {
@@ -27,21 +28,24 @@ const CardForm = () => {
   }, [userId]);
 
   const handleToken = async (token) => {
-    console.log("Stripe Token:", token);
+    console.log("Token received:", token);
+    console.log("Selected product:", selectedProduct);
 
     try {
       const response = await axios.post(
-        `http://localhost:3002/Ezhu/userpayment/payment/${userId}`,
+        `${process.env.BACK_END_URL}/Ezhu/userpayment/payment/${userId}`,
         { token, selectedProduct, userId },
         { headers: { "Content-Type": "application/json" } }
       );
 
       const data = response.data;
       console.log("Subscription response:", data);
-      alert("Payment successful");
     } catch (error) {
       console.error("Error processing Stripe token:", error);
-      alert("Payment failed");
+      // Handle the error appropriately, e.g., display an error message to the user
+      alert(
+        "An error occurred while processing your payment. Please try again."
+      );
     }
   };
 
@@ -73,7 +77,7 @@ const CardForm = () => {
                 </button>
               </div>
               <StripeCheckout
-                stripeKey="pk_test_51PIewdRvFH14lKkrp1Mpmk1Ft0sJi6EEj1YMYEw4SOgKrxN0TjrUhSC7mjTa6B97NM4wQGGopzqNS6xUa7tsJfjn00nfwuoRpd"
+                stripeKey="pk_test_51PIewdRvFH14lKkrp1Mpmk1Ft0sJi6EEj1YMYEw4SOgKrxN0TjrUhSC7mjTa6B97NM4wQGGopzqNS6xUa7tsJfjn00nfwuoRpd" // Replace with your actual publishable key
                 token={handleToken}
                 name="Monthly subscription"
                 amount={selectedProduct.price * 100} // Amount in cents

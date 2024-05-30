@@ -48,7 +48,6 @@ const InvestorSignupSchema = new mongoose.Schema({
   },
   images: {
     type: String,
-    required: true,
     url: String,
   },
   createdAt: {
@@ -74,6 +73,16 @@ const InvestorSignupSchema = new mongoose.Schema({
   followRequest: {
     type: Array,
     default: [],
+  },
+  bio: {
+    type: String,
+  },
+  user_name: {
+    type: String,
+    unique: true,
+  },
+  password: {
+    type: String,
   },
 });
 

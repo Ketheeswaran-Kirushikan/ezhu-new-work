@@ -16,33 +16,44 @@ import InvestorManagement from "./pages/admin.pages/admin-investors/investormana
 import SkillWorkerProfile from "./pages/userProfile/skillworkerprofile";
 import CardForm from "./components/Payment/CardForm";
 import ProfileEdit from "./components/profilePage/profileEdit/ProfileEdit";
-import ProfileView from "./components/profilePage/profileEdit/ProfileView";
+import { SocketProvider } from "./context/SocketProvider";
+import CommunityNav from "./components/profilePage/profileNavbar/communityPage/CommunityNav";
+import SkillWorkersNav from "./components/profilePage/profileNavbar/skilledPage/SkillWorkersNav";
+import BootCampNav from "./components/profilePage/profileNavbar/BootCampPage/BootCampNav";
+import InvestorNav from "./components/profilePage/profileNavbar/investorPage/InvestorNav";
+import Followers from "./components/profilePage/followerView/Followers";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Landingpage />} />
-        <Route path="/header" element={<Header />} />
-        <Route path="/career" element={<Career />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/skillworker" element={<Signup />} />
-        <Route path="/investor" element={<Investor />} />
-        <Route path="/screenpop" element={<ScreenPop />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route
-          path="/skilledworkermanagement"
-          element={<SkilledWorkerDashboard />}
-        />
-        <Route path="/investormanagement" element={<InvestorManagement />} />
-        <Route path="/skillworkerprofile" element={<SkillWorkerProfile />} />
-        <Route path="/cardForm/:userId" element={<CardForm />} />
-        <Route path="/profileedit" element={<ProfileEdit />} />
-        <Route path="/profileview" element={<ProfileView />} />
-      </Routes>
-    </Router>
+    <SocketProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Landingpage />} />
+          <Route path="/header" element={<Header />} />
+          <Route path="/career" element={<Career />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/skillworker" element={<Signup />} />
+          <Route path="/investor" element={<Investor />} />
+          <Route path="/screenpop" element={<ScreenPop />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route
+            path="/skilledworkermanagement"
+            element={<SkilledWorkerDashboard />}
+          />
+          <Route path="/investormanagement" element={<InvestorManagement />} />
+          <Route path="/skillworkerprofile" element={<SkillWorkerProfile />} />
+          <Route path="/cardForm/:userId" element={<CardForm />} />
+          <Route path="/profileedit" element={<ProfileEdit />} />
+          <Route path="/community" element={<CommunityNav />} />
+          <Route path="/skillworkerNav" element={<SkillWorkersNav />} />
+          <Route path="/investorsNav" element={<InvestorNav />} />
+          <Route path="/bootcamps" element={<BootCampNav />} />
+          <Route path="/followers" element={<Followers />} />
+        </Routes>
+      </Router>
+    </SocketProvider>
   );
 }
 

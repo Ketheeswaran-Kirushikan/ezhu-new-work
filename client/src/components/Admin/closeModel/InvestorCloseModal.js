@@ -18,7 +18,7 @@ const InvestorCloseModal = ({ user, onClose, onDelete }) => {
   const handleDelete = async () => {
     try {
       await axios.delete(
-        `http://localhost:3002/Ezhu/Investor/deleteInvestorPerson/${user._id}`
+        `${process.env.BACK_END_URL}/Ezhu/Investor/deleteInvestorPerson/${user._id}`
       );
       notifySuccess();
       onDelete();

@@ -10,14 +10,14 @@ import Input from "../../../../../components/input/Input";
 
 const CreateInvestorModel = ({ user, onClose }) => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    emailAddress: "",
-    phoneNumber: "",
-    birthdayDate: "",
-    nationalId: "",
+    first_name: "",
+    last_name: "",
+    email: "",
+    number: "",
+    birthDate: "",
+    nationalid: "",
     district: "",
-    image: null,
+    images: null,
     companyName: "",
     registrationNumber: "",
   });
@@ -35,43 +35,36 @@ const CreateInvestorModel = ({ user, onClose }) => {
   };
 
   const handleImageChange = (e) => {
-    setFormData({ ...formData, image: e.target.files[0] });
+    setFormData({ ...formData, images: e.target.files[0] });
   };
 
   const validateForm = () => {
-    const { firstName, lastName, emailAddress, birthdayDate, nationalId } =
-      formData;
-    if (
-      !firstName ||
-      !lastName ||
-      !emailAddress ||
-      !birthdayDate ||
-      !nationalId
-    ) {
+    const { first_name, last_name, email, birthDate, nationalid } = formData;
+    if (!first_name || !last_name || !email || !birthDate || !nationalid) {
       notifyError("All fields are required.");
       return false;
     }
 
-    if (!/^[A-Z]/.test(firstName) || !/^[A-Z]/.test(lastName)) {
+    if (!/^[A-Z]/.test(first_name) || !/^[A-Z]/.test(last_name)) {
       notifyError(
         "First name and last name should start with a capital letter."
       );
       return false;
     }
 
-    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(emailAddress)) {
+    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       notifyError("Invalid email address.");
       return false;
     }
 
-    const birthYear = new Date(birthdayDate).getFullYear();
+    const birthYear = new Date(birthDate).getFullYear();
     const age = new Date().getFullYear() - birthYear;
     if (age < 18) {
       notifyError("Age should be greater than 18.");
       return false;
     }
 
-    if (!/^\d{9}[A-Za-z]$|^\d{12}$/.test(nationalId)) {
+    if (!/^\d{9}[A-Za-z]$|^\d{12}$/.test(nationalid)) {
       notifyError("Invalid NIC format.");
       return false;
     }
@@ -92,15 +85,29 @@ const CreateInvestorModel = ({ user, onClose }) => {
     }
 
     try {
-      await axios.post(
-        "http://localhost:3002/Ezhu/Investor/createInvestorPersonAdmin",
+      const response = await axios.post(
+        `${process.env.BACK_END_URL}/Ezhu/Investor/createInvestorPersonAdmin`,
         userData
       );
       notifySuccess();
       onClose();
     } catch (error) {
-      console.error("Error creating user:", error);
-      notifyError("Error creating data. Please try again.");
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error("Error data:", error.response.data);
+        console.error("Error status:", error.response.status);
+        console.error("Error headers:", error.response.headers);
+        notifyError(`Error creating data: ${error.response.data.message}`);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error("Error request:", error.request);
+        notifyError("No response from the server. Please try again.");
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error("Error message:", error.message);
+        notifyError("Error creating data. Please try again.");
+      }
     }
   };
 
@@ -116,8 +123,8 @@ const CreateInvestorModel = ({ user, onClose }) => {
               <label>First Name:</label>
               <Input
                 type="text"
-                name="firstName"
-                value={formData.firstName}
+                name="first_name"
+                value={formData.first_name}
                 onChange={handleChange}
                 className="inputTypeEdit"
               />
@@ -126,8 +133,8 @@ const CreateInvestorModel = ({ user, onClose }) => {
               <label>Last Name:</label>
               <Input
                 type="text"
-                name="lastName"
-                value={formData.lastName}
+                name="last_name"
+                value={formData.last_name}
                 onChange={handleChange}
                 className="inputTypeEdit"
               />
@@ -136,8 +143,8 @@ const CreateInvestorModel = ({ user, onClose }) => {
               <label>Email:</label>
               <Input
                 type="email"
-                name="emailAddress"
-                value={formData.emailAddress}
+                name="email"
+                value={formData.email}
                 onChange={handleChange}
                 className="inputTypeEdit"
               />
@@ -146,8 +153,8 @@ const CreateInvestorModel = ({ user, onClose }) => {
               <label>Number:</label>
               <Input
                 type="text"
-                name="phoneNumber"
-                value={formData.phoneNumber}
+                name="number"
+                value={formData.number}
                 onChange={handleChange}
                 className="inputTypeEdit"
               />
@@ -157,8 +164,8 @@ const CreateInvestorModel = ({ user, onClose }) => {
               <label>Birth Date:</label>
               <Input
                 type="date"
-                name="birthdayDate"
-                value={formData.birthdayDate}
+                name="birthDate"
+                value={formData.birthDate}
                 onChange={handleChange}
                 className="inputTypeEdit"
               />
@@ -167,8 +174,8 @@ const CreateInvestorModel = ({ user, onClose }) => {
               <label>National ID:</label>
               <Input
                 type="text"
-                name="nationalId"
-                value={formData.nationalId}
+                name="nationalid"
+                value={formData.nationalid}
                 onChange={handleChange}
                 className="inputTypeEdit"
               />

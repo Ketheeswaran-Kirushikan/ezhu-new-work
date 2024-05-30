@@ -28,9 +28,9 @@ const SkillWorkerProfile = () => {
       <div className="mt-8" style={{ marginTop: "180px" }}>
         <TopContainer userData={userData} />
         <ProfileAddPost userData={userData} token={token} />{" "}
+        <ProfileRequestCards userData={userData} token={token} />
         {/* Pass token to ProfileAddPost */}
         <ProfilePost userData={userData} />
-        <ProfileRequestCards userData={userData} token={token} />
       </div>
     </div>
   );

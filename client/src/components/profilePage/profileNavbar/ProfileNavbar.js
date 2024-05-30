@@ -13,6 +13,7 @@ import "./ProfileNavbar.css";
 import NotificationOverlay from "../Notification/NotificationOverlay";
 import ProfileModal from "../profileEdit/profileModal/ProfileModal";
 import axios from "axios";
+
 const ProfileNavbar = ({ userData, token }) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -35,9 +36,9 @@ const ProfileNavbar = ({ userData, token }) => {
 
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:3002/Ezhu/logout");
-      localStorage.removeItem("userToken");
-      window.location.href = "/login";
+      await axios.post(`${process.env.BACK_END_URL}/Ezhu/logout`);
+      localStorage.removeItem("token"); // Corrected localStorage key
+      window.location.href = "/login"; // Redirect to the login page
     } catch (err) {
       console.error("Error logging out:", err);
     }
@@ -120,22 +121,33 @@ const ProfileNavbar = ({ userData, token }) => {
           >
             <ul className="navbar-nav mb-2 mb-lg-0">
               <li className="nav-item profile-nav-item">
-                <Link className="nav-link active" aria-current="page" to="!#">
+                <Link className="nav-link" to="/community" state={{ _id }}>
                   Community
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="!#">
+                <Link
+                  className="nav-link"
+                  to={`/investorsNav?userId=${userData._id}&token=${token}`}
+                >
                   Investors
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="!#">
+                <Link
+                  className="nav-link"
+                  to="/skillworkerNav"
+                  state={{ userData, token }}
+                >
                   Skills
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="!#">
+                <Link
+                  className="nav-link"
+                  to="/bootcamps"
+                  state={{ userData, token }}
+                >
                   Work shop
                 </Link>
               </li>
@@ -190,7 +202,9 @@ const ProfileNavbar = ({ userData, token }) => {
               <Link to="/payment">Payment</Link>
             </li>
             <li className="profile-offcanvas-item">
-              <Link to="/followers">Followers</Link>
+              <Link to="/followers" state={{ userData, token }}>
+                Followers
+              </Link>
             </li>
             <li className="profile-offcanvas-item">
               <Link to="/following-request">Following Request</Link>

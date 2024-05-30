@@ -64,7 +64,7 @@ const ProfileAddPost = ({ userData }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3002/Ezhu/Post/createPost",
+        `${process.env.BACK_END_URL}http://localhost:3002/Ezhu/Post/createPost`,
         postData
       );
       console.log("Post created successfully:", response.data);

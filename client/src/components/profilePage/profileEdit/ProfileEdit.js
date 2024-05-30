@@ -69,7 +69,7 @@ const ProfileEdit = () => {
         const editedUser = { ...formData };
         delete editedUser.confirmPassword;
         const response = await axios.put(
-          `http://localhost:3002/Ezhu/skilledworker/updateSkilledPerson/${userData._id}`,
+          `${process.env.BACK_END_URL}/Ezhu/skilledworker/updateSkilledPerson/${userData._id}`,
           editedUser
         );
         if (response.status === 200) {

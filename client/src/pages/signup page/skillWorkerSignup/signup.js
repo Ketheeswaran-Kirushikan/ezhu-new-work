@@ -131,7 +131,7 @@ const Signup = () => {
 
     try {
       await axios.post(
-        "http://localhost:3002/Ezhu/Skillworker/Request/createSkilledPersonRequest",
+        `${process.env.BACK_END_URL}/Ezhu/Skillworker/Request/createSkilledPersonRequest`,
         userData
       );
       togglePopup();
@@ -352,10 +352,6 @@ const Signup = () => {
                 <div className="row mb-4">
                   <div className="col-md-6">
                     <div data-mdb-input-init className="form-outline">
-                      <label
-                        className="form-label"
-                        htmlFor="referenceNumbers"
-                      ></label>
                       <Input
                         type="text"
                         name="referenceNumbers"
@@ -369,9 +365,7 @@ const Signup = () => {
                   </div>
                 </div>
                 {formErrors.referenceNumbers && (
-                  <div className="error-message-handle">
-                    {formErrors.referenceNumbers}
-                  </div>
+                  <div className="error">{formErrors.referenceNumbers}</div>
                 )}
                 <div className="form-check d-flex justify-content-center mb-4 pb-3">
                   <input
