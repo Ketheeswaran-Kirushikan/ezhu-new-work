@@ -10,6 +10,7 @@ import {
 import axios from "axios";
 import "./investornav.css";
 import { useLocation } from "react-router-dom";
+import backendUrl from "../../../context/Config";
 const InvestorNav = () => {
   const [skilledPersons, setSkilledPersons] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -23,7 +24,7 @@ const InvestorNav = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3002/Ezhu/Investor/findInvestorPerson"
+          `${backendUrl}/Ezhu/Investor/findInvestorPerson`
         );
         setSkilledPersons(response.data);
       } catch (error) {
@@ -40,7 +41,7 @@ const InvestorNav = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `${process.env.BACK_END_URL}/Ezhu/follow/followRequest/${userId}/${personId}`,
+        `${backendUrl}/Ezhu/follow/followRequest/${userId}/${personId}`,
         {}, // No need to send any data in the request body
         {
           headers: {

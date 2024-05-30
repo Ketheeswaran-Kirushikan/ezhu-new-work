@@ -7,6 +7,7 @@ import axios from "axios";
 import Investormodel from "../../../pages/admin.pages/detail.view/investormodel/Investoredit";
 import CreateInvestorModel from "../../../pages/admin.pages/detail.view/investormodel/createInvestor/CreateInvestorModel";
 import InvestorCloseModal from "../closeModel/InvestorCloseModal";
+import backendUrl from "../../../context/Config";
 
 const InvestorTable = () => {
   const [skilledPersons, setSkilledPersons] = useState([]);
@@ -18,7 +19,7 @@ const InvestorTable = () => {
 
   const fetchData = () => {
     axios
-      .get(`${process.env.BACK_END_URL}Ezhu/Investor/findInvestorPerson`)
+      .get(`${backendUrl}Ezhu/Investor/findInvestorPerson`)
       .then((response) => setSkilledPersons(response.data))
       .catch((err) => console.log(err));
   };

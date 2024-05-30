@@ -6,6 +6,7 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
+import backendUrl from "../../../../context/Config";
 
 const InvestorDetailModel = ({ user, onClose }) => {
   const notifySuccess = () => {
@@ -18,7 +19,7 @@ const InvestorDetailModel = ({ user, onClose }) => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `${process.env.BACK_END_URL}/Ezhu/Investor/createInvestorPerson/${user._id}`,
+        `${backendUrl}/Ezhu/Investor/createInvestorPerson/${user._id}`,
         {
           method: "POST",
           headers: {

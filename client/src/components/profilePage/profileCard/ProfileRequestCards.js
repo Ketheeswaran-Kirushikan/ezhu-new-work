@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import ProfileRequestCard from "./ProfileRequestCard";
 import "./profileRequestCard.css";
+import backendUrl from "../../../context/Config";
 
 const ProfileRequestCards = ({ token, userData }) => {
   const [persons, setPersons] = useState([]);
@@ -11,7 +12,7 @@ const ProfileRequestCards = ({ token, userData }) => {
     const fetchPersons = async () => {
       try {
         const response = await axios.get(
-          `${process.env.BACK_END_URL}/Ezhu/follow/followers/${userData._id}`,
+          `${backendUrl}/Ezhu/follow/followers/${userData._id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`, // Assuming Bearer token authentication

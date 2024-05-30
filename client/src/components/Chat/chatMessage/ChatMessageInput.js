@@ -5,6 +5,7 @@ import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import "./chatinput.css";
 import useConversation from "../../../store/useConversation";
 import axios from "axios";
+import backendUrl from "../../../context/Config";
 
 const ChatMessageInput = ({ token, _id }) => {
   const [loading, setLoading] = useState(false);
@@ -19,7 +20,7 @@ const ChatMessageInput = ({ token, _id }) => {
       setLoading(true);
       try {
         const res = await axios.post(
-          `${process.env.BACK_END_URL}/Ezhu/chat/sendmessage/${selectedConversation._id}`,
+          `${backendUrl}/Ezhu/chat/sendmessage/${selectedConversation._id}`,
           { message },
           {
             headers: {

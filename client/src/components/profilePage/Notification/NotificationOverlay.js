@@ -10,6 +10,7 @@ import {
 import "./notification.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import backendUrl from "../../../context/Config";
 
 function NotificationOverlay({ userData, token }) {
   const [persons, setPersons] = useState([]);
@@ -18,7 +19,7 @@ function NotificationOverlay({ userData, token }) {
     const fetchPersons = async () => {
       try {
         const response = await axios.get(
-          `${process.env.BACK_END_URL}/Ezhu/follow/followersRequests/${userData._id}`,
+          `${backendUrl}/Ezhu/follow/followersRequests/${userData._id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -38,7 +39,7 @@ function NotificationOverlay({ userData, token }) {
   const handleFollow = async (personId) => {
     try {
       const response = await axios.put(
-        `http://localhost:3002/Ezhu/follow/followersChange/${userData._id}/${personId}`,
+        `${backendUrl}/Ezhu/follow/followersChange/${userData._id}/${personId}`,
         {},
         {
           headers: {
@@ -64,7 +65,7 @@ function NotificationOverlay({ userData, token }) {
   const handleDelete = async (personId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3002/Ezhu/follow/followersDelete/${userData._id}/${personId}`,
+        `${backendUrl}/Ezhu/follow/followersDelete/${userData._id}/${personId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

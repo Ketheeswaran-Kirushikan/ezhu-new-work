@@ -6,6 +6,7 @@ import ProfileNavbar from "../profileNavbar/ProfileNavbar";
 import CircularProgress from "@mui/material/CircularProgress";
 import ProfileAddPost from "../profile-add-post/ProfileAddPost";
 import ProfileEditablePost from "../profile-post/ProfileEditablePost";
+import backendUrl from "../../../context/Config";
 
 const ProfileEdit = () => {
   const location = useLocation();
@@ -69,7 +70,7 @@ const ProfileEdit = () => {
         const editedUser = { ...formData };
         delete editedUser.confirmPassword;
         const response = await axios.put(
-          `${process.env.BACK_END_URL}/Ezhu/skilledworker/updateSkilledPerson/${userData._id}`,
+          `${backendUrl}/Ezhu/skilledworker/updateSkilledPerson/${userData._id}`,
           editedUser
         );
         if (response.status === 200) {

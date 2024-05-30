@@ -3,6 +3,7 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import "./followers.css";
 import Chat from "../../Chat/ChatComponent"; // Import the Chat component
+import backendUrl from "../../../context/Config";
 
 const Followers = () => {
   const location = useLocation();
@@ -16,7 +17,7 @@ const Followers = () => {
 
   const fetchData = () => {
     axios
-      .get(`${process.env.BACK_END_URL}/Ezhu/follow/getfollowers/${userData._id}`)
+      .get(`${backendUrl}/Ezhu/follow/getfollowers/${userData._id}`)
       .then((response) => setSkilledPersons(response.data))
       .catch((err) => console.log(err));
   };

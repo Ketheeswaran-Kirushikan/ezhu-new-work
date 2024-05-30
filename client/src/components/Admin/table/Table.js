@@ -7,6 +7,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import UserDetailsModal from "../../../pages/admin.pages/detail.view/usermodel/UserDetailsModel";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
+import backendUrl from "../../../context/Config";
 
 const Table = () => {
   const [skilledPersons, setSkilledPersons] = useState([]);
@@ -15,9 +16,7 @@ const Table = () => {
 
   useEffect(() => {
     axios
-      .get(
-        `${process.env.BACK_END_URL}/Ezhu/Skillworker/Request/findSkilledPersonRequest`
-      )
+      .get(`${backendUrl}/Ezhu/Skillworker/Request/findSkilledPersonRequest`)
       .then((response) => setSkilledPersons(response.data))
       .catch((err) => console.log("Error fetching data:", err));
   }, []);
@@ -33,7 +32,7 @@ const Table = () => {
   const handleDelete = async (item) => {
     try {
       await axios.delete(
-        `http://localhost:3002/Ezhu/Skillworker/Request/deleteSkilledPersonRequest/${item._id}`
+        `${backendUrl}/Ezhu/Skillworker/Request/deleteSkilledPersonRequest/${item._id}`
       );
       setIsDeleteComplete(true);
       notify();

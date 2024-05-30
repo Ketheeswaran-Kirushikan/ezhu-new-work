@@ -8,6 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import Input from "../../../../components/input/Input";
 import "./investoredit.css";
 import axios from "axios";
+import backendUrl from "../../../../context/Config";
 
 const Investoredit = ({ user, onClose }) => {
   const [editedUser, setEditedUser] = useState(user);
@@ -32,7 +33,7 @@ const Investoredit = ({ user, onClose }) => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `${process.env.BACK_END_URL}/Ezhu/Investor/updateInvestorPerson/${editedUser._id}`,
+        `${backendUrl}/Ezhu/Investor/updateInvestorPerson/${editedUser._id}`,
         editedUser
       );
       if (response.status === 200) {

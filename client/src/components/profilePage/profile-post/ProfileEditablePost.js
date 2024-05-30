@@ -3,6 +3,7 @@ import axios from "axios";
 import "./profilePost.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import backendUrl from "../../../context/Config";
 import {
   faComment,
   faHeart,
@@ -16,7 +17,7 @@ const ProfileEditablePost = ({ userData }) => {
   useEffect(() => {
     axios
       .get(
-        `${process.env.BACK_END_URL}/Ezhu/Post/postScrollProfile/${userData._id}`,
+        `${backendUrl}/Ezhu/Post/postScrollProfile/${userData._id}`,
         {
           params: {
             role: userData.role,

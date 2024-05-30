@@ -8,6 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import Input from "../../../../components/input/Input";
 import "./skillmodel.css";
 import axios from "axios";
+import backendUrl from "../../../../context/Config";
 
 const Skillmodel = ({ user, onClose }) => {
   const [editedUser, setEditedUser] = useState(user);
@@ -32,7 +33,7 @@ const Skillmodel = ({ user, onClose }) => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `${process.env.BACK_END_URL}/Ezhu/skilledworker/updateSkilledPerson/${editedUser._id}`,
+        `${backendUrl}/Ezhu/skilledworker/updateSkilledPerson/${editedUser._id}`,
         editedUser // Send editedUser directly as the body
       );
       if (response.status === 200) {

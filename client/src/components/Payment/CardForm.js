@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
+import backendUrl from "../../context/Config";
 
 const CardForm = () => {
   // const stripePublicKey = process.env.REACT_APP_STRIPE_PUBLIC_KEY;
@@ -33,7 +34,7 @@ const CardForm = () => {
 
     try {
       const response = await axios.post(
-        `${process.env.BACK_END_URL}/Ezhu/userpayment/payment/${userId}`,
+        `${backendUrl}/Ezhu/userpayment/payment/${userId}`,
         { token, selectedProduct, userId },
         { headers: { "Content-Type": "application/json" } }
       );

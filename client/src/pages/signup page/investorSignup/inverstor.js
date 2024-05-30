@@ -4,6 +4,7 @@ import "./investor.css";
 import { Link } from "react-router-dom";
 import RegisterPop from "../../../components/registerpop/RegisterPop";
 import Input from "../../../components/input/Input";
+import backendUrl from "../../../context/Config";
 
 const Investor = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -41,7 +42,7 @@ const Investor = () => {
 
     try {
       await axios.post(
-        `${process.env.BACK_END_URL}/Ezhu/Investor/Request/createInvestorRequest`,
+        `${backendUrl}/Ezhu/Investor/Request/createInvestorRequest`,
         userData
       );
       togglePopup();

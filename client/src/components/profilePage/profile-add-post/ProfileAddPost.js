@@ -3,6 +3,7 @@ import axios from "axios";
 import "./profileAddPost.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImages } from "@fortawesome/free-regular-svg-icons";
+import backendUrl from "../../../context/Config";
 
 const ProfileAddPost = ({ userData }) => {
   const [image, setImage] = useState(null);
@@ -64,7 +65,7 @@ const ProfileAddPost = ({ userData }) => {
 
     try {
       const response = await axios.post(
-        `${process.env.BACK_END_URL}http://localhost:3002/Ezhu/Post/createPost`,
+        `${backendUrl}http://localhost:3002/Ezhu/Post/createPost`,
         postData
       );
       console.log("Post created successfully:", response.data);

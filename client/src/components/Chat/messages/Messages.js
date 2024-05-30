@@ -4,6 +4,7 @@ import useConversation from "../../../store/useConversation";
 import Message from "./Message";
 import "./Message.css";
 import useListenMessages from "../../hooks/useListenMessages";
+import backendUrl from "../../../context/Config";
 
 const Messages = ({ token, _id, images, user_name }) => {
   const [loading, setLoading] = useState(false);
@@ -17,7 +18,7 @@ const Messages = ({ token, _id, images, user_name }) => {
       setLoading(true);
       try {
         const res = await axios.get(
-          `${process.env.BACK_END_URL}/Ezhu/chat/${selectedConversation._id}`,
+          `${backendUrl}/Ezhu/chat/${selectedConversation._id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

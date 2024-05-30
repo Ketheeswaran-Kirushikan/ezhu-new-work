@@ -8,6 +8,7 @@ import {
   faHeart,
   faMessage,
 } from "@fortawesome/free-regular-svg-icons";
+import backendUrl from "../../../context/Config";
 
 const ProfilePost = () => {
   const [posts, setPosts] = useState([]);
@@ -16,7 +17,7 @@ const ProfilePost = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.BACK_END_URL}http://localhost:3002/Ezhu/Post/postScroll`)
+      .get(`${backendUrl}http://localhost:3002/Ezhu/Post/postScroll`)
       .then((response) => {
         const { postDetails, userDetails } = response.data;
         setPosts(postDetails);

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import backendUrl from "../../context/Config";
 const useGetConversation = (_id, token) => {
   const [loading, setLoading] = useState(false);
   const [conversation, setConversations] = useState([]);
@@ -10,7 +10,7 @@ const useGetConversation = (_id, token) => {
       setLoading(true);
       try {
         const response = await axios.get(
-          `${process.env.BACK_END_URL}/Ezhu/chat/getuser/${_id}`,
+          `${backendUrl}/Ezhu/chat/getuser/${_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`, // Assuming Bearer token authentication

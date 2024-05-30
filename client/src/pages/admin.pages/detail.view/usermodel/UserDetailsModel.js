@@ -6,6 +6,7 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
+import backendUrl from "../../../../context/Config";
 
 const UserDetailsModal = ({ user, onClose }) => {
   const notifySuccess = () => {
@@ -18,7 +19,7 @@ const UserDetailsModal = ({ user, onClose }) => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `${process.env.BACK_END_URL}/Ezhu/skilledworker/createSkilledPerson/${user._id}`,
+        `${backendUrl}/Ezhu/skilledworker/createSkilledPerson/${user._id}`,
         {
           method: "POST",
           headers: {

@@ -4,6 +4,7 @@ import "./signup.css";
 import Input from "../../../components/input/Input";
 import { Link } from "react-router-dom";
 import RegisterPop from "../../../components/registerpop/RegisterPop";
+import backendUrl from "../../../context/Config";
 
 const Signup = () => {
   const [formErrors, setFormErrors] = useState({});
@@ -131,7 +132,7 @@ const Signup = () => {
 
     try {
       await axios.post(
-        `${process.env.BACK_END_URL}/Ezhu/Skillworker/Request/createSkilledPersonRequest`,
+        `${backendUrl}/Ezhu/Skillworker/Request/createSkilledPersonRequest`,
         userData
       );
       togglePopup();

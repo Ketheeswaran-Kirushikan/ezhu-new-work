@@ -7,6 +7,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import UserDetailsModal from "../../../pages/admin.pages/detail.view/usermodel/InvestorDetailModel";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
+import backendUrl from "../../../context/Config";
 const InvestorTableData = () => {
   const [skilledPersons, setSkilledPersons] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -14,7 +15,7 @@ const InvestorTableData = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.BACK_END_URL}/Ezhu/Investor/Request/findInvestorRequest`)
+      .get(`${backendUrl}/Ezhu/Investor/Request/findInvestorRequest`)
       .then((response) => setSkilledPersons(response.data))
       .catch((err) => console.log("Error fetching data:", err));
   }, []);
@@ -30,7 +31,7 @@ const InvestorTableData = () => {
   const handleDelete = async (item) => {
     try {
       await axios.delete(
-        `${process.env.BACK_END_URL}/Ezhu/Investor/Request/deleteInvestorRequest/${item._id}`
+        `${backendUrl}/Ezhu/Investor/Request/deleteInvestorRequest/${item._id}`
       );
       setIsDeleteComplete(true);
       notify();

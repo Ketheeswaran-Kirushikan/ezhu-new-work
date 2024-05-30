@@ -7,7 +7,7 @@ import axios from "axios";
 import Skillmodel from "../../../pages/admin.pages/detail.view/skilledmodel/Skillmodel";
 import CreateSkillModel from "../../../pages/admin.pages/detail.view/skilledmodel/createSkillmodel/CreateSkillModel";
 import CloseModal from "../closeModel/CloseModal";
-
+import backendUrl from "../../../context/Config";
 
 const SkilledTable = () => {
   const [skilledPersons, setSkilledPersons] = useState([]);
@@ -26,9 +26,7 @@ const SkilledTable = () => {
 
   const handleDeleteUser = (userId) => {
     axios
-      .delete(
-        `${process.env.BACK_END_URL}/Ezhu/skilledworker/deleteSkilledPerson/${userId}`
-      )
+      .delete(`${backendUrl}/Ezhu/skilledworker/deleteSkilledPerson/${userId}`)
       .then(() => {
         setSelectedUser(null);
       })

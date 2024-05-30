@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./profileRequestCard.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import backendUrl from "../../../context/Config";
 
 const ProfileRequestCard = ({ data, token, id, userData }) => {
   const [followed, setFollowed] = useState(false);
@@ -16,7 +17,7 @@ const ProfileRequestCard = ({ data, token, id, userData }) => {
   const handleFollow = async () => {
     try {
       const response = await axios.post(
-        `${process.env.BACK_END_URL}/follow/followRequest/${id}/${userid}`,
+        `${backendUrl}/follow/followRequest/${id}/${userid}`,
         {},
         {
           headers: {

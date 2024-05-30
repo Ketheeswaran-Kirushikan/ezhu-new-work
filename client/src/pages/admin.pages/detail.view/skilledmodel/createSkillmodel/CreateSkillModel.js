@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./CreateSkillModel.css";
 import Input from "../../../../../components/input/Input";
+import backendUrl from "../../../../../context/Config";
 
 const CreateSkillModel = ({ user, onClose }) => {
   const [formData, setFormData] = useState({
@@ -139,7 +140,7 @@ const CreateSkillModel = ({ user, onClose }) => {
 
     try {
       await axios.post(
-        `${process.env.BACK_END_URL}/Ezhu/skilledworker/createSkilledPersonAdmin`,
+        `${backendUrl}/Ezhu/skilledworker/createSkilledPersonAdmin`,
         userData
       );
       notifySuccess();

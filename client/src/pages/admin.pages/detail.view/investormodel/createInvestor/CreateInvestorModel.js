@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import "./CreateInvestorModel.css";
 import Input from "../../../../../components/input/Input";
+import backendUrl from "../../../../../context/Config";
 
 const CreateInvestorModel = ({ user, onClose }) => {
   const [formData, setFormData] = useState({
@@ -86,7 +87,7 @@ const CreateInvestorModel = ({ user, onClose }) => {
 
     try {
       const response = await axios.post(
-        `${process.env.BACK_END_URL}/Ezhu/Investor/createInvestorPersonAdmin`,
+        `${backendUrl}/Ezhu/Investor/createInvestorPersonAdmin`,
         userData
       );
       notifySuccess();
