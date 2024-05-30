@@ -9,6 +9,7 @@ import Input from "../../components/input/Input";
 import Checkbox from "@mui/material/Checkbox";
 import "./loginpage.css";
 import logo from "../../assets/file(2).png";
+const backendurl = process.env.BACK_END_URL;
 
 const LoginPage = () => {
   const [checked, setChecked] = useState(true);
@@ -41,7 +42,7 @@ const LoginPage = () => {
 
   const login = async () => {
     try {
-      const response = await fetch(`${process.env.BACK_END_URL}/Ezhu/login`, {
+      const response = await fetch(`${backendurl}/Ezhu/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
