@@ -7,22 +7,19 @@ const sgMail = require("@sendgrid/mail");
 sgMail.setApiKey(process.env.SEND_GRID_MAIL_API_SECRET_KEY);
 
 const app = express();
-app.use(cors);
+app.use(cors());
+app.use(express.json()); // Parse JSON bodies
+
 const createUser = async (req, res) => {
-  try {
-    uploadSkilled.fields([
-      { name: "images", maxCount: 4 },
-      { name: "certificates", maxCount: 4 },
-    ])(req, res, async function (err) {
-      if (err) {
-        console.error("Error uploading files:", err);
-        return res.status(500).json({ error: "File upload failed" });
-      }
-      if (
-        req.files["images"] &&
-        req.files["images"][0].mimetype === "application/pdf"
-      ) {
-      }
+  uploadSkilled.fields([
+    { name: "images", maxCount: 4 },
+    { name: "certificates", maxCount: 4 },
+  ])(req, res, async function (err) {
+    if (err) {
+      console.error("Error uploading files:", err);
+      return res.status(500).json({ error: "File upload failed" });
+    }
+    try {
       const {
         first_name,
         last_name,
@@ -68,11 +65,11 @@ const createUser = async (req, res) => {
       res
         .status(201)
         .json({ message: "User created successfully", user: newUser });
-    });
-  } catch (error) {
-    console.error("Error creating user:", error);
-    res.status(500).json({ error: "User failed to create" });
-  }
+    } catch (error) {
+      console.error("Error creating user:", error);
+      res.status(500).json({ error: "User failed to create" });
+    }
+  });
 };
 const deleteUser = async (req, res) => {
   try {

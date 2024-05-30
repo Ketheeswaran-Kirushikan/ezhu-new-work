@@ -9,10 +9,6 @@ const sendMessage = async (req, res) => {
     const { _id: receiver_id } = req.params;
     const senderId = req.user._id.toString();
 
-    console.log("Sender ID:", senderId);
-    console.log("Receiver ID:", receiver_id);
-    console.log("Message:", message);
-
     if (!receiver_id) {
       return res.status(400).json({ error: "Receiver ID is required" });
     }
@@ -69,10 +65,17 @@ const sendMessage = async (req, res) => {
 
     await newMessage.save();
 
+    // Get the receiver's socket ID
+    const receiverSocketId = getReciverSocketId(receiver_id);
+    if (receiverSocketId) {
+      // Emit the new message to the receiver's socket
+      io.to(receiverSocketId).emit("newMessage", newMessage);
+    }
+
     return res.status(200).json({ message: "Message sent successfully" });
   } catch (error) {
     console.log("Error in sending Message controller:", error.message);
-    res.status(500).json({ error: "Internal server error" });
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -81,16 +84,12 @@ const getMessage = async (req, res) => {
     const { _id: userToChatId } = req.params;
     const senderId = req.user._id.toString();
 
-    console.log("Sender ID:", senderId);
-    console.log("User to Chat ID:", userToChatId);
-
     if (!userToChatId) {
       return res.status(400).json({ error: "User to chat ID is required" });
     }
 
     const participants = [senderId, userToChatId];
 
-    // Find the conversation between the sender and the user they want to chat with
     const conversation = await Conversation.findOne({
       participants: { $all: participants },
     }).populate("messages.sender_id messages.receiver_id");
@@ -109,9 +108,6 @@ const getMessage = async (req, res) => {
 const getUsersWithConversations = async (req, res) => {
   try {
     const senderId = req.user._id.toString();
-
-    console.log("Sender ID:", senderId);
-
     const conversations = await Conversation.find({
       participants: senderId,
     });
@@ -150,7 +146,6 @@ const getUsersWithConversations = async (req, res) => {
       }
     }
 
-    // console.log("Found Users:",);
     return res.status(200).json(foundUsers);
   } catch (error) {
     console.log("Error in getting users with conversations:", error.message);

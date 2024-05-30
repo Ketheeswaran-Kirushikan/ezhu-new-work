@@ -1,40 +1,21 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import Conversation from "./Conversation";
+import React from "react";
+import Conversation from "./Conversation"; // Make sure to import Conversation if it's needed
+import useGetConversation from "../../hooks/useGetConversation";
 
 const MultipleConversations = ({ _id, token }) => {
-  const [conversations, setConversations] = useState([]);
-
-  useEffect(() => {
-    const fetchConversations = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3002/Ezhu/chat/getuser/${_id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`, // Assuming Bearer token authentication
-            },
-          }
-        );
-        setConversations(response.data);
-      } catch (err) {
-        console.log("Error fetching data:", err);
-      }
-    };
-
-    fetchConversations();
-  }, [_id, token]);
+  const { loading, conversation } = useGetConversation(_id, token);
+  console.log("Conver", conversation);
 
   return (
     <>
-      {conversations.length > 0 ? (
-        conversations.map((conversation, index) => {
-          console.log("Conversation:", conversation); // Print each conversation separately
+      {conversation.length > 0 ? (
+        conversation.map((conversationItem, index) => {
+          console.log("Conversation:", conversationItem); // Print each conversation separately
           return (
             <Conversation
-              key={conversation._id}
-              data={conversation}
-              lastIndex={index === conversations.length - 1}
+              key={conversationItem._id}
+              data={conversationItem}
+              lastIndex={index === conversation.length - 1}
             />
           );
         })

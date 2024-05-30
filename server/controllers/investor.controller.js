@@ -18,6 +18,10 @@ const verifyUser = async (req, res) => {
         .status(404)
         .json({ error: "User registration request not found" });
     }
+    const username = `${userRequest.first_name.toLowerCase()}${userRequest.last_name.toLowerCase()}${Math.floor(
+      Math.random() * 100
+    )}`;
+    const randomPassword = Math.random().toString(36).slice(-8);
 
     const newUser = new Investors({
       first_name: userRequest.first_name,
@@ -31,6 +35,8 @@ const verifyUser = async (req, res) => {
       registrationNumber: userRequest.registrationNumber,
       images: userRequest.images,
       createdAt: userRequest.createdAt,
+      user_name: username,
+      password: randomPassword,
     });
     await newUser.save();
     await InvestorPersonRequest.findByIdAndDelete(_id);
@@ -114,7 +120,7 @@ const deleteUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const { _id } = req.params;
-    console.log("Getted ID", _id);
+    // console.log("Getted ID", _id);
     const detailUser = req.body;
     const user = await Investors.findByIdAndUpdate(_id, detailUser, {
       new: true,
@@ -131,15 +137,14 @@ const updateUser = async (req, res) => {
 };
 const createUser = async (req, res) => {
   try {
-    // Handle image uploads first
-    uploadInvestor.array("images", 4)(req, res, async (err) => {
+    uploadInvestor.fields([
+      { name: "images", maxCount: 4 },
+      { name: "certificates", maxCount: 4 },
+    ])(req, res, async function (err) {
       if (err) {
-        console.error("Error uploading images:", err);
-        return res.status(500).json({ error: "Image upload failed" });
+        console.error("Error uploading files:", err);
+        return res.status(500).json({ error: "File upload failed" });
       }
-
-      // Extract the first image path if any
-      const images = req.files?.images?.[0]?.path;
 
       const {
         first_name,
@@ -153,11 +158,7 @@ const createUser = async (req, res) => {
         registrationNumber,
       } = req.body;
 
-      // Check if images were uploaded
-      if (!images) {
-        return res.status(400).json({ error: "Images are required" });
-      }
-
+      const images = req.files["images"] ? req.files["images"][0].path : null;
       const newUser = new Investors({
         first_name,
         last_name,

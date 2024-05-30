@@ -28,8 +28,10 @@
     "multer": "^1.4.5-lts.1",
     "multer-storage-cloudinary": "^4.0.0",
     "node": "^18.20.2",
+    "socket.io": "^4.7.5",
     "stream-chat": "^8.33.0",
-    "stripe": "^15.7.0"
+    "stripe": "^15.7.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"

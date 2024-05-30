@@ -100,7 +100,7 @@ const viewPost = async (req, res) => {
         userDetailsArray.push(userDetails);
       }
       res.json({ postDetails, userDetails: userDetailsArray });
-      console.log(userDetailsArray);
+      // console.log(userDetailsArray);
     } else {
       res.status(404).json({ error: "No posts found" });
     }

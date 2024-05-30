@@ -12,12 +12,14 @@ const protectRoute = async (req, res, next) => {
     }
 
     const token = authHeader.split(" ")[1]; // Extract token from header
-    console.log("JWT Token:", token);
+    // console.log("JWT Token:", token);
 
     const decoded = jwt.verify(token, process.env.JSON_SECRET_KEY);
     if (!decoded) {
       return res.status(401).json({ error: "Unauthorized, invalid token" });
     }
+
+    // console.log("Decoded token:", decoded);
 
     let user;
     if (decoded.userType === "admin") {
@@ -33,8 +35,17 @@ const protectRoute = async (req, res, next) => {
     req.user = { ...user.toObject(), userType: decoded.userType }; // Convert Mongoose document to plain object
     next();
   } catch (error) {
-    console.error("Error in protectRoute middleware:", error.message);
-    res.status(500).json({ error: "Internal server error" });
+    if (error.name === "JsonWebTokenError") {
+      return res.status(401).json({ error: "Unauthorized, invalid token" });
+    } else if (error.name === "TokenExpiredError") {
+      return res.status(401).json({ error: "Unauthorized, token expired" });
+    } else if (error.code === "ECONNRESET") {
+      console.error("Network connection reset error:", error.message);
+      return res.status(502).json({ error: "Bad Gateway, connection reset" });
+    } else {
+      console.error("Error in protectRoute middleware:", error.message);
+      return res.status(500).json({ error: "Internal server error" });
+    }
   }
 };
 

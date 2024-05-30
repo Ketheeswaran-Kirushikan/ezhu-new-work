@@ -53,20 +53,24 @@ const ProfileRequestCards = ({ token, userData }) => {
   }, []);
 
   return (
-    <div className="card-flow" ref={cardFlowRef}>
-      {persons.length > 0 ? (
-        persons.map((person) => (
-          <ProfileRequestCard
-            key={person._id}
-            data={person}
-            token={token}
-            id={userData._id} // Corrected prop name to id
-          />
-        ))
-      ) : (
-        <p>No skilled persons found.</p>
-      )}
-    </div>
+    <>
+      <h3>Recomanded you</h3>
+      <div className="card-flow" ref={cardFlowRef}>
+        {persons.length > 0 ? (
+          persons.map((person) => (
+            <ProfileRequestCard
+              key={person._id}
+              data={person}
+              token={token}
+              id={userData._id}
+              userData={userData} // Corrected prop name to id
+            />
+          ))
+        ) : (
+          <p>No skilled persons found.</p>
+        )}
+      </div>
+    </>
   );
 };
 

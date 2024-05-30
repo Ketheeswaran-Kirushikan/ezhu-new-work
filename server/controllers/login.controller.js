@@ -9,6 +9,7 @@ const login = async (req, res) => {
   try {
     let user = null;
     let userType = null;
+
     const admin = await AdminModel.findOne({ email });
     if (admin && admin.password === password) {
       user = admin;
@@ -24,14 +25,14 @@ const login = async (req, res) => {
     if (user) {
       const token = jwt.sign(
         { _id: user._id, userType },
-        process.env.JSON_SECRET_KEY
+        process.env.JSON_SECRET_KEY,
+        { expiresIn: "15d" }
       );
 
-      // Set the JWT token in a cookie
       res.cookie("jwt", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // Set to true in production
-        maxAge: 15 * 24 * 60 * 60 * 1000, // 15 days in milliseconds
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 15 * 24 * 60 * 60 * 1000,
       });
 
       return res

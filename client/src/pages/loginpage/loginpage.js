@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import { SocketContext } from "../../context/SocketProvider"; // Assuming SocketContext is properly defined
+import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.css";
 import Button from "../../components/button/Button";
 import Input from "../../components/input/Input";
 import Checkbox from "@mui/material/Checkbox";
 import "./loginpage.css";
 import logo from "../../assets/file(2).png";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [checked, setChecked] = useState(true);
@@ -15,6 +16,16 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
+  const socket = useContext(SocketContext);
+
+  useEffect(() => {
+    if (socket && socket.on) {
+      // Check if socket is defined and has the on method
+      socket.on("login_error", () => {
+        errorNotify();
+      });
+    }
+  }, [socket]);
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
@@ -44,8 +55,15 @@ const LoginPage = () => {
       const { userType, user, token } = data;
 
       setUserData(user);
-      localStorage.setItem("token", token); // Store the token in localStorage
 
+      // Store user ID and token in localStorage
+      localStorage.setItem("userId", user._id);
+      localStorage.setItem("token", token);
+
+      if (socket && socket.emit) {
+        // Check if socket is defined and has the emit method
+        socket.emit("user_logged_in", { userId: user._id });
+      }
       switch (userType) {
         case "admin":
           navigate("/dashboard");
@@ -69,7 +87,6 @@ const LoginPage = () => {
     e.preventDefault();
     login();
   };
-
   return (
     <>
       <ToastContainer />
@@ -144,7 +161,7 @@ const LoginPage = () => {
                       <Button
                         className="loginpage-signup-Button mb-3"
                         name="Sign up"
-                        onClick={() => navigate("/signup")} // Correctly navigating to sign-up page
+                        onClick={() => navigate("/signup")}
                       />
                     </p>
                   </div>
