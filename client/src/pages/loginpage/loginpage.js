@@ -46,7 +46,7 @@ const LoginPage = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-
+      //weufewfoiwejfiowefjewiofjweiofjiop
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
