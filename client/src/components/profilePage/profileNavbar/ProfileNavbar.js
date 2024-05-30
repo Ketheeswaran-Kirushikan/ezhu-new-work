@@ -36,7 +36,7 @@ const ProfileNavbar = ({ userData, token }) => {
 
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:3002/Ezhu/logout");
+      await axios.post(`${process.env.BACK_END_URL}/Ezhu/logout`);
       localStorage.removeItem("token"); // Corrected localStorage key
       window.location.href = "/login"; // Redirect to the login page
     } catch (err) {

@@ -19,7 +19,7 @@ const databaseConnect = require("../DB/database");
 const PORT = 3002;
 
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "https://ezhu-grow-together.vercel.app/",
   credentials: true,
 };
 

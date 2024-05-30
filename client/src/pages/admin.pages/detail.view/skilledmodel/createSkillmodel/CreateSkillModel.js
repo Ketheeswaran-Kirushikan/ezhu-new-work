@@ -139,7 +139,7 @@ const CreateSkillModel = ({ user, onClose }) => {
 
     try {
       await axios.post(
-        "http://localhost:3002/Ezhu/skilledworker/createSkilledPersonAdmin",
+        `${process.env.BACK_END_URL}/Ezhu/skilledworker/createSkilledPersonAdmin`,
         userData
       );
       notifySuccess();

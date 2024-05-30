@@ -131,7 +131,7 @@ const Signup = () => {
 
     try {
       await axios.post(
-        "http://localhost:3002/Ezhu/Skillworker/Request/createSkilledPersonRequest",
+        `${process.env.BACK_END_URL}/Ezhu/Skillworker/Request/createSkilledPersonRequest`,
         userData
       );
       togglePopup();

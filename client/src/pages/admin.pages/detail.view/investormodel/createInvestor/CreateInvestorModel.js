@@ -86,7 +86,7 @@ const CreateInvestorModel = ({ user, onClose }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3002/Ezhu/Investor/createInvestorPersonAdmin",
+        `${process.env.BACK_END_URL}/Ezhu/Investor/createInvestorPersonAdmin`,
         userData
       );
       notifySuccess();

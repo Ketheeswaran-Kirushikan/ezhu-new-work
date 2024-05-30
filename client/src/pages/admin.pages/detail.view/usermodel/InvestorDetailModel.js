@@ -18,7 +18,7 @@ const InvestorDetailModel = ({ user, onClose }) => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:3002/Ezhu/Investor/createInvestorPerson/${user._id}`,
+        `${process.env.BACK_END_URL}/Ezhu/Investor/createInvestorPerson/${user._id}`,
         {
           method: "POST",
           headers: {

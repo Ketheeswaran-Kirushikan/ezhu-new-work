@@ -33,7 +33,7 @@ const CardForm = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:3002/Ezhu/userpayment/payment/${userId}`,
+        `${process.env.BACK_END_URL}/Ezhu/userpayment/payment/${userId}`,
         { token, selectedProduct, userId },
         { headers: { "Content-Type": "application/json" } }
       );

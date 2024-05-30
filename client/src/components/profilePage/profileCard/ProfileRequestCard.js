@@ -16,7 +16,7 @@ const ProfileRequestCard = ({ data, token, id, userData }) => {
   const handleFollow = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:3002/Ezhu/follow/followRequest/${id}/${userid}`,
+        `${process.env.BACK_END_URL}/follow/followRequest/${id}/${userid}`,
         {},
         {
           headers: {

@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
 import socketIOClient from "socket.io-client";
-
 const SocketContext = createContext();
 
 const SocketProvider = ({ children }) => {
@@ -12,7 +11,7 @@ const SocketProvider = ({ children }) => {
   useEffect(() => {
     console.log("User ID:", userId); // Log userId for testing
 
-    const newSocket = socketIOClient("http://localhost:3002", {
+    const newSocket = socketIOClient(`${process.env.BACK_END_URL}`, {
       withCredentials: true,
       query: { userId },
     });

@@ -40,7 +40,7 @@ const InvestorNav = () => {
     setLoading(true);
     try {
       const response = await axios.post(
-        `http://localhost:3002/Ezhu/follow/followRequest/${userId}/${personId}`,
+        `${process.env.BACK_END_URL}/Ezhu/follow/followRequest/${userId}/${personId}`,
         {}, // No need to send any data in the request body
         {
           headers: {

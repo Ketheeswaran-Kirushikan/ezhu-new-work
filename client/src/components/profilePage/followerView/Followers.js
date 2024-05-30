@@ -16,7 +16,7 @@ const Followers = () => {
 
   const fetchData = () => {
     axios
-      .get(`http://localhost:3002/Ezhu/follow/getfollowers/${userData._id}`)
+      .get(`${process.env.BACK_END_URL}/Ezhu/follow/getfollowers/${userData._id}`)
       .then((response) => setSkilledPersons(response.data))
       .catch((err) => console.log(err));
   };

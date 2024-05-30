@@ -11,7 +11,7 @@ const ProfileRequestCards = ({ token, userData }) => {
     const fetchPersons = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3002/Ezhu/follow/followers/${userData._id}`,
+          `${process.env.BACK_END_URL}/Ezhu/follow/followers/${userData._id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`, // Assuming Bearer token authentication

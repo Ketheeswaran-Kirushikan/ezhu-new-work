@@ -32,7 +32,7 @@ const Skillmodel = ({ user, onClose }) => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `http://localhost:3002/Ezhu/skilledworker/updateSkilledPerson/${editedUser._id}`,
+        `${process.env.BACK_END_URL}/Ezhu/skilledworker/updateSkilledPerson/${editedUser._id}`,
         editedUser // Send editedUser directly as the body
       );
       if (response.status === 200) {

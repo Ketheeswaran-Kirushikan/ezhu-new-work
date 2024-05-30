@@ -18,7 +18,7 @@ const UserDetailsModal = ({ user, onClose }) => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:3002/Ezhu/skilledworker/createSkilledPerson/${user._id}`,
+        `${process.env.BACK_END_URL}/Ezhu/skilledworker/createSkilledPerson/${user._id}`,
         {
           method: "POST",
           headers: {

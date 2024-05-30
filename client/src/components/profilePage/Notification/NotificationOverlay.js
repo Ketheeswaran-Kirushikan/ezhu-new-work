@@ -18,7 +18,7 @@ function NotificationOverlay({ userData, token }) {
     const fetchPersons = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3002/Ezhu/follow/followersRequests/${userData._id}`,
+          `${process.env.BACK_END_URL}/Ezhu/follow/followersRequests/${userData._id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

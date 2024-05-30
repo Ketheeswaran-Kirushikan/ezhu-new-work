@@ -17,7 +17,7 @@ const Messages = ({ token, _id, images, user_name }) => {
       setLoading(true);
       try {
         const res = await axios.get(
-          `http://localhost:3002/Ezhu/chat/${selectedConversation._id}`,
+          `${process.env.BACK_END_URL}/Ezhu/chat/${selectedConversation._id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

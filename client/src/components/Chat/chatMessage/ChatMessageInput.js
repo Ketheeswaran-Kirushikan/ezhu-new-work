@@ -19,7 +19,7 @@ const ChatMessageInput = ({ token, _id }) => {
       setLoading(true);
       try {
         const res = await axios.post(
-          `http://localhost:3002/Ezhu/chat/sendmessage/${selectedConversation._id}`,
+          `${process.env.BACK_END_URL}/Ezhu/chat/sendmessage/${selectedConversation._id}`,
           { message },
           {
             headers: {

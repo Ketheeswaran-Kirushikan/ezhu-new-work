@@ -41,7 +41,7 @@ const LoginPage = () => {
 
   const login = async () => {
     try {
-      const response = await fetch("http://localhost:3002/Ezhu/login", {
+      const response = await fetch(`${process.env.BACK_END_URL}/Ezhu/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

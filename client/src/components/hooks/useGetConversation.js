@@ -10,7 +10,7 @@ const useGetConversation = (_id, token) => {
       setLoading(true);
       try {
         const response = await axios.get(
-          `http://localhost:3002/Ezhu/chat/getuser/${_id}`,
+          `${process.env.BACK_END_URL}/Ezhu/chat/getuser/${_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`, // Assuming Bearer token authentication

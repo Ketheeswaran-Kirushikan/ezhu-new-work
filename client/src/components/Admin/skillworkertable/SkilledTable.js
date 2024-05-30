@@ -8,6 +8,7 @@ import Skillmodel from "../../../pages/admin.pages/detail.view/skilledmodel/Skil
 import CreateSkillModel from "../../../pages/admin.pages/detail.view/skilledmodel/createSkillmodel/CreateSkillModel";
 import CloseModal from "../closeModel/CloseModal";
 
+
 const SkilledTable = () => {
   const [skilledPersons, setSkilledPersons] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -18,7 +19,7 @@ const SkilledTable = () => {
 
   const fetchData = () => {
     axios
-      .get("http://localhost:3002/Ezhu/skilledworker/findSkilledPerson")
+      .get(`${process.env.BACK_END_URL}/Ezhu/skilledworker/findSkilledPerson`)
       .then((response) => setSkilledPersons(response.data))
       .catch((err) => console.log(err));
   };
@@ -26,7 +27,7 @@ const SkilledTable = () => {
   const handleDeleteUser = (userId) => {
     axios
       .delete(
-        `http://localhost:3002/Ezhu/skilledworker/deleteSkilledPerson/${userId}`
+        `${process.env.BACK_END_URL}/Ezhu/skilledworker/deleteSkilledPerson/${userId}`
       )
       .then(() => {
         setSelectedUser(null);
