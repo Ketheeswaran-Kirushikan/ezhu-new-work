@@ -12,7 +12,7 @@ import backendUrl from "../../../context/Config";
 
 const ProfilePost = () => {
   const [posts, setPosts] = useState([]);
-  const [username, setUsername] = useState(null); // Initialize to null
+  const [username, setUsername] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -21,9 +21,8 @@ const ProfilePost = () => {
       .then((response) => {
         const { postDetails, userDetails } = response.data;
         setPosts(postDetails);
-        // Assuming userDetails is an array and you want the first user's data
         if (userDetails && userDetails.length > 0) {
-          setUsername(userDetails[0]); // Set the first user's data
+          setUsername(userDetails[0]);
         }
         console.log("Data fetched successfully");
         console.log(userDetails);
@@ -33,13 +32,18 @@ const ProfilePost = () => {
         console.error("Error fetching data:", err);
       });
   }, []);
+
   return (
     <div className="container mt-3">
       {error && <div className="alert alert-danger">{error}</div>}
-      {username &&
+      {posts.length === 0 ? (
+        <div className="no-posts-message">Showcase your needs and thoughts</div>
+      ) : (
+        username &&
         posts.map((post) => (
           <PostCard key={post._id} post={post} user={username} />
-        ))}
+        ))
+      )}
     </div>
   );
 };
@@ -74,19 +78,16 @@ const PostCard = ({ post, user }) => {
                 alt="profilePic"
               />
               <p className="top-profile-post-name">
-                {" "}
-                {user.first_name} {user.last_name}{" "}
+                {user.first_name} {user.last_name}
               </p>
             </div>
-            <div className="col-6 float-right top-profile-post-right ">
+            <div className="col-6 float-right top-profile-post-right">
               <i
                 className="bi bi-three-dots-vertical"
                 style={{ fontSize: "2rem", color: "currentColor" }}
               ></i>
             </div>
           </div>
-
-          {/* Display post image */}
           <div className="row">
             <div className="col">
               <div className="big-row">
@@ -98,7 +99,6 @@ const PostCard = ({ post, user }) => {
               </div>
             </div>
           </div>
-          {/* Display post description */}
           <div className="row">
             <div className="col">
               <div className="middle-row">
@@ -120,7 +120,6 @@ const PostCard = ({ post, user }) => {
               </div>
             </div>
           </div>
-          {/* Display action buttons */}
           <div className="row">
             <div className="col">
               <div className="small-row">
