@@ -45,7 +45,8 @@ const InvestorDetailModel = ({ user, onClose }) => {
     }
   };
 
-  const sendMail = async (userId) => {
+  const userId=user._id;
+  const sendMail = async () => {
     try {
       const response = await axios.post(`${backendUrl}/Ezhu/Investor/sendMail/${userId}`);
 

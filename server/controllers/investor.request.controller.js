@@ -93,11 +93,10 @@ const sendWelcomeEmail = async (req, res) => {
     console.log("Welcome email sent to:", user.email);
     return res.status(200).json({ message: "Welcome email sent successfully" });
   } catch (error) {
-    console.error("Error sending welcome email:", error);
+    console.log("Error sending welcome email:", error);
     return res.status(500).json({ error: "Error sending welcome email" });
   }
 };
-
 
 const deleteUser = async (req, res) => {
   try {
