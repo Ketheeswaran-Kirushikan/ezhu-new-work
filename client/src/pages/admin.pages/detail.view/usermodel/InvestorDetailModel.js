@@ -6,11 +6,10 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
+import "./investorView.css";
 import backendUrl from "../../../../context/Config";
-
 const InvestorDetailModel = ({ user, onClose }) => {
   const [emailStatus, setEmailStatus] = useState("send mail");
-  const [paymentStatus, setPaymentStatus] = useState("");
 
   const notifySuccess = (message) => {
     toast.success(message);
@@ -45,10 +44,13 @@ const InvestorDetailModel = ({ user, onClose }) => {
     }
   };
 
-  const userId=user._id;
-  const sendMail = async () => {
+  const sendMail = async (e) => {
+    e.preventDefault();
+
     try {
-      const response = await axios.post(`${backendUrl}/Ezhu/Investor/sendMail/${userId}`);
+      const response = await axios.post(
+        `${backendUrl}/Ezhu/Investor/Request/sendMail/${user._id}`
+      );
 
       if (response.status === 200) {
         notifySuccess(response.data.message);
@@ -62,63 +64,75 @@ const InvestorDetailModel = ({ user, onClose }) => {
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${backendUrl}/Ezhu/userpayment/payment/success`);
-        const data = await response.json();
-        console.log("Additional data fetched:", data);
-        if (data.message === "Payment successful") {
-          setPaymentStatus("Payment Successful");
-        }
-      } catch (error) {
-        console.error("Error fetching additional data:", error);
-      }
-    };
-    if (emailStatus === "pending") {
-      fetchData();
-    }
-  }, [emailStatus]);
-
   return (
     <>
-      <Modal show={true} onHide={onClose}>
-        <Modal.Header closeButton>
+      <Modal
+        className="investorDetailView-modal-content"
+        show={true}
+        onHide={onClose}
+      >
+        <Modal.Header className="investorDetailView-modal-header" closeButton>
           <Modal.Title>User Details</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <p>User ID: {user._id}</p>
-          <p>
-            User Name: {user.first_name} {user.last_name}
-          </p>
-          <p>Email: {user.email}</p>
-          <p>Number: {user.number}</p>
-          <p>Birth Date: {new Date(user.birthDate).toLocaleDateString()}</p>
-          <p>National ID: {user.nationalid}</p>
-          <p>District: {user.district}</p>
-          <p>Company Name: {user.companyName}</p>
-          <p>Registration Number: {user.registrationNumber}</p>
-          <p>Role: {user.role}</p>
-          <p>
-            Image:{" "}
-            {user.images && (
-              <img
-                src={user.images}
-                alt="Design"
-                style={{ width: "100px", height: "auto" }}
-              />
-            )}
-          </p>
-          <p>Created At: {new Date(user.createdAt).toLocaleString()}</p>
+        <Modal.Body className="investorDetailView-modal-body">
+          <Modal.Body className="investorDetailView-modal-body">
+            <Modal.Body className="investorDetailView-modal-body">
+              <div className="investorDetailView-user-details-grid">
+                <div className="left-column">
+                  <p>
+                    <b>User ID:</b> {user._id}
+                  </p>
+                  <p>
+                    <b>User Name:</b> {user.first_name} {user.last_name}
+                  </p>
+                  <p>
+                    <b>Email:</b> {user.email}
+                  </p>
+                  <p>
+                    <b>Number:</b> {user.number}
+                  </p>
+                  <p>
+                    <b>Birth Date:</b>{" "}
+                    {new Date(user.birthDate).toLocaleDateString()}
+                  </p>
+                  <p>
+                    <b>National ID:</b> {user.nationalid}
+                  </p>
+                  <p>
+                    <b>District:</b> {user.district}
+                  </p>
+                  <p>
+                    <b>Company Name:</b> {user.companyName}
+                  </p>
+                  <p>
+                    <b>Registration Number:</b> {user.registrationNumber}
+                  </p>
+                  <p>
+                    <b>Role:</b> {user.role}
+                  </p>
+                  <p>
+                    <b>Created At:</b>{" "}
+                    {new Date(user.createdAt).toLocaleString()}
+                  </p>
+                  <p>
+                    <b>Payment:</b> {user.payment.status}
+                  </p>
+                </div>
+                <div className="right-column">
+                  {user.images && <img src={user.images} alt="Design" />}
+                </div>
+              </div>
+            </Modal.Body>
+          </Modal.Body>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="success" onClick={() => sendMail(user._id)}>
-            {emailStatus === "waiting for payment" ? paymentStatus : emailStatus}
+        <Modal.Footer className="investorDetailView-modal-footer">
+          <Button className="btn-success" onClick={sendMail}>
+            {emailStatus === "pending" ? "Pending" : "Send Mail"}
           </Button>
-          <Button variant="primary" onClick={handleSubmit}>
+          <Button className="btn-primary" onClick={handleSubmit}>
             Save
           </Button>
-          <Button variant="secondary" onClick={onClose}>
+          <Button className="investorDetailView btn-danger" onClick={onClose}>
             Close
           </Button>
         </Modal.Footer>

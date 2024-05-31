@@ -1,0 +1,65 @@
+/* Styling for modal */
+.investorDetailView-modal-content {
+  border-radius: 10px;
+  margin-top: -30px;
+}
+
+.investorDetailView-modal-header {
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 10px 10px 0 0;
+}
+
+.investorDetailView-modal-body {
+  padding: 20px;
+}
+
+.investorDetailView-modal-footer {
+  border-radius: 0 0 10px 10px;
+}
+
+/* Styling for buttons */
+.investorDetailView-btn-primary,
+.investorDetailView-btn-success,
+.investorDetailView-btn-secondary {
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+/* Styling for user details */
+.investorDetailView-user-details {
+  margin-bottom: 20px;
+}
+
+.investorDetailView-user-details p {
+  margin-bottom: 10px;
+}
+
+.investorDetailView-user-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 100px; /* Adjust column widths as needed */
+  grid-gap: 10px;
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-bottom: -20px;
+  width: 300px;
+}
+
+.right-column {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+}
+
+/* Additional styles */
+.investorDetailView-user-details-grid img {
+  max-width: 300px;
+  height: 300px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  margin-left: -150px;
+}
