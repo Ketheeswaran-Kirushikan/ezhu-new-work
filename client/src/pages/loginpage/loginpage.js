@@ -8,7 +8,7 @@ import Button from "../../components/button/Button";
 import Input from "../../components/input/Input";
 import Checkbox from "@mui/material/Checkbox";
 import "./loginpage.css";
-import logo from "../../assets/file(2).png";
+import logo from "../../assets/ezhu-high-resolution-logo-transparent.png";
 import backendUrl from "../../context/Config";
 
 const LoginPage = () => {
