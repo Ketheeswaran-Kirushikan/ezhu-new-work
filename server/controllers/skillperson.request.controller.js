@@ -52,8 +52,8 @@ const createUser = async (req, res) => {
         to: newUser.email,
         from: "kirushikanketheeswaran@gmail.com",
         subject: "Welcome to Ezhu",
-        text: `Hello ${newUser.first_name},\n\nYour account has been successfully created.\nPlease click on the following link to proceed with your account setup: http://localhost:3000/cardForm/${newUser._id}`,
-        html: `<p>Hello ${newUser.first_name},</p><p>Your account has been successfully created.</p><p><a href="http://localhost:3000/cardForm/${newUser._id}">Click here</a> to proceed with your account setup.</p>`,
+        text: `Hello ${newUser.first_name},\n\nYour account has been successfully created.\nPlease click on the following link to proceed with your account setup: https://ezhu-grow-together.vercel.app/cardForm/${newUser._id}`,
+        html: `<p>Hello ${newUser.first_name},</p><p>Your account has been successfully created.</p><p><a href="https://ezhu-grow-together.vercel.app/cardForm/${newUser._id}">Click here</a> to proceed with your account setup.</p>`,
       };
 
       if (newUser._id) {
