@@ -2,12 +2,6 @@ require("dotenv").config();
 const SkilledPersonRequest = require("../models/skillperson.request.model");
 const InvestorRequest = require("../models/investor.request.model");
 const Payment = require("../models/payment.model");
-const {
-  verifyUser: verifySkillPersonUser,
-} = require("../controllers/skillperson.controller");
-const {
-  verifyUser: verifyInvestorUser,
-} = require("../controllers/investor.controller");
 const stripe = require("stripe")(process.env.STRIPE_API_PRIVATE_KEY);
 
 const handlePayment = async (req, res) => {
@@ -70,15 +64,6 @@ const handlePayment = async (req, res) => {
       { new: true }
     );
 
-    if (updatedUser.payment.status === "succeed") {
-      // Call verifyUser conditionally based on user's role
-      if (selectedProduct.role === "skilled person") {
-        await verifySkillPersonUser({ params: { _id: updatedUser._id } }, res);
-      } else if (selectedProduct.role === "investor") {
-        await verifyInvestorUser({ params: { _id: updatedUser._id } }, res);
-      }
-    }
-
     const payment = new Payment({
       userId: updatedUser._id,
       amount: selectedProduct.price,
@@ -91,10 +76,10 @@ const handlePayment = async (req, res) => {
 
     await payment.save();
 
-    // res.status(200).json({
-    //   message: "Payment successful",
-    //   transactionId: updatedUser.payment.transactionId,
-    // });
+    res.status(200).json({
+      message: "Payment successful",
+      transactionId: updatedUser.payment.transactionId,
+    });
   } catch (error) {
     console.error("Error processing payment:", error);
     res.status(500).json({ error: "Internal server error" });

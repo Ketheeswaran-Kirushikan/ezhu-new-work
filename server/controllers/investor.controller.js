@@ -8,7 +8,8 @@ sgMail.setApiKey(process.env.SEND_GRID_MAIL_API_SECRET_KEY);
 
 const app = express();
 app.use(cors);
-const verifyUser = async (_id, res) => {
+const verifyUser = async (req, res) => {
+  const { _id } = req.params;
   try {
     const userRequest = await InvestorPersonRequest.findById(_id);
     if (!userRequest) {
