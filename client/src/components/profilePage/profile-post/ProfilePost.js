@@ -28,7 +28,7 @@ const ProfilePost = () => {
         console.log(userDetails);
       })
       .catch((err) => {
-        setError("Error fetching data");
+        // setError("Error fetching data");
         console.error("Error fetching data:", err);
       });
   }, []);
@@ -37,7 +37,9 @@ const ProfilePost = () => {
     <div className="container mt-3">
       {error && <div className="alert alert-danger">{error}</div>}
       {posts.length === 0 ? (
-        <div className="no-posts-message">Showcase your needs and thoughts</div>
+        <div className="no-posts-message text-center">
+          <p>Showcase your needs and thoughts</p>
+        </div>
       ) : (
         username &&
         posts.map((post) => (
