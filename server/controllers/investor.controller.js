@@ -16,6 +16,7 @@ const verifyUser = async (_id, res) => {
         .status(404)
         .json({ error: "User registration request not found" });
     }
+
     const username = `${userRequest.first_name.toLowerCase()}${userRequest.last_name.toLowerCase()}${Math.floor(
       Math.random() * 100
     )}`;
@@ -34,16 +35,18 @@ const verifyUser = async (_id, res) => {
       images: userRequest.images,
       createdAt: userRequest.createdAt,
       user_name: username,
-      password: randomPassword,
+      password: randomPassword, // Save the random password
     });
+
     await newUser.save();
     await InvestorPersonRequest.findByIdAndDelete(_id);
+
     const msg = {
       to: userRequest.email,
       from: "kirushikanketheeswaran@gmail.com",
       subject: "Welcome to Ezhu",
-      text: `Hello ${userRequest.first_name},\n\nYour payment has been successfully completed.\n\nClick on the following link to proceed with your account setup: https://ezhu-grow-together.vercel.app/login\n\nYour email: ${userRequest.email}\nPassword: ${userRequest.password}\n\nThank you!`,
-      html: `<h3>Hello ${userRequest.first_name},</h3><p>Your payment has been successfully completed.</p><p><a href="https://ezhu-grow-together.vercel.app/login">Click here</a> to proceed with your account setup.</p><br><p>Your email: ${userRequest.email}<br>Password: ${newUser.password}<br><p>Thank you!</p>`,
+      text: `Hello ${userRequest.first_name},\n\nYour payment has been successfully completed.\n\nClick on the following link to proceed with your account setup: https://ezhu-grow-together.vercel.app/login\n\nYour email: ${userRequest.email}\nPassword: ${randomPassword}\n\nThank you!`,
+      html: `<h3>Hello ${userRequest.first_name},</h3><p>Your payment has been successfully completed.</p><p><a href="https://ezhu-grow-together.vercel.app/login">Click here</a> to proceed with your account setup.</p><br><p>Your email: ${userRequest.email}<br>Password: ${randomPassword}<br><p>Thank you!</p>`,
     };
 
     await sgMail.send(msg);
