@@ -13,6 +13,7 @@ import "./ProfileNavbar.css";
 import NotificationOverlay from "../Notification/NotificationOverlay";
 import ProfileModal from "../profileEdit/profileModal/ProfileModal";
 import axios from "axios";
+import backendUrl from "../../../context/Config";
 
 const ProfileNavbar = ({ userData, token }) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
@@ -36,7 +37,7 @@ const ProfileNavbar = ({ userData, token }) => {
 
   const handleLogout = async () => {
     try {
-      await axios.post(`${process.env.BACK_END_URL}/Ezhu/logout`);
+      await axios.post(`${backendUrl}/Ezhu/logout`);
       localStorage.removeItem("token"); // Corrected localStorage key
       window.location.href = "/login"; // Redirect to the login page
     } catch (err) {

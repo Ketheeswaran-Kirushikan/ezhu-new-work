@@ -5,35 +5,36 @@ import "./profileRequestCard.css";
 import backendUrl from "../../../context/Config";
 
 const ProfileRequestCards = ({ token, userData }) => {
-  const [persons, setPersons] = useState([]);
+  const [unfollowedUsers, setUnfollowedUsers] = useState([]);
+  const [followed, setFollowed] = useState(false);
   const cardFlowRef = useRef(null);
 
-  useEffect(() => {
-    const fetchPersons = async () => {
-      try {
-        const response = await axios.get(
-          `${backendUrl}/Ezhu/follow/followers/${userData._id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`, // Assuming Bearer token authentication
-            },
-          }
-        );
-        setPersons(response.data);
-        console.log("Fetched persons:", response.data); // Log the fetched data
-      } catch (err) {
-        console.log("Error fetching data:", err);
-      }
-    };
+  const fetchUnfollowedUsers = async () => {
+    try {
+      const response = await axios.get(
+        `${backendUrl}/Ezhu/follow/followers/${userData._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setUnfollowedUsers(response.data.unfollowedUsers);
+      console.log("Fetched unfollowed users:", response.data.unfollowedUsers);
+    } catch (err) {
+      console.log("Error fetching data:", err);
+    }
+  };
 
-    fetchPersons();
-  }, [userData._id, token]); // Use userData._id instead of _id
+  useEffect(() => {
+    fetchUnfollowedUsers();
+  }, [userData._id, token, followed]); // Re-fetch when followed state changes
 
   useEffect(() => {
     const handleWheel = (event) => {
       if (cardFlowRef.current) {
         if (event.deltaY !== 0) {
-          event.preventDefault(); // Prevent vertical scrolling
+          event.preventDefault();
           cardFlowRef.current.scrollLeft += event.deltaY;
         }
       }
@@ -53,18 +54,23 @@ const ProfileRequestCards = ({ token, userData }) => {
     };
   }, []);
 
+  const handleFollowChange = () => {
+    setFollowed(!followed); // Toggle followed state to trigger re-fetch
+  };
+
   return (
     <>
-      <h3>Recomanded you</h3>
+      <h3 className="follow-head">Recommended for you</h3>
       <div className="card-flow" ref={cardFlowRef}>
-        {persons.length > 0 ? (
-          persons.map((person) => (
+        {unfollowedUsers.length > 0 ? (
+          unfollowedUsers.map((person) => (
             <ProfileRequestCard
               key={person._id}
               data={person}
               token={token}
               id={userData._id}
-              userData={userData} // Corrected prop name to id
+              userData={userData}
+              onFollowChange={handleFollowChange} // Pass the callback
             />
           ))
         ) : (

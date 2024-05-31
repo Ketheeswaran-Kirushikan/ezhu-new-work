@@ -74,6 +74,10 @@ const InvestorSignupSchema = new mongoose.Schema({
     type: Array,
     default: [],
   },
+  sendFollowRequest: {
+    type: Array,
+    default: [],
+  },
   bio: {
     type: String,
   },

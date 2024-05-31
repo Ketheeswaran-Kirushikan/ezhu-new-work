@@ -11,6 +11,10 @@
   text-align: center;
   min-width: 350px;
 }
+.follow-head {
+  margin-left: 300px;
+  margin-top: 200px;
+}
 
 .card-image-work {
   height: 200px !important;

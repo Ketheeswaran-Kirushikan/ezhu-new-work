@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const AdminModel = require("../models/admin.model");
 const SkilledWorkerModel = require("../models/skillperson.model");
+const InvestorModel = require("../models/investors.model");
 require("dotenv").config();
 
 const login = async (req, res) => {
@@ -11,14 +12,26 @@ const login = async (req, res) => {
     let userType = null;
 
     const admin = await AdminModel.findOne({ email });
-    if (admin && admin.password === password) {
-      user = admin;
-      userType = "admin";
-    } else {
+    if (admin) {
+      if (admin.password === password) {
+        user = admin;
+        userType = "admin";
+      }
+    }
+
+    if (!user) {
       const skilledWorker = await SkilledWorkerModel.findOne({ email });
       if (skilledWorker && skilledWorker.password === password) {
         user = skilledWorker;
         userType = "skilledperson";
+      }
+    }
+
+    if (!user) {
+      const investor = await InvestorModel.findOne({ email });
+      if (investor && investor.password === password) {
+        user = investor;
+        userType = "investor";
       }
     }
 

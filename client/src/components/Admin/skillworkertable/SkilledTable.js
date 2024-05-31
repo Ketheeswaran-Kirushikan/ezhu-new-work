@@ -12,6 +12,8 @@ import backendUrl from "../../../context/Config";
 const SkilledTable = () => {
   const [skilledPersons, setSkilledPersons] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5; // Adjust this value as needed
 
   useEffect(() => {
     fetchData();
@@ -19,7 +21,7 @@ const SkilledTable = () => {
 
   const fetchData = () => {
     axios
-      .get(`${process.env.BACK_END_URL}/Ezhu/skilledworker/findSkilledPerson`)
+      .get(`${backendUrl}/Ezhu/skilledworker/findSkilledPerson`)
       .then((response) => setSkilledPersons(response.data))
       .catch((err) => console.log(err));
   };
@@ -29,11 +31,23 @@ const SkilledTable = () => {
       .delete(`${backendUrl}/Ezhu/skilledworker/deleteSkilledPerson/${userId}`)
       .then(() => {
         setSelectedUser(null);
+        fetchData(); // Refresh data after deletion
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  // Calculate displayed items based on the current page and items per page
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = skilledPersons.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(skilledPersons.length / itemsPerPage);
 
   return (
     <div className="user-management-container">
@@ -71,7 +85,7 @@ const SkilledTable = () => {
               </tr>
             </thead>
             <tbody>
-              {skilledPersons.map((item, index) => (
+              {currentItems.map((item, index) => (
                 <tr
                   key={item._id}
                   className={index % 2 === 0 ? "even-row" : "odd-row"}
@@ -99,14 +113,46 @@ const SkilledTable = () => {
           </table>
           <div className="clearfix">
             <div className="hint-text">
-              Showing <b>{skilledPersons.length}</b> entries
+              Showing <b>{currentItems.length}</b> out of{" "}
+              <b>{skilledPersons.length}</b> entries
             </div>
             <ul className="pagination">
-              <li className="page-item disabled">
-                <button className="page-link">Previous</button>
+              <li
+                className={`page-item ${currentPage === 1 ? "disabled" : ""}`}
+              >
+                <button
+                  className="page-link"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                >
+                  Previous
+                </button>
               </li>
-              <li className="page-item">
-                <button className="page-link">Next</button>
+              {[...Array(totalPages)].map((_, index) => (
+                <li
+                  key={index}
+                  className={`page-item ${
+                    currentPage === index + 1 ? "active" : ""
+                  }`}
+                >
+                  <button
+                    className="page-link"
+                    onClick={() => handlePageChange(index + 1)}
+                  >
+                    {index + 1}
+                  </button>
+                </li>
+              ))}
+              <li
+                className={`page-item ${
+                  currentPage === totalPages ? "disabled" : ""
+                }`}
+              >
+                <button
+                  className="page-link"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                >
+                  Next
+                </button>
               </li>
             </ul>
           </div>

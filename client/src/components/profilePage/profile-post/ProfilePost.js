@@ -17,7 +17,7 @@ const ProfilePost = () => {
 
   useEffect(() => {
     axios
-      .get(`${backendUrl}http://localhost:3002/Ezhu/Post/postScroll`)
+      .get(`${backendUrl}/Ezhu/Post/postScroll`)
       .then((response) => {
         const { postDetails, userDetails } = response.data;
         setPosts(postDetails);

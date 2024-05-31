@@ -12,6 +12,8 @@ import backendUrl from "../../../context/Config";
 const InvestorTable = () => {
   const [skilledPersons, setSkilledPersons] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [currentState, setCurrentState] = useState(1);
+  const itemPerPage = 5;
 
   useEffect(() => {
     fetchData();
@@ -19,11 +21,18 @@ const InvestorTable = () => {
 
   const fetchData = () => {
     axios
-      .get(`${backendUrl}Ezhu/Investor/findInvestorPerson`)
+      .get(`${backendUrl}/Ezhu/Investor/findInvestorPerson`)
       .then((response) => setSkilledPersons(response.data))
       .catch((err) => console.log(err));
   };
+  const handlePageChange = (page) => {
+    setCurrentState(page);
+  };
 
+  const indexOfFirstItem = (currentState - 1) * itemPerPage;
+  const indexOfLastItem = indexOfFirstItem + itemPerPage;
+  const currentItems = skilledPersons.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(skilledPersons.length / itemPerPage);
   return (
     <div className="user-management-container">
       <div className="user-management-table">
@@ -87,14 +96,46 @@ const InvestorTable = () => {
           </table>
           <div className="clearfix">
             <div className="hint-text">
-              Showing <b>{skilledPersons.length}</b> entries
+              Showing <b>{currentItems.length}</b> of the{""}
+              <b>{skilledPersons.length}</b>entries
             </div>
             <ul className="pagination">
-              <li className="page-item disabled">
-                <button className="page-link">Previous</button>
+              <li
+                className={`page-item${currentState === 1 ? " disabled" : ""}`}
+              >
+                <button
+                  className="page-link"
+                  onClick={() => handlePageChange(1)}
+                >
+                  Previous
+                </button>
               </li>
-              <li className="page-item">
-                <button className="page-link">Next</button>
+              {[...Array(totalPages)].map((_, index) => (
+                <li
+                  key={index}
+                  className={`page-item ${
+                    currentState === index + 1 ? "active" : ""
+                  }`}
+                >
+                  <button
+                    className="page=link"
+                    onClick={() => handlePageChange(index + 1)}
+                  >
+                    {index + 1}
+                  </button>
+                </li>
+              ))}
+              <li
+                className={`page-item ${
+                  currentState === totalPages ? "disabled" : ""
+                }`}
+              >
+                <button
+                  className="page-link"
+                  onClick={() => handlePageChange(currentState + 1)}
+                >
+                  Next
+                </button>
               </li>
             </ul>
           </div>

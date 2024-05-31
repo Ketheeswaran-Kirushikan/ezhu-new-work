@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const AdminModel = require("../models/admin.model");
 const SkilledWorkerModel = require("../models/skillperson.model");
+const InvestorModel = require("../models/investors.model");
 
 const protectRoute = async (req, res, next) => {
   try {
@@ -12,20 +13,19 @@ const protectRoute = async (req, res, next) => {
     }
 
     const token = authHeader.split(" ")[1]; // Extract token from header
-    // console.log("JWT Token:", token);
 
     const decoded = jwt.verify(token, process.env.JSON_SECRET_KEY);
     if (!decoded) {
       return res.status(401).json({ error: "Unauthorized, invalid token" });
     }
 
-    // console.log("Decoded token:", decoded);
-
     let user;
     if (decoded.userType === "admin") {
       user = await AdminModel.findById(decoded._id);
     } else if (decoded.userType === "skilledperson") {
       user = await SkilledWorkerModel.findById(decoded._id);
+    } else if (decoded.userType === "investor") {
+      user = await InvestorModel.findById(decoded._id);
     }
 
     if (!user) {
