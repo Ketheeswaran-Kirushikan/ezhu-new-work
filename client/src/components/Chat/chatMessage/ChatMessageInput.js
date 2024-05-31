@@ -32,8 +32,8 @@ const ChatMessageInput = ({ token, _id }) => {
 
         console.log("Response:", res.data);
 
-        // Optionally update local messages state if you want to reflect the new message immediately
-        setMessages([...messages, { message }]);
+        // Update local messages state with new message details
+        setMessages([...messages, res.data]);
       } catch (error) {
         console.error("Error sending message:", error);
         console.error("Response data:", error.response?.data);
