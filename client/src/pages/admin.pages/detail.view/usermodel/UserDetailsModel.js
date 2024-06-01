@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
+import axios from "axios"; // Make sure axios is imported
 import backendUrl from "../../../../context/Config";
 
 const UserDetailsModal = ({ user, onClose }) => {
@@ -14,9 +14,11 @@ const UserDetailsModal = ({ user, onClose }) => {
   const notifySuccess = () => {
     toast.success("Your data was saved successfully");
   };
+
   const notifyError = () => {
     toast.error("Error saving data. Please try again.");
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -41,19 +43,19 @@ const UserDetailsModal = ({ user, onClose }) => {
       notifyError();
     }
   };
+
   const sendMail = async (e) => {
     e.preventDefault();
-
     try {
       const response = await axios.post(
         `${backendUrl}/Ezhu/Skillworker/Request/sendMail/${user._id}`
       );
 
       if (response.status === 200) {
-        notifySuccess(response.data.message);
+        notifySuccess();
         setEmailStatus("pending");
       } else {
-        notifyError(response.data.error || "Failed to send mail.");
+        notifyError("Failed to send mail.");
       }
     } catch (error) {
       console.error("Error sending mail:", error);
@@ -72,54 +74,50 @@ const UserDetailsModal = ({ user, onClose }) => {
           <Modal.Title>User Details</Modal.Title>
         </Modal.Header>
         <Modal.Body className="investorDetailView-modal-body">
-          <Modal.Body className="investorDetailView-modal-body">
-            <Modal.Body className="investorDetailView-modal-body">
-              <div className="investorDetailView-user-details-grid">
-                <div className="left-column">
-                  <p>
-                    <b>User ID:</b> {user._id}
-                  </p>
-                  <p>
-                    <b>User Name:</b> {user.first_name} {user.last_name}
-                  </p>
-                  <p>
-                    <b>Email:</b> {user.email}
-                  </p>
-                  <p>
-                    <b>Number:</b> {user.number}
-                  </p>
-                  <p>
-                    <b>Birth Date:</b>{" "}
-                    {new Date(user.birthDate).toLocaleDateString()}
-                  </p>
-                  <p>
-                    <b>National ID:</b> {user.nationalid}
-                  </p>
-                  <p>
-                    <b>Gender</b> {user.gender}
-                  </p>
-                  <p>
-                    <b>Role:</b> {user.role}
-                  </p>
-                  <p>
-                    <b>Skill:</b> {user.skill.join(", ")}
-                  </p>
-                  <p>
-                    <b>District:</b> {user.district}
-                  </p>
-                  <p>
-                    <b>Reference Number:</b> {user.referenceNumbers}
-                  </p>
-                  <p>
-                    <b>Payment:</b> {user.payment.status}
-                  </p>
-                </div>
-                <div className="right-column">
-                  {user.images && <img src={user.images} alt="Design" />}
-                </div>
-              </div>
-            </Modal.Body>
-          </Modal.Body>
+          <div className="investorDetailView-user-details-grid">
+            <div className="left-column">
+              <p>
+                <b>User ID:</b> {user._id}
+              </p>
+              <p>
+                <b>User Name:</b> {user.first_name} {user.last_name}
+              </p>
+              <p>
+                <b>Email:</b> {user.email}
+              </p>
+              <p>
+                <b>Number:</b> {user.number}
+              </p>
+              <p>
+                <b>Birth Date:</b>{" "}
+                {new Date(user.birthDate).toLocaleDateString()}
+              </p>
+              <p>
+                <b>National ID:</b> {user.nationalid}
+              </p>
+              <p>
+                <b>Gender:</b> {user.gender}
+              </p>
+              <p>
+                <b>Role:</b> {user.role}
+              </p>
+              <p>
+                <b>Skill:</b> {user.skill.join(", ")}
+              </p>
+              <p>
+                <b>District:</b> {user.district}
+              </p>
+              <p>
+                <b>Reference Number:</b> {user.referenceNumbers}
+              </p>
+              <p>
+                <b>Payment:</b> {user.payment.status}
+              </p>
+            </div>
+            <div className="right-column">
+              {user.images && <img src={user.images} alt="Design" />}
+            </div>
+          </div>
         </Modal.Body>
         <Modal.Footer className="investorDetailView-modal-footer">
           <Button className="btn-success" onClick={sendMail}>
