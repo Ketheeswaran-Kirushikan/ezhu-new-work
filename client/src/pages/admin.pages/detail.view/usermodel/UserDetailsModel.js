@@ -9,6 +9,8 @@ import { toast, ToastContainer } from "react-toastify";
 import backendUrl from "../../../../context/Config";
 
 const UserDetailsModal = ({ user, onClose }) => {
+  const [emailStatus, setEmailStatus] = useState("send mail");
+
   const notifySuccess = () => {
     toast.success("Your data was saved successfully");
   };
@@ -39,43 +41,94 @@ const UserDetailsModal = ({ user, onClose }) => {
       notifyError();
     }
   };
+  const sendMail = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        `${backendUrl}/Ezhu/Skillworker/Request/sendMail/${user._id}`
+      );
+
+      if (response.status === 200) {
+        notifySuccess(response.data.message);
+        setEmailStatus("pending");
+      } else {
+        notifyError(response.data.error || "Failed to send mail.");
+      }
+    } catch (error) {
+      console.error("Error sending mail:", error);
+      notifyError("Failed to send mail. Please try again.");
+    }
+  };
 
   return (
     <>
-      <Modal show={true} onHide={onClose}>
-        <Modal.Header closeButton>
+      <Modal
+        className="investorDetailView-modal-content"
+        show={true}
+        onHide={onClose}
+      >
+        <Modal.Header className="investorDetailView-modal-header" closeButton>
           <Modal.Title>User Details</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <p>User ID: {user._id}</p>
-          <p>
-            User Name: {user.first_name} {user.last_name}
-          </p>
-          <p>Email: {user.email}</p>
-          <p>Number: {user.number}</p>
-          <p>Gender: {user.gender}</p>
-          <p>Birth Date: {new Date(user.birthDate).toLocaleDateString()}</p>
-          <p>Skill: {user.skill.join(", ")}</p>
-          <p>Role: {user.role}</p>
-          <p>National ID: {user.nationalid}</p>
-          <p>District: {user.district}</p>
-          <p>
-            Image:{" "}
-            {user.images && (
-              <img
-                src={user.images}
-                alt="Design"
-                style={{ width: "100px", height: "auto" }}
-              />
-            )}
-          </p>
-          <p>Reference Numbers: {user.referenceNumbers}</p>
+        <Modal.Body className="investorDetailView-modal-body">
+          <Modal.Body className="investorDetailView-modal-body">
+            <Modal.Body className="investorDetailView-modal-body">
+              <div className="investorDetailView-user-details-grid">
+                <div className="left-column">
+                  <p>
+                    <b>User ID:</b> {user._id}
+                  </p>
+                  <p>
+                    <b>User Name:</b> {user.first_name} {user.last_name}
+                  </p>
+                  <p>
+                    <b>Email:</b> {user.email}
+                  </p>
+                  <p>
+                    <b>Number:</b> {user.number}
+                  </p>
+                  <p>
+                    <b>Birth Date:</b>{" "}
+                    {new Date(user.birthDate).toLocaleDateString()}
+                  </p>
+                  <p>
+                    <b>National ID:</b> {user.nationalid}
+                  </p>
+                  <p>
+                    <b>Gender</b> {user.gender}
+                  </p>
+                  <p>
+                    <b>Role:</b> {user.role}
+                  </p>
+                  <p>
+                    <b>Skill:</b> {user.skill.join(", ")}
+                  </p>
+                  <p>
+                    <b>District:</b> {user.district}
+                  </p>
+                  <p>
+                    <b>Reference Number:</b> {user.referenceNumbers}
+                  </p>
+                  <p>
+                    <b>Payment:</b> {user.payment.status}
+                  </p>
+                </div>
+                <div className="right-column">
+                  {user.images && <img src={user.images} alt="Design" />}
+                </div>
+              </div>
+            </Modal.Body>
+          </Modal.Body>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={handleSubmit}>
+        <Modal.Footer className="investorDetailView-modal-footer">
+          <Button className="btn-success" onClick={sendMail}>
+            {emailStatus === "pending" ? "Pending" : "Send Mail"}
+          </Button>
+          <Button className="btn-primary" onClick={handleSubmit}>
             Save
           </Button>
-          <Button variant="secondary" onClick={onClose}>
+          <Button className="investorDetailView btn-danger" onClick={onClose}>
             Close
           </Button>
         </Modal.Footer>

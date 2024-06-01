@@ -47,21 +47,11 @@ const createUser = async (req, res) => {
         referenceNumbers,
       });
       await newUser.save();
-
-      const msg = {
-        to: newUser.email,
-        from: "kirushikanketheeswaran@gmail.com",
-        subject: "Welcome to Ezhu",
-        text: `Hello ${newUser.first_name},\n\nYour account has been successfully created.\nPlease click on the following link to proceed with your account setup: https://ezhu-grow-together.vercel.app/cardForm/${newUser._id}`,
-        html: `<p>Hello ${newUser.first_name},</p><p>Your account has been successfully created.</p><p><a href="https://ezhu-grow-together.vercel.app/cardForm/${newUser._id}">Click here</a> to proceed with your account setup.</p>`,
-      };
-
       if (newUser._id) {
-        await sgMail.send(msg);
+        console.log("Skilled person created successfully");
       } else {
         console.error("Invalid user ID:", newUser._id);
       }
-
       res
         .status(201)
         .json({ message: "User created successfully", user: newUser });
@@ -101,5 +91,29 @@ const findUser = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+const sendWelcomeEmail = async (req, res) => {
+  const { _id } = req.params;
+  try {
+    const user = await skilledPerson.findById(_id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
 
-module.exports = { createUser, findUser, deleteUser };
+    const msg = {
+      to: user.email,
+      from: "kirushikanketheeswaran@gmail.com",
+      subject: "Welcome to Ezhu",
+      text: `Hello ${user.first_name},\n\nYour account has been successfully created.\nPlease click on the following link to proceed with your account setup: https://ezhu-grow-together.vercel.app/cardForm/${user._id}`,
+      html: `<p>Hello ${user.first_name},</p><p>Your account has been successfully created.</p><p><a href="https://ezhu-grow-together.vercel.app/cardForm/${user._id}">Click here</a> to proceed with your account setup.</p>`,
+    };
+
+    await sgMail.send(msg);
+    console.log("Welcome email sent to:", user.email);
+    return res.status(200).json({ message: "Welcome email sent successfully" });
+  } catch (error) {
+    console.log("Error sending welcome email:", error);
+    return res.status(500).json({ error: "Error sending welcome email" });
+  }
+};
+
+module.exports = { createUser, findUser, deleteUser, sendWelcomeEmail };
