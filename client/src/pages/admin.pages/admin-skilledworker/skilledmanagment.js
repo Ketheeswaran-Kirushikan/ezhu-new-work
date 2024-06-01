@@ -29,13 +29,13 @@ const skilledmanagment = () => {
         <div className="sidebar-menu">
           <ul>
             <li>
-              <Link to="/dashboard" className="active">
+              <Link to="/dashboard" className="">
                 <FontAwesomeIcon icon={faChartLine} />
                 <span className="sidebar-span">Dashboard</span>
               </Link>
             </li>
             <li>
-              <Link to="/skilledworkermanagement" className="">
+              <Link to="/skilledworkermanagement" className="active">
                 <FontAwesomeIcon icon={faUser} />
                 <span className="sidebar-span">Skilled worker</span>
               </Link>

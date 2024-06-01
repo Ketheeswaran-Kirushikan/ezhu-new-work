@@ -29,7 +29,7 @@ const investormanagment = () => {
         <div className="sidebar-menu">
           <ul>
             <li>
-              <Link to="/dashboard" className="active">
+              <Link to="/dashboard" className="">
                 <FontAwesomeIcon icon={faChartLine} />
                 <span className="sidebar-span">Dashboard</span>
               </Link>
@@ -41,7 +41,7 @@ const investormanagment = () => {
               </Link>
             </li>
             <li>
-              <Link to="/investormanagement" className="">
+              <Link to="/investormanagement" className="active">
                 <FontAwesomeIcon icon={faUser} />
                 <span className="sidebar-span">Investors</span>
               </Link>
@@ -90,14 +90,13 @@ const investormanagment = () => {
         <main>
           <div className="row">
             <div className="col-md-12 mt-5">
-              <h1 className="text-start text-white">Skilled worker details</h1>
+              <h1 className="text-start text-white">Investors details</h1>
             </div>
           </div>
           <div className="row">
             <div className="container-fluid">
-              <div className="row">
-                <InvestorTable />
-              </div>
+              <div className="row"></div>
+              <InvestorTable />
             </div>
           </div>
         </main>
