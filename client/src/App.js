@@ -22,6 +22,8 @@ import SkillWorkersNav from "./components/profilePage/profileNavbar/skilledPage/
 import BootCampNav from "./components/profilePage/profileNavbar/BootCampPage/BootCampNav";
 import InvestorNav from "./components/profilePage/profileNavbar/investorPage/InvestorNav";
 import Followers from "./components/profilePage/followerView/Followers";
+import InvestorNew from "./pages/signup page/investorSignup/InvestorNew";
+import SignupNew from "./pages/signup page/skillWorkerSignup/SignupNew";
 
 function App() {
   return (
@@ -51,6 +53,8 @@ function App() {
           <Route path="/investorsNav" element={<InvestorNav />} />
           <Route path="/bootcamps" element={<BootCampNav />} />
           <Route path="/followers" element={<Followers />} />
+          <Route path="/investorNew" element={<InvestorNew />} />
+          <Route path="/signupNew" element={<SignupNew />} />
         </Routes>
       </Router>
     </SocketProvider>

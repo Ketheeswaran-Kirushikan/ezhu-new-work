@@ -1,16 +1,6 @@
-const express = require("express");
-const mongoose = require("mongoose");
 const investors = require("../models/investor.request.model");
 const { uploadInvestor } = require("../utils/multer");
-const cors = require("cors");
 const sgMail = require("@sendgrid/mail");
-
-sgMail.setApiKey(process.env.SEND_GRID_MAIL_API_SECRET_KEY);
-
-const app = express();
-app.use(express.json()); // Body parser middleware
-app.use(cors()); // CORS middleware
-app.use("/uploads", express.static("uploads")); // Serve uploaded files statically
 
 const createUser = async (req, res) => {
   try {
@@ -23,7 +13,6 @@ const createUser = async (req, res) => {
         return res.status(500).json({ error: "File upload failed" });
       }
 
-      // File upload handling code...
       const {
         first_name,
         last_name,
@@ -58,7 +47,7 @@ const createUser = async (req, res) => {
       await newUser.save();
 
       if (newUser._id) {
-        console.log("investor created successfully");
+        console.log("Investor created successfully");
       } else {
         console.error("Invalid user ID:", newUser._id);
       }
@@ -74,9 +63,11 @@ const createUser = async (req, res) => {
 };
 
 const sendWelcomeEmail = async (req, res) => {
-  const { _id } = req.params;
+  const { id } = req.params; // Correctly extract _id from req.params
+  console.log(id); // Check if _id is being logged correctly
+
   try {
-    const user = await investors.findById(_id);
+    const user = await investors.findById(id);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -85,15 +76,20 @@ const sendWelcomeEmail = async (req, res) => {
       to: user.email,
       from: "kirushikanketheeswaran@gmail.com",
       subject: "Welcome to Ezhu",
-      text: `Hello ${user.first_name},\n\nYour account has been successfully created.\nPlease click on the following link to proceed with your account setup: https://ezhu-grow-together.vercel.app/cardForm/${user._id}`,
-      html: `<p>Hello ${user.first_name},</p><p>Your account has been successfully created.</p><p><a href="https://ezhu-grow-together.vercel.app/cardForm/${user._id}">Click here</a> to proceed with your account setup.</p>`,
+      text: `Hello ${user.first_name},\n\nYour account has been successfully created.\nPlease click on the following link to proceed with your account setup: http://localhost:3000/cardForm/${user._id}`,
+      html: `<p>Hello ${user.first_name},</p><p>Your account has been successfully created.</p><p><a href="http://localhost:3000/cardForm/${user._id}/${user.role}">Click here</a> to proceed with your account setup.</p>`,
     };
 
-    await sgMail.send(msg);
-    console.log("Welcome email sent to:", user.email);
+    console.log("Sending email to:", user.email);
+    const response = await sgMail.send(msg);
+    console.log("Email sent:", response);
+
     return res.status(200).json({ message: "Welcome email sent successfully" });
   } catch (error) {
-    console.log("Error sending welcome email:", error);
+    console.log(
+      "Error sending welcome email:",
+      error.response ? error.response.body : error
+    );
     return res.status(500).json({ error: "Error sending welcome email" });
   }
 };
@@ -101,9 +97,7 @@ const sendWelcomeEmail = async (req, res) => {
 const deleteUser = async (req, res) => {
   try {
     const value = req.params.value;
-    const deletedData = await investors.findOneAndDelete({
-      user_id: value,
-    });
+    const deletedData = await investors.findOneAndDelete({ user_id: value });
     if (deletedData) {
       res.json(deletedData);
       console.log("User has been deleted");
@@ -115,6 +109,7 @@ const deleteUser = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
 const findUser = async (req, res) => {
   try {
     const allInvestors = await investors.find();

@@ -13,8 +13,94 @@
   gap: 10px;
   margin-bottom: 20px;
 }
-
 .payment-button {
-  padding: 10px 20px;
-  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+  justify-content: center;
+  align-items: center;
+}
+.payment-image {
+  width: 800px !important;
+  height: 100% !important;
+  border-top-right-radius: 10px; /* Top-right corner */
+  border-bottom-right-radius: 10px; /* Bottom-right corner */
+}
+
+.payment-button-success {
+  border-style: none;
+  position: relative; /* Needed for pseudo-elements */
+  font-size: 18px;
+  color: #a19d9d;
+}
+
+.combo-button {
+  display: flex;
+  flex-direction: row;
+  gap: 100px;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: -100px;
+}
+
+/* Underline style */
+.payment-button-success.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px; /* Adjust this value as needed */
+  height: 2px; /* Adjust this value as needed */
+  background-color: currentColor; /* Uses the button's text color */
+  color: rgba(0, 89, 255, 0.585);
+}
+.payment-container {
+  background: rgb(83, 139, 254);
+  background: linear-gradient(
+    90deg,
+    rgba(83, 139, 254, 1) 0%,
+    rgba(72, 138, 246, 1) 35%,
+    rgba(255, 255, 255, 1) 100%
+  );
+}
+.card-payment-title {
+  color: rgb(18, 37, 57);
+  font-size: 35px;
+}
+.card-height {
+  height: 90vh !important;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding: 0px;
+}
+.main-payment-card {
+  border-style: none;
+  border-radius: 0px !important;
+  /* box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0px 8px 16px rgba(0, 0, 0, 0.2); */
+  background-color: transparent;
+  width: 900px;
+  border-right: 1px solid rgb(173, 170, 170);
+  height: 90vh !important;
+}
+.payment-background {
+  border-style: none;
+  margin: 30px;
+  border-radius: 10px;
+  height: 90vh;
+  background-color: white;
+  box-shadow: 0 0 50px 30px rgba(0, 0, 0, 0.2); /* Even darker and more expansive shadow */
+}
+.card-payment-text {
+  color: rgb(54, 80, 98);
+  text-align: center;
+  padding-right: 20px;
+}
+.card-left {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  padding: 0px;
+  padding-left: 20px;
 }

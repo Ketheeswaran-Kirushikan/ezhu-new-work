@@ -1,0 +1,12 @@
+.datepicker input {
+    width: 840px;
+    border: 1px solid rgba(102, 102, 102, 0.35);
+    border-radius: 10px;
+  }
+  .datepicker span svg {
+    display: none;
+  }
+  .MuiStack-root {
+    padding: 0px !important;
+  }
+  

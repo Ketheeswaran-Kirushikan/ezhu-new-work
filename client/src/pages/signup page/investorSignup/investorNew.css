@@ -1,0 +1,236 @@
+/* form styles */
+#grad1 {
+    background: rgb(83, 139, 254);
+    background: linear-gradient(
+      90deg,
+      rgba(83, 139, 254, 0.5) 0%,
+      /* 50% opacity */ rgba(72, 138, 246, 0.5) 35%,
+      /* 50% opacity */ rgba(255, 255, 255, 0.5) 100% /* 50% opacity */
+    );
+    height: 100vh;
+  }
+  
+  #msform {
+    text-align: center;
+    position: relative;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 50px;
+  }
+  .error-message-handle-user {
+    color: #ff0000;
+  }
+  .ms-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 50px;
+  }
+  #msform fieldset .form-card {
+    border: 0 none;
+    border-radius: 50px;
+    box-sizing: border-box;
+    position: relative; /* stacking fieldsets above each other */
+    width: 900px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  .MuiOutlinedInput-notchedOutline {
+    border-style: none !important;
+  }
+  #msform fieldset {
+    background: white;
+    border-radius: 50px;
+    box-sizing: border-box;
+    margin: 0;
+    position: relative; /* stacking fieldsets above each other */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 800px;
+  }
+  
+  /* Hide all except first fieldset */
+  #msform fieldset:not(:first-of-type) {
+    display: none;
+  }
+  
+  #msform input:focus,
+  #msform textarea:focus {
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    border: none;
+    border-bottom: 2px solid skyblue;
+    outline-width: 0;
+  }
+  .datepicker-mar {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+    justify-content: center;
+  }
+  /* Blue Buttons */
+  #msform .action-button {
+    width: 100px;
+    background: rgb(5, 107, 249);
+    color: white;
+    border: 0 none;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 10px 5px;
+  }
+  .display-of-date {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 900px;
+    padding: 0px 40px 0px 40px;
+  }
+  .date-picker-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .inputTypeSignup-company {
+    width: 500px;
+  }
+  #msform .action-button:hover,
+  #msform .action-button:focus {
+    font-weight: lighter;
+  }
+  
+  /* Previous Buttons */
+  #msform .action-button-previous {
+    width: 100px;
+    background: #616161;
+    color: white;
+    border: 0 none;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 10px 5px;
+    margin-right: 10px;
+  }
+  .genderOption {
+    color: rgb(97, 97, 99) !important;
+  }
+  
+  #msform .action-button-previous:hover,
+  #msform .action-button-previous:focus {
+    font-weight: lighter;
+  }
+  
+  /* Dropdown List Exp Date */
+  select.list-dt {
+    border: none;
+    outline: 0;
+    border-bottom: 1px solid #ccc;
+    padding: 2px 5px 3px 5px;
+    margin: 2px;
+  }
+  
+  select.list-dt:focus {
+    border-bottom: 2px solid skyblue;
+  }
+  
+  /* The background card */
+  .card-ms {
+    z-index: 0;
+    border: none;
+    border-radius: 0.5rem;
+    position: relative;
+    background-color: white;
+    height: 80vh;
+  }
+  
+  /* FieldSet headings */
+  .fs-title {
+    font-size: 25px;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-align: left;
+  }
+  
+  /* Progressbar */
+  #progressbar {
+    overflow: hidden;
+    color: lightgrey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    padding-left: 0px !important;
+    width: 800px;
+  }
+  
+  #progressbar .active {
+    color: #000000;
+    padding-left: 0px !important;
+  }
+  
+  #progressbar li {
+    list-style-type: none;
+    font-size: 12px;
+    width: 25%;
+    float: left;
+    position: relative;
+    height: 100px !important;
+    padding-left: 0px !important;
+  }
+  
+  /* Icons in the ProgressBar */
+  #progressbar #company:before {
+    font-family: FontAwesome;
+    content: "\f023";
+  }
+  
+  #progressbar #skill:before {
+    font-family: FontAwesome;
+    content: "\f023";
+  }
+  #progressbar #personal:before {
+    font-family: FontAwesome;
+    content: "\f007";
+  }
+  
+  /* ProgressBar before any progress */
+  #progressbar li:before {
+    width: 50px;
+    height: 50px;
+    line-height: 45px;
+    display: block;
+    font-size: 18px;
+    color: #ffffff;
+    background: lightgray;
+    border-radius: 50%;
+    margin: 0 auto 10px auto;
+    padding: 2px;
+  }
+  
+  /*ProgressBar connectors*/
+  #progressbar li:after {
+    content: "";
+    width: 100%;
+    height: 2px;
+    background: lightgray;
+    position: absolute;
+    left: 0;
+    top: 25px;
+    z-index: -1;
+  }
+  
+  /* Color number of the step and the connector before it */
+  #progressbar li.active:before,
+  #progressbar li.active:after {
+    background: rgb(1, 101, 250);
+  }
+  
