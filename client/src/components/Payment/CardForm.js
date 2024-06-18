@@ -13,21 +13,38 @@ const CardForm = () => {
       price: 100,
       productBy: "Ezhu",
       role: "skilled person",
+      benefits: [
+        "Access to exclusive job postings and opportunities",
+        "Enhanced profile visibility to potential investors",
+        "Networking events and workshops",
+        "Personalized support and resources for skill development",
+        "Priority customer support",
+      ],
     },
     {
       name: "Monthly Subscription for Investors",
       price: 200,
       productBy: "Ezhu",
       role: "investor",
+      benefits: [
+        "Access to a pool of highly skilled workers and startups",
+        "Detailed profiles and project proposals from potential partners",
+        "Invitations to exclusive networking events and pitch sessions",
+        "Personalized matchmaking with promising business opportunities",
+        "Priority customer support",
+      ],
     },
   ];
 
   const [selectedProduct, setSelectedProduct] = useState(products[0]);
 
   useEffect(() => {
-    console.log("User ID:", userId);
-    console.log(userId.role);
-  }, [userId]);
+    if (role === "skilled person") {
+      setSelectedProduct(products[0]);
+    } else if (role === "investor") {
+      setSelectedProduct(products[1]);
+    }
+  }, [role]);
 
   const handleToken = async (token) => {
     console.log("Token received:", token);
@@ -63,10 +80,10 @@ const CardForm = () => {
                   </h2>
                   <p>
                     Unlock your potential with a single click! Experience
-                    seamless payments on our secure platform.!..
+                    seamless payments on our secure platform.
                   </p>
                 </div>
-                <div className="d-flex justify-content-around mb-4 combo-button">
+                <div className="d-flex justify-content-around  combo-button">
                   <button
                     className={`btn payment-button-success ${
                       selectedProduct.role === "skilled person" ? "active" : ""
@@ -84,18 +101,37 @@ const CardForm = () => {
                     Investor
                   </button>
                 </div>
-
-                <StripeCheckout
-                  stripeKey="pk_test_51PIewdRvFH14lKkrp1Mpmk1Ft0sJi6EEj1YMYEw4SOgKrxN0TjrUhSC7mjTa6B97NM4wQGGopzqNS6xUa7tsJfjn00nfwuoRpd"
-                  token={handleToken}
-                  name="Monthly subscription"
-                  amount={selectedProduct.price * 100} // Amount in cents
-                  currency="LKR"
-                >
-                  <button className="btn btn-primary w-100">
-                    Subscribe as {selectedProduct.role}
-                  </button>
-                </StripeCheckout>
+                <div className="card-payment-text-details">
+                  <p className="mb-3 text-start">
+                    <strong>Subscription: </strong>
+                    {selectedProduct.name}
+                  </p>
+                  <p className="mb-3 text-start">
+                    <strong>Price: </strong>
+                    {selectedProduct.price} LKR/month
+                  </p>
+                  <p className="mb-3 text-start">
+                    <strong className="mb-3">Benefits: </strong>
+                    <ul className="ul-style">
+                      {selectedProduct.benefits.map((benefit, index) => (
+                        <li key={index}>{benefit}</li>
+                      ))}
+                    </ul>
+                  </p>
+                </div>
+                <div>
+                  <StripeCheckout
+                    stripeKey="pk_test_51PIewdRvFH14lKkrE1UJCLDNE1Bu2AQACOqssEzny1YQqepVYOurBblXVBfzevB6wbMuZO1gvbRRl2iesvdwVRie00rznf1eAN"
+                    token={handleToken}
+                    name="Monthly subscription"
+                    amount={selectedProduct.price * 100} // Amount in cents
+                    currency="LKR"
+                  >
+                    <button className="btn btn-primary w-100">
+                      Subscribe as {selectedProduct.role}
+                    </button>
+                  </StripeCheckout>
+                </div>
               </div>
             </div>
           </div>
