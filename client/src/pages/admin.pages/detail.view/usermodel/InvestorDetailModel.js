@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,9 +7,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 import "./investorView.css";
-import backendUrl from "../../../../context/Config";
+
 const InvestorDetailModel = ({ user, onClose }) => {
-  const [emailStatus, setEmailStatus] = useState("send mail");
+  const [emailStatus, setEmailStatus] = useState("Send Mail");
 
   const notifySuccess = (message) => {
     toast.success(message);
@@ -23,7 +23,7 @@ const InvestorDetailModel = ({ user, onClose }) => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `${backendUrl}/Ezhu/Investor/createInvestorPerson/${user._id}`,
+        `http://localhost:3002/Ezhu/Investor/createInvestorPerson/${user._id}`,
         {
           method: "POST",
           headers: {
@@ -46,21 +46,24 @@ const InvestorDetailModel = ({ user, onClose }) => {
 
   const sendMail = async (e) => {
     e.preventDefault();
+    setEmailStatus("Sending...");
 
     try {
       const response = await axios.post(
-        `${backendUrl}/Ezhu/Investor/Request/sendMail/${user._id}`
+        `http://localhost:3002/Ezhu/Investor/Request/sendMail/${user._id}/${user.role}`
       );
 
       if (response.status === 200) {
         notifySuccess(response.data.message);
-        setEmailStatus("pending");
+        setEmailStatus("Pending");
       } else {
         notifyError(response.data.error || "Failed to send mail.");
+        setEmailStatus("Send Mail");
       }
     } catch (error) {
       console.error("Error sending mail:", error);
       notifyError("Failed to send mail. Please try again.");
+      setEmailStatus("Send Mail");
     }
   };
 
@@ -75,59 +78,60 @@ const InvestorDetailModel = ({ user, onClose }) => {
           <Modal.Title>User Details</Modal.Title>
         </Modal.Header>
         <Modal.Body className="investorDetailView-modal-body">
-          <Modal.Body className="investorDetailView-modal-body">
-            <Modal.Body className="investorDetailView-modal-body">
-              <div className="investorDetailView-user-details-grid">
-                <div className="left-column">
-                  <p>
-                    <b>User ID:</b> {user._id}
-                  </p>
-                  <p>
-                    <b>User Name:</b> {user.first_name} {user.last_name}
-                  </p>
-                  <p>
-                    <b>Email:</b> {user.email}
-                  </p>
-                  <p>
-                    <b>Number:</b> {user.number}
-                  </p>
-                  <p>
-                    <b>Birth Date:</b>{" "}
-                    {new Date(user.birthDate).toLocaleDateString()}
-                  </p>
-                  <p>
-                    <b>National ID:</b> {user.nationalid}
-                  </p>
-                  <p>
-                    <b>District:</b> {user.district}
-                  </p>
-                  <p>
-                    <b>Company Name:</b> {user.companyName}
-                  </p>
-                  <p>
-                    <b>Registration Number:</b> {user.registrationNumber}
-                  </p>
-                  <p>
-                    <b>Role:</b> {user.role}
-                  </p>
-                  <p>
-                    <b>Created At:</b>{" "}
-                    {new Date(user.createdAt).toLocaleString()}
-                  </p>
-                  <p>
-                    <b>Payment:</b> {user.payment.status}
-                  </p>
-                </div>
-                <div className="right-column">
-                  {user.images && <img src={user.images} alt="Design" />}
-                </div>
-              </div>
-            </Modal.Body>
-          </Modal.Body>
+          <div className="investorDetailView-user-details-grid">
+            <div className="left-column">
+              <p>
+                <b>User ID:</b> {user._id}
+              </p>
+              <p>
+                <b>User Name:</b> {user.first_name} {user.last_name}
+              </p>
+              <p>
+                <b>Email:</b> {user.email}
+              </p>
+              <p>
+                <b>Number:</b> {user.number}
+              </p>
+              <p>
+                <b>Birth Date:</b>{" "}
+                {new Date(user.birthDate).toLocaleDateString()}
+              </p>
+              <p>
+                <b>National ID:</b> {user.nationalid}
+              </p>
+              <p>
+                <b>District:</b> {user.district}
+              </p>
+              <p>
+                <b>Company Name:</b> {user.companyName}
+              </p>
+              <p>
+                <b>Registration Number:</b> {user.registrationNumber}
+              </p>
+              <p>
+                <b>Role:</b> {user.role}
+              </p>
+              <p>
+                <b>Created At:</b> {new Date(user.createdAt).toLocaleString()}
+              </p>
+              <p>
+                <b>Payment:</b> {user.payment.status}
+              </p>
+            </div>
+            <div className="right-column">
+              {user.images && <img src={user.images} alt="Design" />}
+            </div>
+          </div>
         </Modal.Body>
         <Modal.Footer className="investorDetailView-modal-footer">
-          <Button className="btn-success" onClick={sendMail}>
-            {emailStatus === "pending" ? "Pending" : "Send Mail"}
+          <Button
+            className={`btn-${
+              emailStatus === "Pending" ? "warning" : "success"
+            }`}
+            onClick={sendMail}
+            disabled={emailStatus === "Pending"}
+          >
+            {emailStatus}
           </Button>
           <Button className="btn-primary" onClick={handleSubmit}>
             Save

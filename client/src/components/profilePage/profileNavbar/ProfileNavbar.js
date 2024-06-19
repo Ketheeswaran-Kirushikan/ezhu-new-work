@@ -12,12 +12,14 @@ import ChatComponent from "../../Chat/ChatComponent";
 import "./ProfileNavbar.css";
 import NotificationOverlay from "../Notification/NotificationOverlay";
 import ProfileModal from "../profileEdit/profileModal/ProfileModal";
+import PaymentPop from "../profileNavbar/PaymentPop/PaymentPop"; // Import PaymentPop component
 import axios from "axios";
-import backendUrl from "../../../context/Config";
 
 const ProfileNavbar = ({ userData, token }) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false); // State for payment modal
+
   const { _id, user_name, images } = userData || {};
 
   const toggleCollapse = () => {
@@ -37,12 +39,21 @@ const ProfileNavbar = ({ userData, token }) => {
 
   const handleLogout = async () => {
     try {
-      await axios.post(`${backendUrl}/Ezhu/logout`);
+      await axios.post(`http://localhost:3002/Ezhu/logout`);
       localStorage.removeItem("token"); // Corrected localStorage key
       window.location.href = "/login"; // Redirect to the login page
     } catch (err) {
       console.error("Error logging out:", err);
     }
+  };
+
+  const handlePaymentClick = (e) => {
+    e.preventDefault();
+    setShowPaymentModal(true); // Show the payment modal
+  };
+
+  const handleClosePaymentModal = () => {
+    setShowPaymentModal(false); // Hide the payment modal
   };
 
   return (
@@ -200,7 +211,11 @@ const ProfileNavbar = ({ userData, token }) => {
               </Link>
             </li>
             <li className="profile-offcanvas-item">
-              <Link to="/payment">Payment</Link>
+              <Link to="#" onClick={handlePaymentClick}>
+                {" "}
+                {/* Trigger modal */}
+                Payment
+              </Link>
             </li>
             <li className="profile-offcanvas-item">
               <Link to="/followers" state={{ userData, token }}>
@@ -221,6 +236,11 @@ const ProfileNavbar = ({ userData, token }) => {
           </ul>
         </div>
       </div>
+
+      <PaymentPop
+        show={showPaymentModal}
+        handleClose={handleClosePaymentModal}
+      />
     </div>
   );
 };

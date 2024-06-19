@@ -46,7 +46,7 @@ function App() {
           />
           <Route path="/investormanagement" element={<InvestorManagement />} />
           <Route path="/skillworkerprofile" element={<SkillWorkerProfile />} />
-          <Route path="/cardForm/:userId" element={<CardForm />} />
+          <Route path="/cardForm/:userId/:role" element={<CardForm />} />
           <Route path="/profileedit" element={<ProfileEdit />} />
           <Route path="/community" element={<CommunityNav />} />
           <Route path="/skillworkerNav" element={<SkillWorkersNav />} />

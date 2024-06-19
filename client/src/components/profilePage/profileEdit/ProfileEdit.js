@@ -6,7 +6,8 @@ import ProfileNavbar from "../profileNavbar/ProfileNavbar";
 import CircularProgress from "@mui/material/CircularProgress";
 import ProfileAddPost from "../profile-add-post/ProfileAddPost";
 import ProfileEditablePost from "../profile-post/ProfileEditablePost";
-import backendUrl from "../../../context/Config";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProfileEdit = () => {
   const location = useLocation();
@@ -26,6 +27,16 @@ const ProfileEdit = () => {
     password: "",
     bio: userData?.bio || "", // Initialize bio from userData if available
   });
+
+  const [errors, setErrors] = useState({});
+  const [isEditing, setIsEditing] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setFormData({ ...formData, [id]: value });
+  };
+
   const handleCancel = () => {
     setFormData({
       user_name: userData?.user_name || "",
@@ -40,27 +51,13 @@ const ProfileEdit = () => {
       images: userData?.images || "",
       password: "",
       bio: userData?.bio || "",
-      confirmPassword: "", // Reset confirmPassword as well
     });
     setIsEditing(false); // Close the edit mode
   };
 
-  const [errors, setErrors] = useState({});
-  const [isEditing, setIsEditing] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const handleInputChange = (e) => {
-    const { id, value } = e.target;
-    setFormData({ ...formData, [id]: value });
-  };
-
   const validateForm = () => {
-    const newErrors = {};
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match.";
-    }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    setErrors({});
+    return true; // Validation without confirm password
   };
 
   const handleSubmit = async (e) => {
@@ -68,21 +65,23 @@ const ProfileEdit = () => {
     if (validateForm()) {
       try {
         const editedUser = { ...formData };
-        delete editedUser.confirmPassword;
+
         const response = await axios.put(
-          `${backendUrl}/Ezhu/skilledworker/updateSkilledPerson/${userData._id}`,
+          `http://localhost:3002/Ezhu/skilledworker/updateSkilledPerson/${userData._id}`,
           editedUser
         );
         if (response.status === 200) {
-          console.log("update successfully");
+          toast.success("Update successful!");
+          setIsEditing(false); // Close the edit mode
         } else {
-          console.log("Error updating user: " + response.statusText);
+          toast.error("Error updating user: " + response.statusText);
         }
       } catch (error) {
-        console.error("Error updating user:", error);
+        toast.error("Error updating user: " + error.message);
       }
     }
   };
+
   const birthDate = new Date(userData.birthDate);
 
   // Format the date to a more readable format, e.g., "January 1, 2000"
@@ -103,9 +102,9 @@ const ProfileEdit = () => {
   if (!userData || !token) {
     return <div>Loading...</div>;
   }
-
   return (
     <>
+      <ToastContainer />
       <ProfileNavbar userData={userData} token={token} style />
       <div className="container-fluid profile-side-bar">
         <div className="profile-management-side-bar-row">
@@ -273,30 +272,8 @@ const ProfileEdit = () => {
                           value={formData.password}
                           onChange={handleInputChange}
                         />
-                        {errors.password && (
-                          <div className="text-danger">{errors.password}</div>
-                        )}
                       </div>
                       <div className="form-group">
-                        <label htmlFor="confirmPassword">
-                          Confirm Password:
-                        </label>
-                        <input
-                          type="password"
-                          id="confirmPassword"
-                          className="editable-confirm-password form-control profile-edit-input"
-                          value={formData.confirmPassword}
-                          onChange={handleInputChange}
-                        />
-                        {errors.confirmPassword && (
-                          <div className="text-danger">
-                            {errors.confirmPassword}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div className="text-area-edit-row form-row">
-                      <div className="form-group text-area-input">
                         <label htmlFor="bio">Bio:</label>
                         <textarea
                           id="bio"
@@ -306,19 +283,16 @@ const ProfileEdit = () => {
                         />
                       </div>
                     </div>
-                    <div className="row d-flex align-item-center justify-content-end">
-                      <button
-                        type="submit"
-                        className="btn btn-primary profile-edit-save-button"
-                      >
-                        Save Changes
+                    <div className="button-row">
+                      <button type="submit" className="btn btn-primary">
+                        Save
                       </button>
                       <button
-                        type="submit"
-                        className="btn btn-outline-danger profile-edit-save-button"
+                        type="button"
+                        className="btn btn-secondary"
                         onClick={handleCancel}
                       >
-                        cancel
+                        Cancel
                       </button>
                     </div>
                   </form>
