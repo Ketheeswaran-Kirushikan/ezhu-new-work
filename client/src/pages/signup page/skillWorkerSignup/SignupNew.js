@@ -7,6 +7,7 @@ import Input from "../../../components/input/Input";
 import DatePickerComponent from "../../../components/DatePicker/DatePicker";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBuilding, faCode, faUser } from "@fortawesome/free-solid-svg-icons";
+import backendUrl from "../../../context/Config";
 
 const SkilledWorkerSignup = () => {
   const [currentStep, setCurrentStep] = useState(1);

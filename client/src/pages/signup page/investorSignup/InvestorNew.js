@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import RegisterPop from "../../../components/registerpop/RegisterPop";
 import Input from "../../../components/input/Input";
 import DatePickerComponent from "../../../components/DatePicker/DatePicker";
+import backendUrl from "../../../context/Config";
 
 const InvestorNew = () => {
   const [currentStep, setCurrentStep] = useState(1);
