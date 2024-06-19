@@ -128,7 +128,7 @@ const InvestorNew = () => {
 
     try {
       await axios.post(
-        "http://localhost:3002/Ezhu/Investor/Request/createInvestorRequest",
+        `${backendUrl}/Ezhu/Investor/Request/createInvestorRequest `,
         userData
       );
       togglePopup();

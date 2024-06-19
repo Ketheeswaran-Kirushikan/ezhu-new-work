@@ -7,6 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 import "./investorView.css";
+import backendUrl from "../../../../context/Config";
 
 const InvestorDetailModel = ({ user, onClose }) => {
   const [emailStatus, setEmailStatus] = useState("Send Mail");
@@ -23,7 +24,7 @@ const InvestorDetailModel = ({ user, onClose }) => {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:3002/Ezhu/Investor/createInvestorPerson/${user._id}`,
+        `${backendUrl}/Ezhu/Investor/createInvestorPerson/${user._id}`,
         {
           method: "POST",
           headers: {
@@ -50,7 +51,7 @@ const InvestorDetailModel = ({ user, onClose }) => {
 
     try {
       const response = await axios.post(
-        `http://localhost:3002/Ezhu/Investor/Request/sendMail/${user._id}/${user.role}`
+        `${backendUrl}/Ezhu/Investor/Request/sendMail/${user._id}/${user.role}`
       );
 
       if (response.status === 200) {

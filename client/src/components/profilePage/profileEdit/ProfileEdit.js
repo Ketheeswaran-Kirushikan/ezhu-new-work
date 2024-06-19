@@ -8,6 +8,7 @@ import ProfileAddPost from "../profile-add-post/ProfileAddPost";
 import ProfileEditablePost from "../profile-post/ProfileEditablePost";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import backendUrl from "../../../context/Config";
 
 const ProfileEdit = () => {
   const location = useLocation();
@@ -67,7 +68,7 @@ const ProfileEdit = () => {
         const editedUser = { ...formData };
 
         const response = await axios.put(
-          `http://localhost:3002/Ezhu/skilledworker/updateSkilledPerson/${userData._id}`,
+          `${backendUrl}/Ezhu/skilledworker/updateSkilledPerson/${userData._id}`,
           editedUser
         );
         if (response.status === 200) {

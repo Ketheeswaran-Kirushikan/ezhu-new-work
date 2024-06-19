@@ -16,7 +16,7 @@ const Table = () => {
   useEffect(() => {
     axios
       .get(
-        "http://localhost:3002/Ezhu/Skillworker/Request/findSkilledPersonRequest"
+        `${backendUrl}/Ezhu/Skillworker/Request/findSkilledPersonRequest`
       )
       .then((response) => setSkilledPersons(response.data))
       .catch((err) => console.log("Error fetching data:", err));
@@ -33,7 +33,7 @@ const Table = () => {
   const handleDelete = async (item) => {
     try {
       await axios.delete(
-        `http://localhost:3002/Ezhu/Skillworker/Request/deleteSkilledPersonRequest/${item._id}`
+        `${backendUrl}/Ezhu/Skillworker/Request/deleteSkilledPersonRequest/${item._id}`
       );
       setIsDeleteComplete(true);
       notify();

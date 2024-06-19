@@ -4,6 +4,7 @@ import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
 import logo from "../../assets/Payment.jpg";
 import "./cardform.css";
+import backendUrl from "../../context/Config";
 
 const CardForm = () => {
   const { userId, role } = useParams();
@@ -52,7 +53,7 @@ const CardForm = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:3002/Ezhu/userpayment/payment/${userId}`,
+        `${backendUrl}/Ezhu/userpayment/payment/${userId}`,
         { token, selectedProduct, userId },
         { headers: { "Content-Type": "application/json" } }
       );
