@@ -8,10 +8,11 @@ import backendUrl from "../../context/Config";
 
 const CardForm = () => {
   const { userId, role } = useParams();
+  console.log(role);
   const products = [
     {
       name: "Monthly Subscription for Skilled Workers",
-      price: 100,
+      price: 300,
       productBy: "Ezhu",
       role: "skilled person",
       benefits: [
@@ -24,7 +25,7 @@ const CardForm = () => {
     },
     {
       name: "Monthly Subscription for Investors",
-      price: 200,
+      price: 500,
       productBy: "Ezhu",
       role: "investor",
       benefits: [
@@ -36,7 +37,6 @@ const CardForm = () => {
       ],
     },
   ];
-
   const [selectedProduct, setSelectedProduct] = useState(products[0]);
 
   useEffect(() => {

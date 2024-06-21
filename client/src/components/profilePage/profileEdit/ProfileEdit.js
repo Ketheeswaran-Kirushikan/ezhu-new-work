@@ -67,7 +67,7 @@ const ProfileEdit = () => {
       try {
         const editedUser = { ...formData };
 
-        const response = await axios.put(
+        const response = await axios.patch(
           `${backendUrl}/Ezhu/skilledworker/updateSkilledPerson/${userData._id}`,
           editedUser
         );
