@@ -7,21 +7,29 @@ CORS(app)  # Enable CORS to allow requests from frontend
 def handle_message():
     try:
         data = request.get_json()
+        print("[REQUEST]:", data)
+
         if not data or 'message' not in data:
             return jsonify({'response': 'No message received'}), 400
+
         message = data['message'].strip()
+        print("[MESSAGE]:", message)
+
         if not message:
             return jsonify({'response': 'Empty message'}), 400
+
         intents_list = predict_class(message)
-        if not intents_list:
-            return jsonify({'response': 'Sorry, I didn’t understand that.'}), 200
+        print("[INTENTS]:", intents_list)
+
         response = get_response(intents_list)
+        print("[RESPONSE]:", response)
+
         return jsonify({'response': response})
     except Exception as e:
         print(f"[ERROR]: {e}")
         return jsonify({'response': 'Sorry, an error occurred.'}), 500
 if __name__ == '__main__':
-    host = '0.0.0.0'
-    port = 5000
-    print(f"✅ Flask Chatbot running on http://{host}:{port}")
-    app.run(host=host, port=port, debug=True)
+    import os
+    port = int(os.environ.get('PORT', 5000))  # railway will use PORT env
+    print(f"✅ Flask Chatbot running on http://0.0.0.0:{port}")
+    app.run(host='0.0.0.0', port=port, debug=True)
