@@ -103,8 +103,8 @@ const sendWelcomeEmail = async (req, res) => {
       to: user.email,
       from: "kirushikanketheeswaran@gmail.com",
       subject: "Welcome to Ezhu",
-      text: `Hello ${user.first_name},\n\nYour account has been successfully created.\nPlease click on the following link to proceed with your account setup: https://ezhu-grow-together.vercel.app/cardForm/${user._id}`,
-      html: `<p>Hello ${user.first_name},</p><p>Your account has been successfully created.</p><p><a href="http://localhost:3000/cardForm/${user._id}/${user.role}">Click here</a> to proceed with your account setup.</p>`,
+      text: `Hello ${user.first_name},\n\nYour account has been successfully created.\nPlease click on the following link to proceed with your account setup: https://ezhu-new-work.vercel.app/cardForm/${user._id}`,
+      html: `<p>Hello ${user.first_name},</p><p>Your account has been successfully created.</p><p><a href="https://ezhu-new-work.vercel.app/cardForm/${user._id}/${user.role}">Click here</a> to proceed with your account setup.</p>`,
     };
 
     await sgMail.send(msg);

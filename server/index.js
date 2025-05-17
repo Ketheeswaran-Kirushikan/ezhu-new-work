@@ -18,7 +18,7 @@ const databaseConnect = require("./DB/database");
 
 const PORT = 3002;
 
-const corsOptions = { origin: "http://localhost:3000", credentials: true };
+const corsOptions = { origin: "https://ezhu-new-work.vercel.app/", credentials: true };
 // Add a basic status check endpoint
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Server is running!" });
