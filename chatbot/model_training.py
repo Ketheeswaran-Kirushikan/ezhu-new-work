@@ -10,6 +10,7 @@ from tensorflow.keras.layers import Dense, Activation, Dropout, Input
 from tensorflow.keras.optimizers import SGD
 # Initialize NLTK lemmatizer
 lemmatizer = WordNetLemmatizer()
+nltk.download('punkt')  # ✅ Add this line to download the tokenizer model
 # Paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_DIR = os.path.join("model")
