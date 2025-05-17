@@ -1,15 +1,18 @@
-import React, { useState } from "react";
-import axios from "axios";
+
+import React, { useState, useEffect } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./signup.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RegisterPop from "../../../components/registerpop/RegisterPop";
 import Input from "../../../components/input/Input";
 import DatePickerComponent from "../../../components/DatePicker/DatePicker";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBuilding, faCode, faUser } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios"; // Ensure axios is imported
 import backendUrl from "../../../context/Config";
 
 const SkilledWorkerSignup = () => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [showPopup, setShowPopup] = useState(false);
   const [formErrors, setFormErrors] = useState({});
@@ -27,22 +30,24 @@ const SkilledWorkerSignup = () => {
     referenceNumbers: "",
   });
 
+  // Log showPopup changes for debugging
+  useEffect(() => {
+    console.log("showPopup:", showPopup);
+  }, [showPopup]);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-
-    // Clear the error when the input changes
     setFormErrors({ ...formErrors, [e.target.name]: "" });
   };
 
   const handleDateChange = (date) => {
     setFormData({ ...formData, birthDate: date });
-
-    // Clear the error when the input changes
     setFormErrors({ ...formErrors, birthDate: "" });
   };
 
   const handleImageChange = (e) => {
     setFormData({ ...formData, images: e.target.files[0] });
+    setFormErrors({ ...formErrors, images: "" });
   };
 
   const validateForm = (step) => {
@@ -114,7 +119,7 @@ const SkilledWorkerSignup = () => {
 
     if (step === 2) {
       if (!skill) {
-        errors.skill = "Skill is required.";
+        errors.skill = "Please select a skill.";
       }
       if (!district) {
         errors.district = "District is required.";
@@ -128,12 +133,14 @@ const SkilledWorkerSignup = () => {
     }
 
     setFormErrors(errors);
-
     return Object.keys(errors).length === 0;
   };
 
   const togglePopup = () => {
-    setShowPopup(!showPopup);
+    setShowPopup((prev) => {
+      if (prev) navigate("/"); // Navigate to homepage when closing popup
+      return !prev;
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -142,21 +149,30 @@ const SkilledWorkerSignup = () => {
     if (!validateForm(2)) {
       return;
     }
+
     const userData = new FormData();
     for (const key in formData) {
       userData.append(key, formData[key]);
     }
 
     try {
-      await axios.post(
-        `${backendUrl}/Ezhu/SkilledWorker/Request/createSkilledWorkerRequest`,
-        userData
-      );
-      togglePopup();
-      alert("User created successfully");
+      const response = await axios.post(
+        `${backendUrl}/Ezhu/Skillworker/Request/createSkilledPersonRequest`,
+        userData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );      
+      console.log("Submission successful:", response.data);
+      setShowPopup(true); // Directly set to true for clarity
     } catch (error) {
-      console.error("Error creating user:", error);
-      alert("User creation failed");
+      console.error("Submission error:", error.response || error);
+      setFormErrors({
+        ...formErrors,
+        submit: "User creation failed. Please try again.",
+      });
     }
   };
 
@@ -170,6 +186,30 @@ const SkilledWorkerSignup = () => {
     setCurrentStep((prevStep) => prevStep - 1);
   };
 
+  // List of job options for the skill dropdown
+  const jobOptions = [
+    "Software Engineering",
+    "Web Designer",
+    "Graphic Designer",
+    "Carpenter",
+    "Hand Craft",
+    "Welder",
+    "Electrician",
+    "Plumber",
+    "Mechanic",
+    "Mason",
+    "Painter",
+    "Tailor",
+    "Chef",
+    "Hairdresser",
+    "Photographer",
+    "Videographer",
+    "Data Analyst",
+    "Network Administrator",
+    "Civil Engineer",
+    "Architect",
+  ];
+
   return (
     <div className="container-fluid" id="grad1">
       <div className="row justify-content-center mt-0">
@@ -182,7 +222,6 @@ const SkilledWorkerSignup = () => {
             <div className="">
               <div className="card-ms col-md-12 mx-0">
                 <form id="msform" onSubmit={handleSubmit}>
-                  {/* Progressbar */}
                   <ul id="progressbar">
                     <li
                       className={currentStep === 1 ? "active" : ""}
@@ -198,7 +237,6 @@ const SkilledWorkerSignup = () => {
                     </li>
                   </ul>
 
-                  {/* Fieldsets */}
                   {currentStep === 1 && (
                     <fieldset>
                       <div className="form-card">
@@ -374,18 +412,23 @@ const SkilledWorkerSignup = () => {
                         <h2 className="fs-title">Skill Information</h2>
                         <div className="row mb-4">
                           <div className="col-md-6">
-                            <Input
-                              type="text"
+                            <select
                               className="form-control inputTypeSignup"
                               id="skill"
                               name="skill"
                               value={formData.skill}
                               onChange={handleChange}
-                              placeholder={
-                                formErrors.skill ? "" : "Enter your skill"
-                              }
                               required
-                            />
+                            >
+                              <option value="" disabled>
+                                Select your skill
+                              </option>
+                              {jobOptions.map((job) => (
+                                <option key={job} value={job}>
+                                  {job}
+                                </option>
+                              ))}
+                            </select>
                             {formErrors.skill && (
                               <div className="error-message-handle-user">
                                 {formErrors.skill}
@@ -424,7 +467,6 @@ const SkilledWorkerSignup = () => {
                               onChange={handleImageChange}
                               required
                             />
-
                             {formErrors.images && (
                               <div className="error-message-handle-user">
                                 {formErrors.images}
@@ -444,20 +486,36 @@ const SkilledWorkerSignup = () => {
                               }
                               required
                             />
+                            {formErrors.district && (
+                              <div className="error-message-handle-user">
+                                {formErrors.district}
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
-                      <button
-                        type="button"
-                        className="previous action-button-previous"
-                        onClick={handlePrevious}
-                      >
-                        Previous
-                      </button>
-                      <button type="submit" className="submit action-button">
-                        Submit
-                      </button>
+                      <div className="d-flex justify-content-between gap-3">
+                        <button
+                          type="button"
+                          className="previous action-button-previous flex-grow-1"
+                          onClick={handlePrevious}
+                        >
+                          Previous
+                        </button>
+                        <button
+                          type="submit"
+                          className="submit action-button flex-grow-1"
+                          onClick={handleSubmit}
+                        >
+                          Submit
+                        </button>
+                      </div>
                     </fieldset>
+                  )}
+                  {formErrors.submit && (
+                    <div className="error-message-handle-user">
+                      {formErrors.submit}
+                    </div>
                   )}
                   <div className="d-flex justify-content-center align-items-center mb-2 mt-4">
                     <p className="mb-0 me-2">Already have an account?</p>
@@ -472,7 +530,7 @@ const SkilledWorkerSignup = () => {
                 </form>
                 {showPopup && (
                   <RegisterPop
-                    showPopup={showPopup}
+                    isOpen={showPopup}
                     togglePopup={togglePopup}
                   />
                 )}

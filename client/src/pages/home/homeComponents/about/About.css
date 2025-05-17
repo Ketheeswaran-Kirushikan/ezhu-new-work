@@ -1,16 +1,16 @@
 .about-container {
     background-image: url("../../../../assets/Subtract1.png");
-    height: 180vh;
     background-repeat: no-repeat;
-    padding-top: 400px;
+    background-size: cover;
+    background-position: center;
+    height: 150vh;
+    padding-top: 300px;
     overflow: hidden;
     position: relative; 
     z-index: 1000; 
-    background-size: contain;
 }
 
-
-  .detail-container {
+.detail-container {
     background-color: #f8f9fa;
     padding: 50px;
     border: 1px solid #3d3e3f;
@@ -42,9 +42,9 @@
         height: 180vh;
         background-repeat: no-repeat;
         padding-top: 250px;
-      }
+    }
     
-      .detail-container {
+    .detail-container {
         background-color: #f8f9fa;
         padding: 50px;
         border: 1px solid #3d3e3f;
@@ -54,6 +54,7 @@
         text-align: center;
         border-radius: 30px;
     }
+    
     .about-container {
         height: 180vh;
         padding-top: 400px;

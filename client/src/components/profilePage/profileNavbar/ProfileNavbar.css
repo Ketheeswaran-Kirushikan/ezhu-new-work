@@ -1,9 +1,8 @@
-/* ProfileNavbar.css */
 .profile-nav-fixed {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 1030; /* Ensure the navbar is on top of other content */
+  z-index: 1030;
 }
 
 .logOut-button-canvas {
@@ -170,6 +169,23 @@
   text-align: center;
 }
 
+/* Navbar width and gap adjustments */
+.navbar-container {
+  max-width: 100%; /* Set a narrower width for the second navbar */
+  margin: 0 auto; /* Center the navbar */
+}
+
+.navbar-nav {
+  display: flex;
+  gap: 30px; /* Equal gap between navigation items */
+  justify-content: center; /* Center the items */
+  width: 100%; /* Ensure the nav items span the container */
+}
+
+.nav-item {
+  padding: 0 !important; /* Remove any padding overrides */
+}
+
 /* Media Queries */
 @media (max-width: 768px) {
   .profile-nav-image {
@@ -213,6 +229,16 @@
 
   .profile-nav-input {
     width: 200px;
+  }
+
+  .navbar-container {
+    max-width: 100%; /* Full width on smaller screens */
+  }
+
+  .navbar-nav {
+    gap: 20px; /* Smaller gap on smaller screens */
+    flex-direction: column; /* Stack items vertically on mobile */
+    align-items: center;
   }
 }
 
@@ -258,9 +284,12 @@
   .profile-nav-input {
     width: 200px;
   }
+
+  .navbar-nav {
+    gap: 15px; /* Even smaller gap on very small screens */
+  }
 }
 
-/* ProfileNavbar.css */
 .modal.show {
   display: block;
 }

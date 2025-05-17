@@ -108,7 +108,7 @@ const ProfileAddPost = ({ userData }) => {
             </div>
             <div className="container-fluid mt-5">
               <div className="row">
-                <div className="col mx-auto">
+                <div className="col p-0">
                   <div className="profile-card">
                     {image && (
                       <div className="image-container">

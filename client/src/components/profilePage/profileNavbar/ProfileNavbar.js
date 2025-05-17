@@ -12,16 +12,16 @@ import ChatComponent from "../../Chat/ChatComponent";
 import "./ProfileNavbar.css";
 import NotificationOverlay from "../Notification/NotificationOverlay";
 import ProfileModal from "../profileEdit/profileModal/ProfileModal";
-import PaymentPop from "../profileNavbar/PaymentPop/PaymentPop"; // Import PaymentPop component
+import PaymentPop from "../profileNavbar/PaymentPop/PaymentPop";
 import axios from "axios";
 import backendUrl from "../../../context/Config";
 
-const ProfileNavbar = ({ userData, token }) => {
+const ProfileNavbar = ({ userData, token, id }) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [showPaymentModal, setShowPaymentModal] = useState(false); // State for payment modal
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
-  const { _id, user_name, images } = userData || {};
+  const { _id, user_name, images, role } = userData || {};
 
   const toggleCollapse = () => {
     setIsCollapsed(!isCollapsed);
@@ -41,8 +41,8 @@ const ProfileNavbar = ({ userData, token }) => {
   const handleLogout = async () => {
     try {
       await axios.post(`${backendUrl}/Ezhu/logout`);
-      localStorage.removeItem("token"); // Corrected localStorage key
-      window.location.href = "/login"; // Redirect to the login page
+      localStorage.removeItem("token");
+      window.location.href = "/login";
     } catch (err) {
       console.error("Error logging out:", err);
     }
@@ -50,11 +50,24 @@ const ProfileNavbar = ({ userData, token }) => {
 
   const handlePaymentClick = (e) => {
     e.preventDefault();
-    setShowPaymentModal(true); // Show the payment modal
+    setShowPaymentModal(true);
   };
 
   const handleClosePaymentModal = () => {
-    setShowPaymentModal(false); // Hide the payment modal
+    setShowPaymentModal(false);
+  };
+
+  const getDashboardRoute = () => {
+    switch (role) {
+      case "investor":
+        return "/investorprofile";
+      case "skilledperson":
+        return "/skilledworkerprofile";
+      case "admin":
+        return "/dashboard";
+      default:
+        return "/skillworkerprofile";
+    }
   };
 
   return (
@@ -112,67 +125,83 @@ const ProfileNavbar = ({ userData, token }) => {
           </div>
         </div>
       </div>
-      <nav className="navbar navbar-expand-lg navbar-light bg-body-tertiary border-bottom">
-        <div className="container-fluid">
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-mdb-toggle="collapse"
-            data-mdb-target="#navbarCenteredExample"
-            aria-controls="navbarCenteredExample"
-            aria-expanded={!isCollapsed ? "true" : "false"}
-            aria-label="Toggle navigation"
-            onClick={toggleCollapse}
-          >
-            <FontAwesomeIcon icon={faBars} />
-          </button>
-          <div
-            className={`collapse navbar-collapse justify-content-center ${
-              !isCollapsed ? "show" : ""
-            }`}
-            id="navbarCenteredExample"
-          >
-            <ul className="navbar-nav mb-2 mb-lg-0">
-              <li className="nav-item profile-nav-item">
-                <Link className="nav-link" to="/community" state={{ _id }}>
-                  Community
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to={`/investorsNav?userId=${userData._id}&token=${token}`}
-                >
-                  Investors
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/skillworkerNav"
-                  state={{ userData, token }}
-                >
-                  Skills
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/bootcamps"
-                  state={{ userData, token }}
-                >
-                  Work shop
-                </Link>
-              </li>
-            </ul>
+      <div className="navbar-container"> {/* Added wrapper for width control */}
+        <nav className="navbar navbar-expand-lg navbar-light bg-body-tertiary border-bottom">
+          <div className="container-fluid">
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-mdb-toggle="collapse"
+              data-mdb-target="#navbarCenteredExample"
+              aria-controls="navbarCenteredExample"
+              aria-expanded={!isCollapsed ? "true" : "false"}
+              aria-label="Toggle navigation"
+              onClick={toggleCollapse}
+            >
+              <FontAwesomeIcon icon={faBars} />
+            </button>
+            <div
+              className={`collapse navbar-collapse justify-content-center ${
+                !isCollapsed ? "show" : ""
+              }`}
+              id="navbarCenteredExample"
+            >
+              <ul className="navbar-nav mb-2 mb-lg-0">
+                <li className="nav-item profile-nav-item">
+                  <Link
+                    className="nav-link"
+                    to={`${getDashboardRoute()}?userId=${userData._id}&token=${token}`}
+                    state={{ userData, token }}
+                  >
+                    Dashboard
+                  </Link>
+                </li>
+                <li className="nav-item profile-nav-item">
+                  <Link
+                    className="nav-link"
+                    to={`/community?userId=${userData._id}&token=${token}`}
+                    state={{ userData, token }}
+                  >
+                    Community
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    className="nav-link"
+                    to={`/investorsNav?userId=${userData._id}&token=${token}`}
+                    state={{ userData, token }}
+                  >
+                    Investors
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    className="nav-link"
+                    to={`/skillworkerNav?userId=${userData._id}&token=${token}`}
+                    state={{ userData, token }}
+                  >
+                    Skills
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    className="nav-link"
+                    to={`/bootcamps?userId=${userData._id}&token=${token}`}
+                    state={{ userData, token }}
+                  >
+                    Work shop
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </div>
 
       <ChatComponent
         isChatOpen={isChatOpen}
         closeChat={closeChat}
-        userId={_id}
+        userId={id || _id}
         userName={user_name}
         userImage={images}
         userToken={token}
@@ -213,8 +242,6 @@ const ProfileNavbar = ({ userData, token }) => {
             </li>
             <li className="profile-offcanvas-item">
               <Link to="#" onClick={handlePaymentClick}>
-                {" "}
-                {/* Trigger modal */}
                 Payment
               </Link>
             </li>

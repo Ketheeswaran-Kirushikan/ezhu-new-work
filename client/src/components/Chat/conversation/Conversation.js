@@ -4,28 +4,25 @@ import "./conversation.css";
 import useConversation from "../../../store/useConversation";
 import { SocketContext } from "../../../context/SocketProvider";
 
+
 const Conversation = ({ data }) => {
   const { message, images, user_name, _id } = data;
-  const { selectedConversation, setSelectedConversation } = useConversation(
-    (state) => ({
-      selectedConversation: state.selectedConversation,
-      setSelectedConversation: state.setSelectedConversation,
-    })
-  );
+  const { selectedConversation, setSelectedConversation } = useConversation();
+  const { userSocketMap } = useContext(SocketContext);
 
   const isSelected = selectedConversation?._id === _id;
-  const { onlineUsers, userSocketMap } = useContext(SocketContext);
+  const isOnline = userSocketMap[_id] || false;
 
-  const isOnline = userSocketMap[_id] || false; // Check if userSocketMap contains the user's socket ID
-
-  // Log isOnline status for debugging
-  console.log("Is User Online?", isOnline);
+  console.log(`User ${_id} online status:`, isOnline, "userSocketMap:", userSocketMap);
 
   return (
     <div
       className={`conversation-item d-flex align-items-center border-bottom py-2 px-3 
       ${isSelected ? "selected-conversation" : ""}`}
-      onClick={() => setSelectedConversation(data)}
+      onClick={() => {
+        console.log("Selecting conversation:", data);
+        setSelectedConversation(data);
+      }}
     >
       <Avatar alt={user_name} src={images} />
       <div className="conversation-content ms-3">

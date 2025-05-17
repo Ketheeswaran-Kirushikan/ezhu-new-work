@@ -47,7 +47,7 @@ const verifyUser = async (req, res) => {
       from: "kirushikanketheeswaran@gmail.com",
       subject: "Welcome to Ezhu",
       text: `Hello ${userRequest.first_name},\n\nYour payment has been successfully completed.\n\nClick on the following link to proceed with your account setup: https://ezhu-grow-together.vercel.app/login\n\nYour email: ${userRequest.email}\nPassword: ${randomPassword}\n\nThank you!`,
-      html: `<h3>Hello ${userRequest.first_name},</h3><p>Your payment has been successfully completed.</p><p><a href="https://ezhu-grow-together.vercel.app/login">Click here</a> to proceed with your account setup.</p><br><p>Your email: ${userRequest.email}<br>Password: ${randomPassword}<br><p>Thank you!</p>`,
+      html: `<h3>Hello ${userRequest.first_name},</h3><p>Your payment has been successfully completed.</p><p><a href="http://localhost:3000/login">Click here</a> to proceed with your account setup.</p><br><p>Your email: ${userRequest.email}<br>Password: ${randomPassword}<br><p>Thank you!</p>`,
     };
 
     await sgMail.send(msg);

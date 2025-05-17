@@ -2,24 +2,19 @@ const Conversation = require("../models/conversation.model");
 const Message = require("../models/message.model");
 const Investor = require("../models/investors.model");
 const SkilledWorkerModel = require("../models/skillperson.model");
-
 const sendMessage = async (req, res) => {
   try {
     const { message } = req.body;
     const { _id: receiver_id } = req.params;
     const senderId = req.user._id.toString();
-
     if (!receiver_id) {
       return res.status(400).json({ error: "Receiver ID is required" });
     }
-
     const participants = [...new Set([senderId, receiver_id])];
-
     // Check for Existing Conversation
     let conversation = await Conversation.findOne({
       participants: { $all: participants },
     });
-
     // Create Conversation (if needed)
     if (!conversation) {
       conversation = new Conversation({
@@ -28,7 +23,6 @@ const sendMessage = async (req, res) => {
       });
       await conversation.save();
     }
-
     // Update Conversation (if existing)
     const updatedConversation = await Conversation.findOneAndUpdate(
       { _id: conversation._id },
@@ -44,17 +38,14 @@ const sendMessage = async (req, res) => {
       },
       { new: true }
     );
-
     // Get the Receiver's Role
     let receiver = await Investor.findById(receiver_id);
     if (!receiver) {
       receiver = await SkilledWorkerModel.findById(receiver_id);
     }
-
     if (!receiver) {
       return res.status(404).json({ error: "Receiver not found" });
     }
-
     const newMessage = new Message({
       sender_id: senderId,
       receiver_id,
@@ -62,17 +53,25 @@ const sendMessage = async (req, res) => {
       sender_role: req.user.role,
       receiver_role: receiver.role,
     });
-
     await newMessage.save();
-
-    // Get the receiver's socket ID
+    // Emit to both sender and receiver
     const receiverSocketId = getReciverSocketId(receiver_id);
+    const senderSocketId = getReciverSocketId(senderId);
+    console.log("Receiver Socket ID:", receiverSocketId);
+    console.log("Sender Socket ID:", senderSocketId);
     if (receiverSocketId) {
-      // Emit the new message to the receiver's socket
       io.to(receiverSocketId).emit("newMessage", newMessage);
+      console.log(`Emitted newMessage to receiver ${receiver_id}:`, newMessage);
+    } else {
+      console.log(`Receiver ${receiver_id} not connected`);
     }
-
-    return res.status(200).json({ message: "Message sent successfully" });
+    if (senderSocketId) {
+      io.to(senderSocketId).emit("newMessage", newMessage);
+      console.log(`Emitted newMessage to sender ${senderId}:`, newMessage);
+    } else {
+      console.log(`Sender ${senderId} not connected`);
+    }
+    return res.status(200).json(newMessage);
   } catch (error) {
     console.log("Error in sending Message controller:", error.message);
     return res.status(500).json({ error: "Internal server error" });

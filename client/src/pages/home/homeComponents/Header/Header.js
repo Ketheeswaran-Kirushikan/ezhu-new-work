@@ -6,14 +6,11 @@ import Button from "../../../../components/button/Button";
 import person from "../../../../assets/Group 29.png";
 import { Link } from "react-router-dom";
 import SignPop from "../../../../components/signupPop/SignPop";
-
 const Header = () => {
   const [showPopup, setShowPopup] = useState(false);
-
   const togglePopup = () => {
     setShowPopup(!showPopup);
   };
-
   return (
     <section className="header-container" id="header-section">
       <div className="container-fluid top mb-5">
@@ -40,5 +37,4 @@ const Header = () => {
     </section>
   );
 };
-
 export default Header;

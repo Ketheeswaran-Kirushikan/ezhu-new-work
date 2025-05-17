@@ -6,7 +6,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://ezhu-grow-together.vercel.app",
+    origin: "http://localhost:3000",
     credentials: true,
     methods: ["GET", "POST"],
   },
@@ -33,8 +33,9 @@ io.on("connection", (socket) => {
       userSocketMap[userId] = socket.id;
     }
 
-    // Emit to the specific user only
-    socket.emit("getAllUsers", Object.keys(userSocketMap));
+    // Emit to all connected clients
+    io.emit("getAllUsers", Object.keys(userSocketMap));
+    console.log("Emitted getAllUsers to all clients:", Object.keys(userSocketMap));
   }
 
   socket.on("disconnect", () => {
@@ -45,8 +46,13 @@ io.on("connection", (socket) => {
     if (userId) {
       delete userSocketMap[userId];
 
-      // Emit to all connected clients except the disconnected user
-      socket.broadcast.emit("getAllUsers", Object.keys(userSocketMap));
+      // Emit to all connected clients
+      io.emit("disconnectUser", userId);
+      console.log("Emitted disconnectUser to all clients:", userId);
+
+      // Update all clients with the new list of online users
+      io.emit("getAllUsers", Object.keys(userSocketMap));
+      console.log("Emitted updated getAllUsers to all clients:", Object.keys(userSocketMap));
     }
   });
 });

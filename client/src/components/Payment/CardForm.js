@@ -122,7 +122,7 @@ const CardForm = () => {
                 </div>
                 <div>
                   <StripeCheckout
-                    stripeKey="pk_test_51PIewdRvFH14lKkrE1UJCLDNE1Bu2AQACOqssEzny1YQqepVYOurBblXVBfzevB6wbMuZO1gvbRRl2iesvdwVRie00rznf1eAN"
+                    stripeKey="pk_test_51PIewdRvFH14lKkr1P4TlS0TakanXLH81joX49ezkQjtqCCCBC94pbb4hvHmnwl8hLiVn8ApRNxHbFOZm84TDzsg00QKYgvjcp"
                     token={handleToken}
                     name="Monthly subscription"
                     amount={selectedProduct.price * 100} // Amount in cents

@@ -1,6 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
+
+// Pages
 import Landingpage from "./pages/home/landingpage";
 import Header from "./pages/home/homeComponents/Header/Header";
 import Career from "./pages/home/homeComponents/career/Career";
@@ -16,19 +18,30 @@ import InvestorManagement from "./pages/admin.pages/admin-investors/investormana
 import SkillWorkerProfile from "./pages/userProfile/skillworkerprofile";
 import CardForm from "./components/Payment/CardForm";
 import ProfileEdit from "./components/profilePage/profileEdit/ProfileEdit";
-import { SocketProvider } from "./context/SocketProvider";
+import InvestorNew from "./pages/signup page/investorSignup/InvestorNew";
+import SignupNew from "./pages/signup page/skillWorkerSignup/SignupNew";
+import Settings from "./pages/admin.pages/settings/settings";
+
+// Navs & Features
 import CommunityNav from "./components/profilePage/profileNavbar/communityPage/CommunityNav";
 import SkillWorkersNav from "./components/profilePage/profileNavbar/skilledPage/SkillWorkersNav";
 import BootCampNav from "./components/profilePage/profileNavbar/BootCampPage/BootCampNav";
 import InvestorNav from "./components/profilePage/profileNavbar/investorPage/InvestorNav";
 import Followers from "./components/profilePage/followerView/Followers";
-import InvestorNew from "./pages/signup page/investorSignup/InvestorNew";
-import SignupNew from "./pages/signup page/skillWorkerSignup/SignupNew";
+
+// Chatbot
+import ChatbotWidget from "./components/chatbot/ChatbotWidget";
+
+// Context
+import { SocketProvider } from "./context/SocketProvider";
 
 function App() {
   return (
     <SocketProvider>
       <Router>
+        {/* /Global Chatbot Widget */}
+        <ChatbotWidget />
+
         <Routes>
           <Route path="/" element={<Landingpage />} />
           <Route path="/header" element={<Header />} />
@@ -40,10 +53,7 @@ function App() {
           <Route path="/investor" element={<Investor />} />
           <Route path="/screenpop" element={<ScreenPop />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route
-            path="/skilledworkermanagement"
-            element={<SkilledWorkerDashboard />}
-          />
+          <Route path="/skilledworkermanagement" element={<SkilledWorkerDashboard />} />
           <Route path="/investormanagement" element={<InvestorManagement />} />
           <Route path="/skillworkerprofile" element={<SkillWorkerProfile />} />
           <Route path="/cardForm/:userId/:role" element={<CardForm />} />
@@ -55,6 +65,7 @@ function App() {
           <Route path="/followers" element={<Followers />} />
           <Route path="/investorNew" element={<InvestorNew />} />
           <Route path="/signupNew" element={<SignupNew />} />
+          <Route path ="/settings" element={<Settings/>}/>
         </Routes>
       </Router>
     </SocketProvider>

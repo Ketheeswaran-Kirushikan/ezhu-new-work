@@ -1,4 +1,3 @@
-const backendUrl =
-  process.env.REACT_APP_BACKEND_URL || "https://ezhu-server.onrender.com";
+const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:3002';
 
 export default backendUrl;

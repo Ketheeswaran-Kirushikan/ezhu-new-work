@@ -1,6 +1,7 @@
-import backendUrl from "./Config";
 import React, { createContext, useEffect, useState } from "react";
 import socketIOClient from "socket.io-client";
+import backendUrl from "../context/Config";
+
 const SocketContext = createContext();
 
 const SocketProvider = ({ children }) => {
@@ -10,7 +11,6 @@ const SocketProvider = ({ children }) => {
   const userId = localStorage.getItem("userId"); // Get userId from localStorage
 
   useEffect(() => {
-    console.log("User ID:", userId); // Log userId for testing
 
     const newSocket = socketIOClient(backendUrl, {
       withCredentials: true,
@@ -20,22 +20,23 @@ const SocketProvider = ({ children }) => {
     setSocket(newSocket);
 
     newSocket.on("connect", () => {
-      console.log("Socket connected:", newSocket.id);
+    });
+
+    newSocket.on("connect_error", (error) => {
     });
 
     newSocket.on("disconnect", () => {
-      console.log("Socket disconnected:", newSocket.id);
+
     });
 
     return () => {
       newSocket.disconnect();
     };
-  }, [userId]); // Include userId in the dependency array
+  }, [userId]);
 
   useEffect(() => {
     if (socket) {
       socket.on("getAllUsers", (users) => {
-        console.log("All users:", users);
         setOnlineUsers(users);
         const newUserSocketMap = {};
         users.forEach((userId) => {
@@ -44,9 +45,9 @@ const SocketProvider = ({ children }) => {
         setUserSocketMap(newUserSocketMap);
       });
 
-      socket.on("disconnectUser", (userId) => {
+      socket.on("disconnectUser", (disconnectedUserId) => {
         const newUserSocketMap = { ...userSocketMap };
-        delete newUserSocketMap[userId];
+        delete newUserSocketMap[disconnectedUserId];
         setOnlineUsers(Object.keys(newUserSocketMap));
         setUserSocketMap(newUserSocketMap);
       });
@@ -54,8 +55,6 @@ const SocketProvider = ({ children }) => {
   }, [socket, userSocketMap]);
 
   useEffect(() => {
-    console.log("Online Users:", onlineUsers);
-    console.log("User Socket Map:", userSocketMap);
   }, [onlineUsers, userSocketMap]);
 
   return (

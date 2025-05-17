@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./investorNew.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RegisterPop from "../../../components/registerpop/RegisterPop";
 import Input from "../../../components/input/Input";
 import DatePickerComponent from "../../../components/DatePicker/DatePicker";
 import backendUrl from "../../../context/Config";
 
 const InvestorNew = () => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [showPopup, setShowPopup] = useState(false);
   const [formErrors, setFormErrors] = useState({});
@@ -24,17 +25,18 @@ const InvestorNew = () => {
     images: null,
   });
 
+  // Log showPopup changes for debugging
+  useEffect(() => {
+    console.log("showPopup:", showPopup);
+  }, [showPopup]);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-
-    // Clear the error when the input changes
     setFormErrors({ ...formErrors, [e.target.name]: "" });
   };
 
   const handleDateChange = (date) => {
     setFormData({ ...formData, birthDate: date });
-
-    // Clear the error when the input changes
     setFormErrors({ ...formErrors, birthDate: "" });
   };
 
@@ -108,12 +110,14 @@ const InvestorNew = () => {
     }
 
     setFormErrors(errors);
-
     return Object.keys(errors).length === 0;
   };
 
   const togglePopup = () => {
-    setShowPopup(!showPopup);
+    setShowPopup((prev) => {
+      if (prev) navigate("/"); // Navigate to homepage when closing popup
+      return !prev;
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -122,21 +126,25 @@ const InvestorNew = () => {
     if (!validateForm()) {
       return;
     }
+
     const userData = new FormData();
     for (const key in formData) {
       userData.append(key, formData[key]);
     }
 
     try {
-      await axios.post(
-        `${backendUrl}/Ezhu/Investor/Request/createInvestorRequest `,
+      const response = await axios.post(
+        `${backendUrl}/Ezhu/Investor/Request/createInvestorRequest`,
         userData
       );
-      togglePopup();
-      alert("User created successfully");
+      console.log("Submission successful:", response.data);
+      setShowPopup(true); // Directly set to true for clarity
     } catch (error) {
-      console.error("Error creating user:", error);
-      alert("User creation failed");
+      console.error("Submission error:", error.response || error);
+      setFormErrors({
+        ...formErrors,
+        submit: "User creation failed. Please try again.",
+      });
     }
   };
 
@@ -156,13 +164,12 @@ const InvestorNew = () => {
         <div className="card-ms col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2">
           <div className="px-0 pt-4 pb-0 mt-3 mb-3">
             <h2>
-              <strong>Sign Up Your User Account</strong>
+              <strong>Sign Up Your Company Account</strong>
             </h2>
             <p>Fill all form fields to go to the next step</p>
             <div className="">
               <div className="card-ms col-md-12 mx-0">
                 <form id="msform" onSubmit={handleSubmit}>
-                  {/* Progressbar */}
                   <ul id="progressbar">
                     <li
                       className={currentStep === 1 ? "active" : ""}
@@ -178,7 +185,6 @@ const InvestorNew = () => {
                     </li>
                   </ul>
 
-                  {/* Fieldsets */}
                   {currentStep === 1 && (
                     <fieldset>
                       <div className="form-card">
@@ -400,7 +406,7 @@ const InvestorNew = () => {
                         <input
                           type="button"
                           name="previous"
-                          className=" action-button-previous"
+                          className="action-button-previous"
                           value="Previous"
                           onClick={handlePrevious}
                         />
@@ -412,6 +418,11 @@ const InvestorNew = () => {
                         />
                       </div>
                     </fieldset>
+                  )}
+                  {formErrors.submit && (
+                    <div className="error-message-handle-user">
+                      {formErrors.submit}
+                    </div>
                   )}
                   <div className="d-flex justify-content-center align-items-center mb-2 mt-4">
                     <p className="mb-0 me-2">Already have an account?</p>
@@ -426,7 +437,7 @@ const InvestorNew = () => {
                 </form>
                 {showPopup && (
                   <RegisterPop
-                    showPopup={showPopup}
+                    isOpen={showPopup}
                     togglePopup={togglePopup}
                   />
                 )}

@@ -11,14 +11,22 @@ import {
   faBell,
   faMessage,
   faBars,
+  faSignOutAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import Input from "../../../components/input/Input";
 import Button from "../../../components/button/Button";
 import profile from "../../../assets/Group 29.png";
 import InvestorTable from "../../../components/Admin/skillworkertable/Investortable";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const investormanagment = () => {
+const InvestorManagement = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    navigate("/");
+  };
+
   return (
     <div>
       <input type="checkbox" id="nav-toggle" className="dashboard-toggle" />
@@ -79,11 +87,17 @@ const investormanagment = () => {
           <div className="dashboard-nav-icon">
             <Button icon={faMessage} className="search-button dashboard-icon" />
           </div>
-          <div className="user-wrapper">
+          <div className="user-wrapper d-flex align-items-center">
             <div>
-              <h4 className="text-white">Kirushikan</h4>
+              <h4 className="text-white me-2">Kirushikan</h4>
             </div>
-            <img src={profile} width="40px" height="40px" alt="profile-img" />
+            <img src={profile} width="40px" height="40px" alt="profile-img" className="me-2" />
+            <Button
+              icon={faSignOutAlt}
+              className="search-button dashboard-icon"
+              onClick={handleLogout}
+              title="Logout"
+            />
           </div>
         </header>
 
@@ -95,8 +109,9 @@ const investormanagment = () => {
           </div>
           <div className="row">
             <div className="container-fluid">
-              <div className="row"></div>
-              <InvestorTable />
+              <div className="row">
+                <InvestorTable />
+              </div>
             </div>
           </div>
         </main>
@@ -105,4 +120,4 @@ const investormanagment = () => {
   );
 };
 
-export default investormanagment;
+export default InvestorManagement;

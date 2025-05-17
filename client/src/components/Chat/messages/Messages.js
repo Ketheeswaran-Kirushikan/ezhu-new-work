@@ -5,7 +5,6 @@ import Message from "./Message";
 import "./Message.css";
 import useListenMessages from "../../hooks/useListenMessages";
 import backendUrl from "../../../context/Config";
-
 const Messages = ({ token, _id, images, user_name }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -29,7 +28,7 @@ const Messages = ({ token, _id, images, user_name }) => {
         if (data.error) {
           throw new Error(data.error);
         }
-        setMessages(data);
+        setMessages(data); // Initial fetch
       } catch (error) {
         console.error("Error fetching messages:", error);
         setError(error);

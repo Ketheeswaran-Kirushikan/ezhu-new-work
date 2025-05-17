@@ -36,6 +36,9 @@
 .upload-container {
   position: relative;
 }
+.form-control{
+  width: 1180px;
+}
 
 .custom-icon {
   font-size: 1.5rem;

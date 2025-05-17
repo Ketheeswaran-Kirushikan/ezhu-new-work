@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./dashboard.css";
 import logo from "../../../assets/file(2).png";
@@ -12,6 +12,7 @@ import {
   faMessage,
   faBars,
   faMoneyBill,
+  faSignOutAlt, // Added for logout icon
 } from "@fortawesome/free-solid-svg-icons";
 import Input from "../../../components/input/Input";
 import Button from "../../../components/button/Button";
@@ -19,9 +20,36 @@ import profile from "../../../assets/Group 29.png";
 import Card from "../../../components/Admin/card/Card";
 import Table from "../../../components/Admin/table/Table";
 import InvestorTableData from "../../../components/Admin/table/InvestorTableData";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Added useNavigate
+import axios from "axios";
+import backendUrl from "../../../context/Config";
 
 const Dashboard = () => {
+  const [skilledCount, setSkilledCount] = useState(0);
+  const [investorCount, setInvestorCount] = useState(0);
+  const navigate = useNavigate(); // Initialize navigate
+
+  useEffect(() => {
+    // Fetch skilled worker requests count
+    axios
+      .get(`${backendUrl}/Ezhu/Skillworker/Request/findSkilledPersonRequest`)
+      .then((response) => setSkilledCount(response.data.length))
+      .catch((err) => console.log("Error fetching skilled requests:", err));
+
+    // Fetch investor requests count
+    axios
+      .get(`${backendUrl}/Ezhu/Investor/Request/findInvestorRequest`)
+      .then((response) => setInvestorCount(response.data.length))
+      .catch((err) => console.log("Error fetching investor requests:", err));
+  }, []);
+
+  const handleLogout = () => {
+    // Clear authentication data (e.g., token)
+    localStorage.removeItem("authToken"); // Adjust based on your auth setup
+    // Navigate to homepage
+    navigate("/");
+  };
+
   return (
     <div>
       <input type="checkbox" id="nav-toggle" className="dashboard-toggle" />
@@ -82,11 +110,17 @@ const Dashboard = () => {
           <div className="dashboard-nav-icon">
             <Button icon={faMessage} className="search-button dashboard-icon" />
           </div>
-          <div className="user-wrapper">
+          <div className="user-wrapper d-flex align-items-center">
             <div>
-              <h4 className="text-white">Kirushikan</h4>
+              <h4 className="text-white me-2">Kirushikan</h4>
             </div>
-            <img src={profile} width="40px" height="40px" alt="profile-img" />
+            <img src={profile} width="40px" height="40px" alt="profile-img" className="me-2" />
+            <Button
+              icon={faSignOutAlt}
+              className="search-button dashboard-icon"
+              onClick={handleLogout}
+              title="Logout"
+            />
           </div>
         </header>
 
@@ -104,22 +138,26 @@ const Dashboard = () => {
               <div className="row dashboard-card-container">
                 <Card
                   icon={faMoneyBill}
-                  title={"Today earnings:"}
+                  title="Today earnings:"
+                  value="$500"
                   className="dasboard-moneybill"
                 />
                 <Card
                   icon={faUser}
-                  title={"Skilled persons requests:"}
+                  title="Skilled persons requests:"
+                  value={skilledCount}
                   className="dasboard-moneybill"
                 />
                 <Card
                   icon={faUser}
-                  title={"Investor requests:"}
+                  title="Investor requests:"
+                  value={investorCount}
                   className="dasboard-moneybill"
                 />
                 <Card
                   icon={faMoneyBill}
-                  title={"Total income:"}
+                  title="Total income:"
+                  value="$10,000"
                   className="dasboard-moneybill"
                 />
               </div>

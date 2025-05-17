@@ -6,44 +6,43 @@ import "./chatinput.css";
 import useConversation from "../../../store/useConversation";
 import axios from "axios";
 import backendUrl from "../../../context/Config";
-
 const ChatMessageInput = ({ token, _id }) => {
   const [loading, setLoading] = useState(false);
-  const { selectedConversation, setMessages, messages } = useConversation();
+  const { selectedConversation } = useConversation();
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitted message:", message);
+    console.log("Submitting message:", message);
+    console.log("Selected conversation:", selectedConversation);
 
-    const sendMessage = async () => {
-      setLoading(true);
-      try {
-        const res = await axios.post(
-          `${backendUrl}/Ezhu/chat/sendmessage/${selectedConversation._id}`,
-          { message },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+    if (!message.trim()) return; // Prevent sending empty messages
+    if (!selectedConversation?._id) {
+      console.error("No conversation selected");
+      return;
+    }
 
-        console.log("Response:", res.data);
+    setLoading(true);
+    try {
+      const res = await axios.post(
+        `${backendUrl}/Ezhu/chat/sendmessage/${selectedConversation._id}`,
+        { message },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-        // Update local messages state with new message details
-        setMessages([...messages, res.data]);
-      } catch (error) {
-        console.error("Error sending message:", error);
-        console.error("Response data:", error.response?.data);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    await sendMessage();
-    setMessage(""); // Clear message after sending
+      console.log("Message sent successfully:", res.data);
+    } catch (error) {
+      console.error("Error sending message:", error);
+      console.error("Response data:", error.response?.data);
+    } finally {
+      setLoading(false);
+      setMessage("");
+    }
   };
 
   return (

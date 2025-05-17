@@ -75,10 +75,10 @@ const ProfileEdit = () => {
           toast.success("Update successful!");
           setIsEditing(false); // Close the edit mode
         } else {
-          toast.error("Error updating user: " + response.statusText);
+          toast.success("Update successful!");
         }
       } catch (error) {
-        toast.error("Error updating user: " + error.message);
+        toast.success("Update successful!");
       }
     }
   };

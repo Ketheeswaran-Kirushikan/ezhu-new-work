@@ -10,7 +10,6 @@ import Checkbox from "@mui/material/Checkbox";
 import "./loginpage.css";
 import logo from "../../assets/ezhu-high-resolution-logo-transparent.png";
 import backendUrl from "../../context/Config";
-
 const LoginPage = () => {
   const [checked, setChecked] = useState(true);
   const [email, setEmail] = useState("");
@@ -18,7 +17,6 @@ const LoginPage = () => {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
   const socket = useContext(SocketContext);
-
   useEffect(() => {
     if (socket && socket.on) {
       // Check if socket is defined and has the on method
@@ -27,19 +25,15 @@ const LoginPage = () => {
       });
     }
   }, [socket]);
-
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
-
   const notify = (message, type) => {
     toast[type](message);
   };
-
   const errorNotify = () => {
     notify("Login unsuccessful", "error");
   };
-
   const login = async () => {
     try {
       const response = await fetch(`${backendUrl}/Ezhu/login`, {
@@ -51,16 +45,12 @@ const LoginPage = () => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-
       const data = await response.json();
       const { userType, user, token } = data;
-
       setUserData(user);
-
       // Store user ID and token in localStorage
       localStorage.setItem("userId", user._id);
       localStorage.setItem("token", token);
-
       if (socket && socket.emit) {
         // Check if socket is defined and has the emit method
         socket.emit("user_logged_in", { userId: user._id });
@@ -114,7 +104,6 @@ const LoginPage = () => {
                         />
                       </div>
                     </div>
-
                     <div className="form-outline form-white mb-2">
                       <div className="label-container">
                         <label htmlFor="inputPassword" className="label-set">
@@ -131,7 +120,6 @@ const LoginPage = () => {
                         />
                       </div>
                     </div>
-
                     <p className="small text-end mt-0">
                       <a href="#!" className="text-secondary">
                         Forgot password?

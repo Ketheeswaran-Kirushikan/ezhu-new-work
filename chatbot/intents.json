@@ -1,0 +1,191 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": ["Hi", "Hello", "Hey", "Is anyone there?", "Good day", "Greetings"],
+      "responses": ["Hello! Welcome to Ezhu.", "Hi there, how can I assist you on Ezhu?", "Greetings! How may I help you?"],
+      "context_set": ""
+    },
+    {
+      "tag": "goodbye",
+      "patterns": ["Goodbye", "See you later", "Bye", "I am leaving", "Talk to you soon"],
+      "responses": ["Goodbye! Thanks for visiting Ezhu.", "See you again on Ezhu!", "Take care and come back soon!"],
+      "context_set": ""
+    },
+    {
+      "tag": "about_ezhu",
+      "patterns": ["What is Ezhu?", "Tell me about Ezhu", "Can you explain Ezhu?", "What does Ezhu do?"],
+      "responses": [
+        "Ezhu is a platform that connects skilled workers with investors and users to create opportunities, collaboration, and growth in Sri Lanka."
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "register",
+      "patterns": ["How do I register?", "Sign me up", "Create an account", "I want to join", "Register me on Ezhu"],
+      "responses": ["To register, visit our signup page and choose your role: User, Skilled Worker, or Investor."],
+      "context_set": ""
+    },
+    {
+      "tag": "investor_help",
+      "patterns": ["I am an investor", "How can I invest?", "Investor info", "I want to fund a project"],
+      "responses": [
+        "As an investor, you can explore skilled worker portfolios, view proposals, and connect directly through Ezhu to fund or support initiatives."
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "skilled_worker",
+      "patterns": ["I'm a skilled worker", "I have skills", "Can I join as a worker?", "How do skilled workers benefit?"],
+      "responses": [
+        "Skilled workers can create profiles, showcase their work, and connect with investors or users who need their skills."
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "user_help",
+      "patterns": ["I need a service", "How can I hire someone?", "Looking for help", "Find a worker"],
+      "responses": [
+        "You can search for skilled workers based on category or skill, and message them directly through the platform."
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "features",
+      "patterns": ["What are Ezhu's features?", "What can I do here?", "Services on Ezhu", "Features of Ezhu"],
+      "responses": [
+        "Ezhu offers user profiles, chat, proposal submission, investment management, and a social feed to showcase work and collaboration."
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "security",
+      "patterns": ["Is Ezhu secure?", "How do you protect data?", "Is my info safe?", "Data privacy"],
+      "responses": [
+        "Ezhu follows standard security protocols and encrypts personal data to ensure safe and trusted communication between users."
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "project_feed",
+      "patterns": ["What is the feed?", "Show me projects", "How to post updates?", "Can I share my work?"],
+      "responses": [
+        "The Feed allows skilled workers to post updates, share project progress, and connect with investors and users through their work stories."
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "admin_help",
+      "patterns": ["What does the admin do?", "Who is the admin?", "Admin features?", "Report a problem"],
+      "responses": [
+        "Admins manage users, moderate content, handle disputes, and make sure Ezhu is running smoothly for everyone."
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "messages",
+      "patterns": ["How can I message?", "Where are my chats?", "I want to contact someone", "Send a message"],
+      "responses": [
+        "You can use the built-in messaging system to connect with users, skilled workers, or investors once you're logged in."
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "verification",
+      "patterns": ["Is verification required?", "How to get verified?", "Verify my profile", "Why verify?"],
+      "responses": [
+        "Verification builds trust! Upload your documents or ID from the profile settings, and we’ll review and approve your status."
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "payments",
+      "patterns": ["How do payments work?", "Can I pay online?", "Is payment safe?", "Fund transfer"],
+      "responses": [
+        "Ezhu supports secure payments through Stripe. Users and investors can send and receive funds directly in the platform."
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "technical_support",
+      "patterns": ["I have a bug", "The app is not working", "Issue with my profile", "Help! Something is broken"],
+      "responses": [
+        "Please contact our support team or use the Report Issue option in your dashboard. We'll help you out as fast as possible!"
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "forgot_password",
+      "patterns": ["I forgot my password", "Reset password", "How do I change my password?", "Password issue"],
+      "responses": [
+        "Click on 'Forgot Password' on the login page and follow the instructions to reset your password securely."
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "language_support",
+      "patterns": ["Is Tamil supported?", "Sinhala interface?", "Language options?", "Can I use it in Sinhala?"],
+      "responses": [
+        "We are working on multi-language support including Tamil and Sinhala to make Ezhu more inclusive!"
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "mobile_app",
+      "patterns": ["Do you have a mobile app?", "Ezhu app", "Download Ezhu app", "Android or iOS version"],
+      "responses": [
+        "Our mobile app is under development and will be available soon on the Play Store and App Store!"
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "terms_policy",
+      "patterns": ["Where is the privacy policy?", "Terms and conditions?", "Data usage", "Legal information"],
+      "responses": [
+        "You can find our Privacy Policy and Terms of Use at the bottom of the homepage or in your profile settings."
+      ],
+      "context_set": ""
+    },
+    {
+      "tag": "account_deletion",
+      "patterns": ["How do I delete my account?", "Remove my profile", "Delete my Ezhu account", "I want to leave Ezhu"],
+      "responses": ["You can delete your account by going to your profile settings and choosing the 'Delete Account' option. Be careful—this action is permanent."]
+    },
+    {
+      "tag": "collaboration",
+      "patterns": ["Can I collaborate with others?", "Looking for team members", "Work together on a project", "Find collaborators"],
+      "responses": ["Yes! Ezhu allows skilled workers, users, and investors to collaborate through messaging, proposal sharing, and project feeds."]
+    },
+    {
+      "tag": "proposal_submission",
+      "patterns": ["How to submit a proposal?", "Send project proposal", "Submit my idea", "Where to submit proposal?"],
+      "responses": ["You can submit a proposal from your dashboard under the 'Proposals' tab. Make sure to include detailed info and documentation!"]
+    },
+    {
+      "tag": "profile_edit",
+      "patterns": ["How can I update my profile?", "Edit my details", "Change my information", "Update profile photo"],
+      "responses": ["Go to your profile page and click on 'Edit Profile' to update your name, bio, skills, image, and other details."]
+    },
+    {
+      "tag": "notification_settings",
+      "patterns": ["How do I manage notifications?", "Stop notifications", "Change email alerts", "Notification preferences"],
+      "responses": ["To manage your notifications, go to settings > notifications and toggle your preferences for email or in-app alerts."]
+    },
+    {
+      "tag": "platform_goals",
+      "patterns": ["What is Ezhu's mission?", "Why was Ezhu created?", "Ezhu's vision", "Purpose of Ezhu"],
+      "responses": ["Ezhu was created to empower skilled workers and promote investment in local talent, driving inclusive growth in Sri Lanka."]
+    },
+    {
+      "tag": "support_contact",
+      "patterns": ["How to contact support?", "Talk to customer care", "Reach Ezhu support", "Help center"],
+      "responses": ["You can contact Ezhu support via the 'Help & Support' section in the dashboard or email us at support@ezhu.lk."]
+    },
+    {
+      "tag": "trusted_badge",
+      "patterns": ["What is a trusted badge?", "How to earn a badge?", "Verified badge meaning", "Trusted user on Ezhu"],
+      "responses": ["The trusted badge is awarded to active, verified users with a great track record. Earn it by being reliable and engaging!"]
+    }
+    
+  ]
+}

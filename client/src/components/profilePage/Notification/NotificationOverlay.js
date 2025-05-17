@@ -15,24 +15,24 @@ import backendUrl from "../../../context/Config";
 function NotificationOverlay({ userData, token }) {
   const [persons, setPersons] = useState([]);
 
-  useEffect(() => {
-    const fetchPersons = async () => {
-      try {
-        const response = await axios.get(
-          `${backendUrl}/Ezhu/follow/followersRequests/${userData._id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setPersons(response.data);
-        console.log("Fetched persons:", response.data);
-      } catch (err) {
-        console.log("Error fetching data:", err.message);
-      }
-    };
+  const fetchPersons = async () => {
+    try {
+      const response = await axios.get(
+        `${backendUrl}/Ezhu/follow/followersRequests/${userData._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setPersons(response.data);
+      console.log("Fetched persons:", response.data);
+    } catch (err) {
+      console.log("Error fetching data:", err.message);
+    }
+  };
 
+  useEffect(() => {
     fetchPersons();
   }, [userData._id, token]);
 
@@ -48,15 +48,7 @@ function NotificationOverlay({ userData, token }) {
         }
       );
       console.log("Follow Approved:", response.data);
-
-      // Update the local state
-      setPersons((prevPersons) =>
-        prevPersons.map((person) =>
-          person._id === personId
-            ? { ...person, followRequest: false, followers: true }
-            : person
-        )
-      );
+      await fetchPersons();
     } catch (err) {
       console.log("Error approving follow request:", err.message);
     }
@@ -73,15 +65,7 @@ function NotificationOverlay({ userData, token }) {
         }
       );
       console.log("Follow Delete:", response.data);
-
-      // Update the local state
-      setPersons((prevPersons) =>
-        prevPersons.map((person) =>
-          person._id === personId
-            ? { ...person, followRequest: false, followers: true }
-            : person
-        )
-      );
+      await fetchPersons();
     } catch (err) {
       console.log("Error deleting follow request:", err.message);
     }
@@ -144,6 +128,8 @@ function NotificationOverlay({ userData, token }) {
             </Popover.Body>
           </Popover>
         }
+        rootClose
+        rootCloseEvent="click" // Explicitly set to close on click outside
       >
         <span>
           <FontAwesomeIcon icon={faBell} />

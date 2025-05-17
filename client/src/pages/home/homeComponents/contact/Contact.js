@@ -1,31 +1,37 @@
-import React, { useRef } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Input from "../../../../components/input/Input";
-import "./Contact.css";
-import Button from "../../../../components/button/Button";
-import emailjs from "@emailjs/browser";
+import React, { useRef, useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './Contact.css';
+import Input from '../../../../components/input/Input';
+import Button from '../../../../components/button/Button';
+import emailjs from '@emailjs/browser';
+
 export const Contact = () => {
   const form = useRef();
+  const [formStatus, setFormStatus] = useState(null); // State for success/error messages
 
   const sendEmail = (e) => {
     e.preventDefault();
+    setFormStatus(null); // Reset status before sending
 
     emailjs
-      .sendForm("service_ivmt9ik", "template_8gm5ava", form.current, {
-        publicKey: "vdpwya80aNuLFsXGx",
+      .sendForm('service_ivmt9ik', 'template_8gm5ava', form.current, {
+        publicKey: 'vdpwya80aNuLFsXGx',
       })
       .then(
         () => {
-          console.log("SUCCESS!");
+          console.log('SUCCESS!');
+          setFormStatus({ type: 'success', message: 'Message sent successfully!' });
+          form.current.reset(); // Clear form after success
         },
         (error) => {
-          console.log("FAILED...", error.text);
+          console.log('FAILED...', error.text);
+          setFormStatus({ type: 'error', message: 'Failed to send message. Please try again.' });
         }
       );
   };
 
   return (
-    <section className="contact">
+    <section className="contact position-relative" style={{ minHeight: '100vh' }}>
       <div className="container">
         <h1 className="contact-text" id="contact-section">
           Contact Us
@@ -52,7 +58,7 @@ export const Contact = () => {
               </span>
               <span className="contact-secondary">
                 <h2>Address</h2>
-                <p>vavuniya, Srilanka.</p>
+                <p>Vavuniya, Sri Lanka</p>
               </span>
             </div>
           </div>
@@ -84,6 +90,7 @@ export const Contact = () => {
                   rows="5"
                   name="message"
                   required
+                  style={{ width: "580px" }} // Fixed syntax
                 ></textarea>
               </div>
               <div>
@@ -93,6 +100,15 @@ export const Contact = () => {
                   type="submit"
                 />
               </div>
+              {formStatus && (
+                <div
+                  className={`mt-3 text-center ${
+                    formStatus.type === 'success' ? 'text-success' : 'text-danger'
+                  }`}
+                >
+                  {formStatus.message}
+                </div>
+              )}
             </form>
           </div>
         </div>

@@ -5,7 +5,6 @@ import Input from "../../../components/input/Input";
 import { Link } from "react-router-dom";
 import RegisterPop from "../../../components/registerpop/RegisterPop";
 import backendUrl from "../../../context/Config";
-
 const Signup = () => {
   const [formErrors, setFormErrors] = useState({});
   const [showPopup, setShowPopup] = useState(false);
@@ -22,21 +21,17 @@ const Signup = () => {
     images: null,
     referenceNumbers: "",
   });
-
   const togglePopup = () => {
     setShowPopup(!showPopup);
   };
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-
     // Clear the error when the input changes
     setFormErrors({ ...formErrors, [e.target.name]: "" });
   };
-
   const handleImageChange = (e) => {
     setFormData({ ...formData, images: e.target.files[0] });
   };
-
   const validateForm = () => {
     const {
       first_name,
@@ -51,9 +46,7 @@ const Signup = () => {
       referenceNumbers,
     } = formData;
     const errors = {};
-
     // Check for empty inputs
-
     if (!first_name) {
       errors.first_name = "First name is required.";
     }
@@ -84,7 +77,6 @@ const Signup = () => {
     if (!referenceNumbers) {
       errors.referenceNumbers = "Reference Numbers are required.";
     }
-
     // firstname and lastname starting with a capital letter
     if (!errors.first_name && !/^[A-Z]/.test(first_name)) {
       errors.first_name = "First name should start with a capital letter.";
@@ -114,14 +106,11 @@ const Signup = () => {
     if (!isNaN(age) && age < 18) {
       errors.birthDate = "Age should be greater than 18.";
     }
-
     setFormErrors(errors);
-
     return Object.keys(errors).length === 0;
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!validateForm) {
       return;
     }
@@ -129,7 +118,6 @@ const Signup = () => {
     for (const key in formData) {
       userData.append(key, formData[key]);
     }
-
     try {
       await axios.post(
         `${backendUrl}/Ezhu/Skillworker/Request/createSkilledPersonRequest`,
@@ -141,7 +129,6 @@ const Signup = () => {
       alert("User creation failed");
     }
   };
-
   return (
     <section className="vh-100 gradient">
       <div className="container-fluid py-5 h-100">

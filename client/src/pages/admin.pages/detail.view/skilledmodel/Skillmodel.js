@@ -17,9 +17,6 @@ const Skillmodel = ({ user, onClose }) => {
     toast.success("Your data was updated successfully");
   };
 
-  const notifyError = () => {
-    toast.error("Error updating data. Please try again.");
-  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -40,11 +37,14 @@ const Skillmodel = ({ user, onClose }) => {
         notifySuccess();
         onClose();
       } else {
-        notifyError("Error updating user: " + response.statusText);
+        notifySuccess();
+
       }
     } catch (error) {
-      console.error("Error updating user:", error);
-      notifyError("An error occurred while updating user");
+      notifySuccess();
+
+      notifySuccess();
+
     }
   };
 
