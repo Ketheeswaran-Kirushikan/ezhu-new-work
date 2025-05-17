@@ -6,7 +6,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://ezhu-new-work.vercel.app/",
+    origin: "https://ezhu-new-work.vercel.app",
     credentials: true,
     methods: ["GET", "POST"],
   },

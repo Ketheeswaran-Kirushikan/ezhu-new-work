@@ -23,7 +23,7 @@ const ChatbotWidget = () => {
 
     try {
       // Use the correct backend URL (update based on Flask server IP)
-      const url = `${process.env.REACT_APP_CHATBOT_URL || 'exquisite-unity-production.up.railway.app'}/handle_message`;
+      const url = `${process.env.REACT_APP_CHATBOT_URL || 'https://exquisite-unity-production.up.railway.app'}/handle_message`;
       console.log('Sending request to:', url, 'REACT_APP_CHATBOT_URL:', process.env.REACT_APP_CHATBOT_URL);
       
       const response = await fetch(url, {
