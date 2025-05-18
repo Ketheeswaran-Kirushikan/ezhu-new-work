@@ -3,10 +3,9 @@ import random
 import pickle
 import numpy as np
 import nltk
-nltk.download('punkt', quiet=True)
 from nltk.stem import WordNetLemmatizer
 from tensorflow.keras.models import load_model
-nltk.download('punkt')  # ✅ Add this line to download the tokenizer model
+
 lemmatizer = WordNetLemmatizer()
 words = pickle.load(open('model/words.pkl', 'rb'))
 classes = pickle.load(open('model/classes.pkl', 'rb'))

@@ -11,7 +11,7 @@ intents = json.load(open('model/intents.json'))
 words = pickle.load(open('model/words.pkl', 'rb'))
 classes = pickle.load(open('model/classes.pkl', 'rb'))
 model = load_model('model/chatbot_model.keras')
-nltk.download('punkt')  # ✅ Add this line to download the tokenizer model
+
 def clean_up_sentence(sentence):
     sentence_words = nltk.word_tokenize(sentence)
     sentence_words = [lemmatizer.lemmatize(word.lower()) for word in sentence_words]
