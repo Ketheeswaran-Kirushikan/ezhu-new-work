@@ -2,7 +2,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from utils import get_response, predict_class
 app = Flask(__name__)
-CORS(app)  # Enable CORS to allow requests from frontend
+CORS(app, resources={r"/*": {"origins": "https://ezhu-new-work.vercel.app"}})
+
 @app.route('/handle_message', methods=['POST'])
 def handle_message():
     try:
