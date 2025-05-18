@@ -63,9 +63,7 @@ const createUser = async (req, res) => {
 };
 
 const sendWelcomeEmail = async (req, res) => {
-  const { id } = req.params; // Correctly extract _id from req.params
-  console.log(id); // Check if _id is being logged correctly
-
+  const { id, role } = req.params;
   try {
     const user = await investors.findById(id);
     if (!user) {
@@ -76,8 +74,8 @@ const sendWelcomeEmail = async (req, res) => {
       to: user.email,
       from: "kirushikanketheeswaran@gmail.com",
       subject: "Welcome to Ezhu",
-      text: `Hello ${user.first_name},\n\nYour account has been successfully created.\nPlease click on the following link to proceed with your account setup: https://ezhu-new-work.vercel.app/cardForm/${user._id}/${user.role}`,
-      html: `<p>Hello ${user.first_name},</p><p>Your account has been successfully created.</p><p><a href="https://ezhu-new-work.vercel.app/cardForm/${user._id}/${user.role}">Click here</a> to proceed with your account setup.</p>`,
+      text: `Hello ${user.first_name},\n\nYour account has been successfully created.\nPlease click on the following link to proceed with your account setup: https://ezhu-new-work.vercel.app/cardForm/${user._id}/${role}`,
+      html: `<p>Hello ${user.first_name},</p><p>Your account has been successfully created.</p><p><a href="https://ezhu-new-work.vercel.app/cardForm/${user._id}/${role}">Click here</a> to proceed with your account setup.</p>`,
     };
 
     console.log("Sending email to:", user.email);
@@ -86,7 +84,7 @@ const sendWelcomeEmail = async (req, res) => {
 
     return res.status(200).json({ message: "Welcome email sent successfully" });
   } catch (error) {
-    console.log(
+    console.error(
       "Error sending welcome email:",
       error.response ? error.response.body : error
     );

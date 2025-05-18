@@ -91,10 +91,11 @@ const findUser = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
 const sendWelcomeEmail = async (req, res) => {
-  const { _id } = req.params;
+  const { id, role } = req.params;
   try {
-    const user = await skilledPerson.findById(_id);
+    const user = await skilledPerson.findById(id);
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -103,15 +104,19 @@ const sendWelcomeEmail = async (req, res) => {
       to: user.email,
       from: "kirushikanketheeswaran@gmail.com",
       subject: "Welcome to Ezhu",
-      text: `Hello ${user.first_name},\n\nYour account has been successfully created.\nPlease click on the following link to proceed with your account setup: https://ezhu-new-work.vercel.app/cardForm/${user._id}`,
-      html: `<p>Hello ${user.first_name},</p><p>Your account has been successfully created.</p><p><a href="https://ezhu-new-work.vercel.app/cardForm/${user._id}/${user.role}">Click here</a> to proceed with your account setup.</p>`,
+      text: `Hello ${user.first_name},\n\nYour account has been successfully created.\nPlease click on the following link to proceed with your account setup: https://ezhu-new-work.vercel.app/cardForm/${user._id}/${role}`,
+      html: `<p>Hello ${user.first_name},</p><p>Your account has been successfully created.</p><p><a href="https://ezhu-new-work.vercel.app/cardForm/${user._id}/${role}">Click here</a> to proceed with your account setup.</p>`,
     };
 
-    await sgMail.send(msg);
-    console.log("Welcome email sent to:", user.email);
+    console.log("Sending email to:", user.email);
+    const response = await sgMail.send(msg);
+    console.log("Email sent:", response);
     return res.status(200).json({ message: "Welcome email sent successfully" });
   } catch (error) {
-    console.log("Error sending welcome email:", error);
+    console.error(
+      "Error sending welcome email:",
+      error.response ? error.response.body : error
+    );
     return res.status(500).json({ error: "Error sending welcome email" });
   }
 };

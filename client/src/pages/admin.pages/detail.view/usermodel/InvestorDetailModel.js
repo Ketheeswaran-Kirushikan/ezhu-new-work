@@ -51,7 +51,7 @@ const InvestorDetailModel = ({ user, onClose }) => {
 
     try {
       const response = await axios.post(
-        `${backendUrl}/Ezhu/Investor/Request/sendMail/${user._id}/${user.role}`
+        `${backendUrl}/Ezhu/Investor/Request/sendMail/${user._id}/${user.role || "investor"}`
       );
 
       if (response.status === 200) {
@@ -110,13 +110,13 @@ const InvestorDetailModel = ({ user, onClose }) => {
                 <b>Registration Number:</b> {user.registrationNumber}
               </p>
               <p>
-                <b>Role:</b> {user.role}
+                <b>Role:</b> {user.role || "investor"}
               </p>
               <p>
                 <b>Created At:</b> {new Date(user.createdAt).toLocaleString()}
               </p>
               <p>
-                <b>Payment:</b> {user.payment.status}
+                <b>Payment:</b> {user.payment?.status || "N/A"}
               </p>
             </div>
             <div className="right-column">
@@ -126,9 +126,7 @@ const InvestorDetailModel = ({ user, onClose }) => {
         </Modal.Body>
         <Modal.Footer className="investorDetailView-modal-footer">
           <Button
-            className={`btn-${
-              emailStatus === "Pending" ? "warning" : "success"
-            }`}
+            className={`btn-${emailStatus === "Pending" ? "warning" : "success"}`}
             onClick={sendMail}
             disabled={emailStatus === "Pending"}
           >

@@ -5,18 +5,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
-import axios from "axios"; // Make sure axios is imported
+import axios from "axios";
 import backendUrl from "../../../../context/Config";
 
 const UserDetailsModal = ({ user, onClose }) => {
-  const [emailStatus, setEmailStatus] = useState("send mail");
+  const [emailStatus, setEmailStatus] = useState("Send Mail");
 
-  const notifySuccess = () => {
-    toast.success("Your data was saved successfully");
+  const notifySuccess = (message = "Your data was saved successfully") => {
+    toast.success(message);
   };
 
-  const notifyError = () => {
-    toast.error("Error saving data. Please try again.");
+  const notifyError = (message = "Error saving data. Please try again.") => {
+    toast.error(message);
   };
 
   const handleSubmit = async (e) => {
@@ -46,20 +46,24 @@ const UserDetailsModal = ({ user, onClose }) => {
 
   const sendMail = async (e) => {
     e.preventDefault();
+    setEmailStatus("Sending...");
+
     try {
       const response = await axios.post(
-        `${backendUrl}/Ezhu/Skillworker/Request/sendMail/${user._id}`
+        `${backendUrl}/Ezhu/Skillworker/Request/sendMail/${user._id}/${user.role || "skilledWorker"}`
       );
 
       if (response.status === 200) {
-        notifySuccess();
-        setEmailStatus("pending");
+        notifySuccess(response.data.message);
+        setEmailStatus("Pending");
       } else {
-        notifyError("Failed to send mail.");
+        notifyError(response.data.error || "Failed to send mail.");
+        setEmailStatus("Send Mail");
       }
     } catch (error) {
       console.error("Error sending mail:", error);
       notifyError("Failed to send mail. Please try again.");
+      setEmailStatus("Send Mail");
     }
   };
 
@@ -99,10 +103,10 @@ const UserDetailsModal = ({ user, onClose }) => {
                 <b>Gender:</b> {user.gender}
               </p>
               <p>
-                <b>Role:</b> {user.role}
+                <b>Role:</b> {user.role || "skilledWorker"}
               </p>
               <p>
-                <b>Skill:</b> {user.skill.join(", ")}
+                <b>Skill:</b> {Array.isArray(user.skill) ? user.skill.join(", ") : user.skill}
               </p>
               <p>
                 <b>District:</b> {user.district}
@@ -111,7 +115,7 @@ const UserDetailsModal = ({ user, onClose }) => {
                 <b>Reference Number:</b> {user.referenceNumbers}
               </p>
               <p>
-                <b>Payment:</b> {user.payment.status}
+                <b>Payment:</b> {user.payment?.status || "N/A"}
               </p>
             </div>
             <div className="right-column">
@@ -120,8 +124,12 @@ const UserDetailsModal = ({ user, onClose }) => {
           </div>
         </Modal.Body>
         <Modal.Footer className="investorDetailView-modal-footer">
-          <Button className="btn-success" onClick={sendMail}>
-            {emailStatus === "pending" ? "Pending" : "Send Mail"}
+          <Button
+            className={`btn-${emailStatus === "Pending" ? "warning" : "success"}`}
+            onClick={sendMail}
+            disabled={emailStatus === "Pending"}
+          >
+            {emailStatus}
           </Button>
           <Button className="btn-primary" onClick={handleSubmit}>
             Save
