@@ -2,10 +2,15 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from utils import get_response, predict_class
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "https://ezhu-new-work.vercel.app"}})
-
-@app.route('/handle_message', methods=['POST'])
+# ✅ Recommended: Allow specific domain
+CORS(app, origins=["https://ezhu-new-work.vercel.app"], supports_credentials=True)
+@app.route('/handle_message', methods=['POST', 'OPTIONS'])
 def handle_message():
+    if request.method == "OPTIONS":
+        # Handle preflight request directly
+        response = app.make_default_options_response()
+        return response
+
     try:
         data = request.get_json()
         print("[REQUEST]:", data)
@@ -29,6 +34,7 @@ def handle_message():
     except Exception as e:
         print(f"[ERROR]: {e}")
         return jsonify({'response': 'Sorry, an error occurred.'}), 500
+
     
 if __name__ == '__main__':
     import os
