@@ -49,8 +49,9 @@ const UserDetailsModal = ({ user, onClose }) => {
     setEmailStatus("Sending...");
 
     try {
+      const role = user.role ? user.role.replace(/\s+/g, '').toLowerCase() : "skilledWorker";
       const response = await axios.post(
-        `${backendUrl}/Ezhu/Skillworker/Request/sendMail/${user._id}/${user.role || "skilledWorker"}`
+        `${backendUrl}/Ezhu/Skillworker/Request/sendMail/${user._id}/${role}`
       );
 
       if (response.status === 200) {
