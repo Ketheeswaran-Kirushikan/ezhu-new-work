@@ -66,6 +66,7 @@ const sendWelcomeEmail = async (req, res) => {
   const { id, role } = req.params;
   try {
     const user = await investors.findById(id);
+    console.log(user)
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
