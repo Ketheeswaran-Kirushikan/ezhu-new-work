@@ -2,6 +2,14 @@ const investors = require("../models/investor.request.model");
 const { uploadInvestor } = require("../utils/multer");
 const sgMail = require("@sendgrid/mail");
 
+// Validate and set SendGrid API key
+const apiKey = process.env.SEND_GRID_MAIL_API_SECRET_KEY;
+if (!apiKey || !apiKey.startsWith("SG.")) {
+  console.error("Invalid or missing SendGrid API key");
+  process.exit(1); // Exit if key is invalid
+}
+sgMail.setApiKey(apiKey.trim()); // Trim to remove whitespace
+
 const createUser = async (req, res) => {
   try {
     uploadInvestor.fields([
@@ -42,15 +50,11 @@ const createUser = async (req, res) => {
         images,
         companyName,
         registrationNumber,
+        role: "investor", // Explicitly set role
       });
 
       await newUser.save();
-
-      if (newUser._id) {
-        console.log("Investor created successfully");
-      } else {
-        console.error("Invalid user ID:", newUser._id);
-      }
+      console.log("Investor created successfully, ID:", newUser._id);
 
       res
         .status(201)
@@ -63,11 +67,16 @@ const createUser = async (req, res) => {
 };
 
 const sendWelcomeEmail = async (req, res) => {
-  const { id, role } = req.params;
+  let { id, role } = req.params;
+  role = role.replace(/\s+/g, "").toLowerCase(); // Normalize role
+  if (role !== "investor") role = "investor"; // Ensure correct role
+
   try {
     const user = await investors.findById(id);
-    console.log(user)
+    console.log("User data:", user);
+
     if (!user) {
+      console.error(`User not found for ID: ${id}`);
       return res.status(404).json({ error: "User not found" });
     }
 
@@ -79,10 +88,9 @@ const sendWelcomeEmail = async (req, res) => {
       html: `<p>Hello ${user.first_name},</p><p>Your account has been successfully created.</p><p><a href="https://ezhu-new-work.vercel.app/cardForm/${user._id}/${role}">Click here</a> to proceed with your account setup.</p>`,
     };
 
-    console.log("Sending email to:", user.email);
+    console.log(`Sending email to: ${user.email} with role: ${role}`);
     const response = await sgMail.send(msg);
     console.log("Email sent:", response);
-
     return res.status(200).json({ message: "Welcome email sent successfully" });
   } catch (error) {
     console.error(
@@ -95,17 +103,18 @@ const sendWelcomeEmail = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    const value = req.params.value;
-    const deletedData = await investors.findOneAndDelete({ user_id: value });
+    const { value } = req.params;
+    const deletedData = await investors.findOneAndDelete({ _id: value }); // Use _id
     if (deletedData) {
-      res.json(deletedData);
       console.log("User has been deleted");
+      return res.json(deletedData);
     } else {
-      res.status(404).json("User not found");
+      console.error(`User not found for ID: ${value}`);
+      return res.status(404).json({ error: "User not found" });
     }
   } catch (error) {
-    console.error("Error deleting user", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error("Error deleting user:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -113,13 +122,14 @@ const findUser = async (req, res) => {
   try {
     const allInvestors = await investors.find();
     if (allInvestors.length > 0) {
-      res.json(allInvestors);
+      return res.json(allInvestors);
     } else {
-      res.status(404).json({ error: "No Investor found" });
+      console.error("No investors found");
+      return res.status(404).json({ error: "No investors found" });
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error("Error finding investors:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
