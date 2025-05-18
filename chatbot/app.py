@@ -28,8 +28,9 @@ def handle_message():
     except Exception as e:
         print(f"[ERROR]: {e}")
         return jsonify({'response': 'Sorry, an error occurred.'}), 500
+    
 if __name__ == '__main__':
     import os
-    port = int(os.environ.get('PORT', 5000))  # railway will use PORT env
+    port = int(os.environ.get('PORT', 5000))  # <- dynamic port
     print(f"✅ Flask Chatbot running on http://0.0.0.0:{port}")
-    app.run(host='0.0.0.0', port=port, debug=True)
+    app.run(host='0.0.0.0', port=port)
