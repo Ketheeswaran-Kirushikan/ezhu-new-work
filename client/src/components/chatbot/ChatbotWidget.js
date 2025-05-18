@@ -22,14 +22,15 @@ const ChatbotWidget = () => {
     setInput('');
 
     try {
-      // Use the correct backend URL (update based on Flask server IP)
-const url = `${process.env.REACT_APP_CHATBOT_URL || 'http://172.20.10.2:5000'}/handle_message`;
+      // Use the correct backend URL based on environment
+      const url = `${process.env.REACT_APP_CHATBOT_URL || 'http://127.0.0.1:5000'}/handle_message`;
       console.log('Sending request to:', url, 'REACT_APP_CHATBOT_URL:', process.env.REACT_APP_CHATBOT_URL);
-      
+
       const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: input }),
+        credentials: 'include', // Include credentials for CORS if needed
       });
       console.log('Response status:', response.status, 'Response ok:', response.ok);
 
@@ -49,7 +50,7 @@ const url = `${process.env.REACT_APP_CHATBOT_URL || 'http://172.20.10.2:5000'}/h
       console.error('Chatbot error:', error);
       setMessages((prev) => [
         ...prev,
-        { from: 'bot', text: `Error: ${error.message || 'Unable to connect to chatbot server. Check CORS or network.'}`, timestamp: new Date() },
+        { from: 'bot', text: `Error: Unable to connect to the chatbot server. Please try again later.`, timestamp: new Date() },
       ]);
     }
   };

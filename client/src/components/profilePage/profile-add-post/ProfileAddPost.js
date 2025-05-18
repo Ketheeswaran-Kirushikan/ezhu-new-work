@@ -98,7 +98,7 @@ const ProfileAddPost = ({ userData }) => {
                 <h2>Share your needs!</h2>
               </label>
               <textarea
-                className="form-control"
+                className="form-control post-input"
                 id="post-text"
                 rows="3"
                 name="description"

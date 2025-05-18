@@ -164,7 +164,7 @@ const InvestorNew = () => {
         <div className="card-ms col-11 col-sm-9 col-md-7 col-lg-6 text-center p-0 mt-3 mb-2">
           <div className="px-0 pt-4 pb-0 mt-3 mb-3">
             <h2>
-              <strong>Sign Up Your Company Account</strong>
+              <strong>Sign Up Your  Account</strong>
             </h2>
             <p>Fill all form fields to go to the next step</p>
             <div className="">
